@@ -19,7 +19,7 @@ namespace DrugStores.Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AppConfigConfigurations());
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<CT_HoaDon> CT_HoaDons { get; set; }
