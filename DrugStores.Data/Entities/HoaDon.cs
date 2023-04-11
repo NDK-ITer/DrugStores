@@ -5,12 +5,18 @@ namespace DrugStores.Data.Entities
 {
     public class HoaDon
     {
-        public string? SoHD { get; set; }
-        public string? Id { get; set; }
-        public DateTime NgayLap { get; set; }
-        public decimal TongThanhTien { get; set; }
-        public string? TenNguoiMua { get; set; }
-        public string? Email { get; set; }
-        public string? SDT { get; set; }
+        public HoaDon()
+        {
+            this.CT_HoaDon = new HashSet<CT_HoaDon>();
+        }
+
+        public string SoDH { get; set; }
+        public string Id { get; set; }
+        public Nullable<System.DateTime> NgayLap { get; set; }
+        public Nullable<decimal> TongThanhTien { get; set; }
+        public string TenNguoiMua { get; set; }
+        public string Email { get; set; }
+        public string SDT { get; set; }
+        public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
     }
 }
