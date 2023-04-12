@@ -19,7 +19,8 @@ namespace DrugStores.Data.Configurations
             builder.HasOne(x => x.PhanLoaiSP).WithMany(x => x.SanPhams).HasForeignKey(x => x.MaLoaiSP);
             builder.HasOne(x => x.DanhMuc).WithMany(x => x.SanPhams).HasForeignKey(x => x.MaDM);
             builder.HasOne(x => x.TrangThai).WithMany(x => x.SanPhams).HasForeignKey(x => x.MaTT);
-            builder.Property(x => x.DonGia).IsRequired().HasDefaultValue(0);
+            builder.Property(x => x.DonGia).HasDefaultValue(0);
+            builder.Property(x => x.GiamGia).HasDefaultValue(0);
             builder.Property(x => x.SoLanMua).HasDefaultValue(0);
 
         }

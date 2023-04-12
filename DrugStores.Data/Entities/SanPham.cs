@@ -21,8 +21,8 @@ namespace DrugStores.Data.Entities
         public string MaLoaiSP { get; set; }
         public string MaDM { get; set; }
         public string MaTT { get; set; }
-        public Nullable<decimal> GiamGia { get; set; }
-        public Nullable<decimal> DonGia { get; set; }
+        public decimal GiamGia { get; set; }
+        public decimal DonGia { get; set; }
         public List<CT_HoaDon> CTHoaDon { get; set; }
         public virtual DanhMuc DanhMuc { get; set; }
         public List<GioHang> GioHangs { get; set; }

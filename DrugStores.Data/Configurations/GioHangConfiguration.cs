@@ -13,7 +13,7 @@ namespace DrugStores.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<GioHang> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => new {x.Id,x.MaSP});
             builder.ToTable(nameof(GioHang));
             builder.HasOne(x => x.SanPham).WithMany(x => x.GioHangs).HasForeignKey(x => x.MaSP);
             builder.HasOne(x => x.AppUser).WithMany(x => x.GioHangs).HasForeignKey(x => x.Id);
