@@ -5,8 +5,8 @@ namespace DrugStores.Data.Entities
 {
     public class HoaDon
     {
-        public string SoDH { get; set; }
-        public string Id { get; set; }
+        public Guid SoDH { get; set; }
+        public Guid Id { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
         public Nullable<decimal> TongThanhTien { get; set; }
         public string TenNguoiMua { get; set; }

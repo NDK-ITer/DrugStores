@@ -8,7 +8,7 @@ namespace DrugStores.Data.Entities
 {
     public class TrangThai
     {
-        public string MaTT { get; set; }
+        public Guid MaTT { get; set; }
         public string TenTT { get; set; }
         public List<SanPham> SanPhams { get; set; }
 

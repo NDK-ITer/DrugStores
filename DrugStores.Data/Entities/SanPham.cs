@@ -8,7 +8,7 @@ namespace DrugStores.Data.Entities
 {
     public class SanPham
     {
-        public string MaSP { get; set; }
+        public Guid MaSP { get; set; }
         public string TenSP { get; set; }
         public string DonViTinh { get; set; }
         public string ThanhPhan { get; set; }
@@ -18,9 +18,9 @@ namespace DrugStores.Data.Entities
         public string MoTa { get; set; }
         public string AnhDaiDien { get; set; }
         public Nullable<int> SoLanMua { get; set; }
-        public string MaLoaiSP { get; set; }
-        public string MaDM { get; set; }
-        public string MaTT { get; set; }
+        public Guid MaLoaiSP { get; set; }
+        public Guid MaDM { get; set; }
+        public Guid MaTT { get; set; }
         public decimal GiamGia { get; set; }
         public decimal DonGia { get; set; }
         public List<CT_HoaDon> CTHoaDon { get; set; }

@@ -8,8 +8,8 @@ namespace DrugStores.Data.Entities
 {
     public partial class CT_HoaDon
     {
-        public string SoDH { get; set; }
-        public string MaSP { get; set; }
+        public Guid SoDH { get; set; }
+        public Guid MaSP { get; set; }
         public Nullable<int> SoLuong { get; set; }
         public HoaDon HoaDon { get; set; }
         public SanPham SanPham { get; set; }

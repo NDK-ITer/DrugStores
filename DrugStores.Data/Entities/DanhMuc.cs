@@ -8,7 +8,7 @@ namespace DrugStores.Data.Entities
 {
     public class DanhMuc
     {
-        public string MaDM { get; set; }
+        public Guid MaDM { get; set; }
         public string TenDM { get; set; }
         public List<SanPham> SanPhams { get; set; }
     }

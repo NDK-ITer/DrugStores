@@ -9,8 +9,8 @@ namespace DrugStores.Data.Entities
     public class GioHang
     {
         public Guid Id { get; set; }
-        public string MaSP { get; set; }
-        public Nullable<int> SoLuong { get; set; }
+        public Guid MaSP { get; set; }
+        public int SoLuong { get; set; }
         public SanPham SanPham { get; set; }
         public AppUser AppUser { get; set; }
     }
