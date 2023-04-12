@@ -12,6 +12,6 @@ namespace DrugStores.Data.Entities
         public string MaSP { get; set; }
         public Nullable<int> SoLuong { get; set; }
         public SanPham SanPham { get; set; }
-        public AppUser User { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
