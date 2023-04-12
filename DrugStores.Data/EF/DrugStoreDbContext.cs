@@ -1,5 +1,6 @@
 ﻿using DrugStores.Data.Configurations;
 using DrugStores.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DrugStores.Data.EF
 {
-    public class DrugStoreDbContext : IdentityDbContext
+    public class DrugStoreDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
         public DrugStoreDbContext(DbContextOptions options) : base(options)
         {
@@ -19,13 +20,14 @@ namespace DrugStores.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new SanPhamConfigurations());
-            modelBuilder.ApplyConfiguration(new DanhMucConfigurations());
-            modelBuilder.ApplyConfiguration(new CT_HoaDonConfigurations());
-            modelBuilder.ApplyConfiguration(new GioHangConfigurations());
-            modelBuilder.ApplyConfiguration(new HoaDonConfigurations());
-            modelBuilder.ApplyConfiguration(new PhanLoaiSPConfigurations());
-            modelBuilder.ApplyConfiguration(new TrangThaiConfigurations());
+            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
+
             //base.OnModelCreating(modelBuilder);
         }
 

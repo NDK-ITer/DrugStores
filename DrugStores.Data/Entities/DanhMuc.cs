@@ -8,10 +8,6 @@ namespace DrugStores.Data.Entities
 {
     public class DanhMuc
     {
-        public DanhMuc()
-        {
-            this.SanPhams = new HashSet<SanPham>();
-        }
         public string MaDM { get; set; }
         public string TenDM { get; set; }
         public List<SanPham> SanPhams { get; set; }
