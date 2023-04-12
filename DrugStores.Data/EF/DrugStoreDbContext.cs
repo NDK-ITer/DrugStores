@@ -1,5 +1,6 @@
 ﻿using DrugStores.Data.Configurations;
 using DrugStores.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DrugStores.Data.EF
 {
-    public class DrugStoreDbContext : DbContext
+    public class DrugStoreDbContext : IdentityDbContext
     {
         public DrugStoreDbContext(DbContextOptions options) : base(options)
         {
@@ -18,7 +19,6 @@ namespace DrugStores.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AppConfigConfigurations());
             modelBuilder.ApplyConfiguration(new SanPhamConfigurations());
             modelBuilder.ApplyConfiguration(new DanhMucConfigurations());
             modelBuilder.ApplyConfiguration(new CT_HoaDonConfigurations());
