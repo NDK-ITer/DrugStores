@@ -13,5 +13,7 @@ namespace DrugStores.Data.Entities
         public string LastName { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime UpdateDate {get; set; }
+        public List<GioHang> GioHangs { get; set; }
+        public List<HoaDon> HoaDons { get; set; }
     }
 }

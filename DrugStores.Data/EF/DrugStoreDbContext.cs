@@ -37,6 +37,6 @@ namespace DrugStores.Data.EF
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<PhanLoaiSP> PhanLoaiSPs { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
-        public DbSet<TrangThai> TrangThaiSPs { get;set; }
+        public DbSet<TrangThai> TrangThaiSPs { get; set; }
     }
 }

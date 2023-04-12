@@ -13,5 +13,7 @@ namespace DrugStores.Data.Entities
         public string Email { get; set; }
         public string SDT { get; set; }
         public List<CT_HoaDon> CTHoaDon { get; set; }
+        public AppUser AppUser { get; set; }
+
     }
 }
