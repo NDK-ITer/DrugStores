@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores", "DrugStores\DrugStores.csproj", "{BC5156FF-49F9-4575-81CB-AD32B81EB19D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Data", "DrugStores.Data\DrugStores.Data.csproj", "{3AF8946E-EF98-477C-919C-C9FD70DC4445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugStores.Data", "DrugStores.Data\DrugStores.Data.csproj", "{3AF8946E-EF98-477C-919C-C9FD70DC4445}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugStores.Application", "DrugStores.Application\DrugStores.Application.csproj", "{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Application", "DrugStores.Application\DrugStores.Application.csproj", "{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC5156FF-49F9-4575-81CB-AD32B81EB19D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC5156FF-49F9-4575-81CB-AD32B81EB19D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC5156FF-49F9-4575-81CB-AD32B81EB19D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC5156FF-49F9-4575-81CB-AD32B81EB19D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Release|Any CPU.ActiveCfg = Release|Any CPU

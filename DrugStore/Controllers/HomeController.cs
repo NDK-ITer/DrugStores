@@ -1,8 +1,8 @@
-﻿using DrugStores.Models;
+﻿using DrugStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace DrugStores.Controllers
+namespace DrugStore.Controllers
 {
     public class HomeController : Controller
     {

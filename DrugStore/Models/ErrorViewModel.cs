@@ -1,4 +1,4 @@
-namespace DrugStores.Models
+namespace DrugStore.Models
 {
     public class ErrorViewModel
     {
