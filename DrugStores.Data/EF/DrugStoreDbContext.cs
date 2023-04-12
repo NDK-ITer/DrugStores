@@ -19,6 +19,13 @@ namespace DrugStores.Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AppConfigConfigurations());
+            modelBuilder.ApplyConfiguration(new SanPhamConfigurations());
+            modelBuilder.ApplyConfiguration(new DanhMucConfigurations());
+            modelBuilder.ApplyConfiguration(new CT_HoaDonConfigurations());
+            modelBuilder.ApplyConfiguration(new GioHangConfigurations());
+            modelBuilder.ApplyConfiguration(new HoaDonConfigurations());
+            modelBuilder.ApplyConfiguration(new PhanLoaiSPConfigurations());
+            modelBuilder.ApplyConfiguration(new TrangThaiConfigurations());
             //base.OnModelCreating(modelBuilder);
         }
 

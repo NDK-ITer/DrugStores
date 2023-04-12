@@ -5,11 +5,6 @@ namespace DrugStores.Data.Entities
 {
     public class HoaDon
     {
-        public HoaDon()
-        {
-            this.CT_HoaDon = new HashSet<CT_HoaDon>();
-        }
-
         public string SoDH { get; set; }
         public string Id { get; set; }
         public Nullable<System.DateTime> NgayLap { get; set; }
@@ -17,6 +12,6 @@ namespace DrugStores.Data.Entities
         public string TenNguoiMua { get; set; }
         public string Email { get; set; }
         public string SDT { get; set; }
-        public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
+        public List<CT_HoaDon> CTHoaDon { get; set; }
     }
 }
