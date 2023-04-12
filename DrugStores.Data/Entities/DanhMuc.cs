@@ -14,6 +14,6 @@ namespace DrugStores.Data.Entities
         }
         public string MaDM { get; set; }
         public string TenDM { get; set; }
-        public virtual ICollection<SanPham> SanPhams { get; set; }
+        public List<SanPham> SanPhams { get; set; }
     }
 }
