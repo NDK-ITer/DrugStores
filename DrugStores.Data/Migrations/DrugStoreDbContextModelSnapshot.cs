@@ -198,9 +198,6 @@ namespace DrugStores.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -224,7 +221,7 @@ namespace DrugStores.Data.Migrations
 
                     b.HasKey("SoDH");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("Id");
 
                     b.ToTable("HoaDon", (string)null);
                 });
@@ -353,21 +350,21 @@ namespace DrugStores.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c0483f16-18a1-4767-b3bc-43fbbfbbee56",
+                            Id = "17b53ddf-8554-4e8d-8bb2-5a39f7f987cd",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "c488c9b1-e2c9-4f6d-b55a-a834c68f97d5",
+                            Id = "cf8254d8-ccca-4bc0-abd7-f14690bb399d",
                             ConcurrencyStamp = "1",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "51be30d5-2550-4388-9fa7-2e7745b5cc77",
+                            Id = "9498a730-b1fd-4fd1-ab00-c0eeb9c6a2c2",
                             ConcurrencyStamp = "1",
                             Name = "Memember",
                             NormalizedName = "Memember"
@@ -519,7 +516,7 @@ namespace DrugStores.Data.Migrations
                 {
                     b.HasOne("DrugStores.Data.Entities.AppUser", "AppUser")
                         .WithMany("HoaDons")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

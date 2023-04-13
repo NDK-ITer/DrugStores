@@ -14,6 +14,7 @@ namespace DrugStores.Data.Configurations
         public void Configure(EntityTypeBuilder<HoaDon> builder)
         {
             builder.ToTable(nameof(HoaDon));
+            builder.HasOne(x => x.AppUser).WithMany(x => x.HoaDons).HasForeignKey(x => x.Id);
             builder.HasKey(x => x.SoDH);
             builder.Property(x => x.TenNguoiMua).IsRequired();
             builder.Property(x => x.SDT).IsRequired();

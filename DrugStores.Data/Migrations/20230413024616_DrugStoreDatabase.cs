@@ -223,15 +223,14 @@ namespace DrugStores.Data.Migrations
                     TongThanhTien = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TenNguoiMua = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SDT = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SDT = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HoaDon", x => x.SoDH);
                     table.ForeignKey(
-                        name: "FK_HoaDon_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_HoaDon_AspNetUsers_Id",
+                        column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -335,9 +334,9 @@ namespace DrugStores.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "51be30d5-2550-4388-9fa7-2e7745b5cc77", "1", "Memember", "Memember" },
-                    { "c0483f16-18a1-4767-b3bc-43fbbfbbee56", "1", "Admin", "Admin" },
-                    { "c488c9b1-e2c9-4f6d-b55a-a834c68f97d5", "1", "User", "User" }
+                    { "17b53ddf-8554-4e8d-8bb2-5a39f7f987cd", "1", "Admin", "Admin" },
+                    { "9498a730-b1fd-4fd1-ab00-c0eeb9c6a2c2", "1", "Memember", "Memember" },
+                    { "cf8254d8-ccca-4bc0-abd7-f14690bb399d", "1", "User", "User" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -390,9 +389,9 @@ namespace DrugStores.Data.Migrations
                 column: "MaSP");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDon_AppUserId",
+                name: "IX_HoaDon_Id",
                 table: "HoaDon",
-                column: "AppUserId");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SanPham_MaDM",
