@@ -353,21 +353,21 @@ namespace DrugStores.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "812fa55a-9af2-4756-aad4-857ac743b7d9",
+                            Id = "c0483f16-18a1-4767-b3bc-43fbbfbbee56",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "8c42b17a-f113-4ac1-a5a1-1a0cbf03c34a",
+                            Id = "c488c9b1-e2c9-4f6d-b55a-a834c68f97d5",
                             ConcurrencyStamp = "1",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "6b9213de-bf9c-4e9d-9e70-9fa8427ac9a0",
+                            Id = "51be30d5-2550-4388-9fa7-2e7745b5cc77",
                             ConcurrencyStamp = "1",
                             Name = "Memember",
                             NormalizedName = "Memember"

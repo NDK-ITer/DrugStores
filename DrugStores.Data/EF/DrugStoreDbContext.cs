@@ -33,8 +33,8 @@ namespace DrugStores.Data.EF
             modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
             modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims").HasKey(x => x.Id);
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
-            base.OnModelCreating(modelBuilder);
             SeedRoles(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
         private void SeedRoles(ModelBuilder builder)
         {

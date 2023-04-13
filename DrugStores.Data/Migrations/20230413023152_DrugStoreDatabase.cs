@@ -335,9 +335,9 @@ namespace DrugStores.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6b9213de-bf9c-4e9d-9e70-9fa8427ac9a0", "1", "Memember", "Memember" },
-                    { "812fa55a-9af2-4756-aad4-857ac743b7d9", "1", "Admin", "Admin" },
-                    { "8c42b17a-f113-4ac1-a5a1-1a0cbf03c34a", "1", "User", "User" }
+                    { "51be30d5-2550-4388-9fa7-2e7745b5cc77", "1", "Memember", "Memember" },
+                    { "c0483f16-18a1-4767-b3bc-43fbbfbbee56", "1", "Admin", "Admin" },
+                    { "c488c9b1-e2c9-4f6d-b55a-a834c68f97d5", "1", "User", "User" }
                 });
 
             migrationBuilder.CreateIndex(
