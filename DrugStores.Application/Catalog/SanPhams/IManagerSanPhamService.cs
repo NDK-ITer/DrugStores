@@ -10,9 +10,9 @@ namespace DrugStores.Application.Catalog.SanPhams
 {
     public interface IManagerSanPhamService
     {
-        Task<Guid> Create(SanPhamCreateRequest request);
-        Task<Guid> Update(SanPhamCreateRequest request);
-        Task<Guid> Delete(Guid id);
+        Task<int> Create(SanPhamCreateRequest request);
+        Task<int> Update(SanPhamCreateRequest request);
+        Task<int> Delete(Guid id);
         Task<List<SanPhamViewModel>> GetAll();
         Task<PagedViewModel<SanPhamViewModel>> GetAllPaging(string keyWord, int pageIndex, int pageSize);
     }

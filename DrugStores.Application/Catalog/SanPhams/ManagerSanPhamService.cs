@@ -1,6 +1,7 @@
 ﻿using DrugStores.Application.Catalog.SanPhams.DTOs;
 using DrugStores.Application.DTOs;
 using DrugStores.Data.EF;
+using DrugStores.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,31 @@ namespace DrugStores.Application.Catalog.SanPhams
         {
             this.dbContext = dbContext;
         }
-        public async Task<Guid> Create(SanPhamCreateRequest request)
+        public async Task<int> Create(SanPhamCreateRequest request)
         {
-            throw new NotImplementedException();
+            var sanPham = new SanPham()
+            {
+                MaSP = request.MaSP,
+                TenSP = request.TenSP,
+                DonViTinh = request.DonViTinh,
+                ThanhPhan = request.ThanhPhan,
+                CongDung = request.CongDung,
+                LieuDung = request.LieuDung,
+                TacDungPhu = request.TacDungPhu,
+                MoTa = request.MoTa,
+                AnhDaiDien = request.AnhDaiDien,
+                SoLanMua = request.SoLanMua,
+                GiamGia = request.GiamGia,
+                DonGia = request.DonGia,
+                MaDM = request.MaDM,
+                MaTT = request.MaTT,
+                MaLoaiSP = request.MaLoaiSP,
+            };
+            dbContext.SanPhams.Add(sanPham);
+            return await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Guid> Delete(Guid id)
+        public async Task<int> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +56,7 @@ namespace DrugStores.Application.Catalog.SanPhams
             throw new NotImplementedException();
         }
 
-        public Task<Guid> Update(SanPhamCreateRequest request)
+        public Task<int> Update(SanPhamCreateRequest request)
         {
             throw new NotImplementedException();
         }
