@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrugStores.Application.DTOs
 {
-    public class PagedViewModel<T>
+    public class PagedResult<T>
     {
         List<T> Items { get; set; }
         public int TotalRecord { get; set; }

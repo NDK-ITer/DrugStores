@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Data", "DrugStor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Application", "DrugStores.Application\DrugStores.Application.csproj", "{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugStore", "DrugStore\DrugStore.csproj", "{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStore", "DrugStore\DrugStore.csproj", "{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,6 +10,6 @@ namespace DrugStores.Application.Catalog.SanPhams
 {
     public interface IPublicSanPhamService
     {
-        PagedViewModel<SanPhamViewModel> GetAllByMaDM(Guid MaDM, int pageIndex, int pageSize);
+        PagedResult<SanPhamViewModel> GetAllByMaDM(Guid MaDM, int pageIndex, int pageSize);
     }
 }
