@@ -13,7 +13,7 @@ namespace DrugStores.Data.Entities
         public string ThanhPhan { get; set; }
         public string TacDungPhu { get; set; }
         public string LieuDung { get; set; }
-        public SanPham SanPham { get; set; }
+        public virtual SanPham SanPham { get; set; }
 
     }
 }

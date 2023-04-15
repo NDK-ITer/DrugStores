@@ -12,8 +12,8 @@ namespace DrugStores.Data.Entities
         public string TenNguoiMua { get; set; }
         public string Email { get; set; }
         public string SDT { get; set; }
-        public List<CT_HoaDon> CTHoaDon { get; set; }
-        public AppUser AppUser { get; set; }
+        public virtual List<CT_HoaDon> CTHoaDon { get; set; }
+        public virtual AppUser AppUser { get; set; }
 
     }
 }
