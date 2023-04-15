@@ -18,6 +18,7 @@ namespace DrugStores.Data.EF
         public DbSet<PhanLoaiSP> PhanLoaiSPs { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<TrangThai> TrangThaiSPs { get; set; }
+        public DbSet<TinTuc> TinTucs { get; set; }
         public DrugStoreDbContext() : base(GetOptions())
         {
 
