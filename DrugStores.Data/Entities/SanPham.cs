@@ -10,11 +10,7 @@ namespace DrugStores.Data.Entities
     {
         public Guid MaSP { get; set; }
         public string TenSP { get; set; }
-        public string DonViTinh { get; set; }
-        public string ThanhPhan { get; set; }
         public string CongDung { get; set; }
-        public string LieuDung { get; set; }
-        public string TacDungPhu { get; set; }
         public string MoTa { get; set; }
         public string AnhDaiDien { get; set; }
         public Nullable<int> SoLanMua { get; set; }
