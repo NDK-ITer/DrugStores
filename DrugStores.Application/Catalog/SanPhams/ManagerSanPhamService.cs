@@ -56,6 +56,11 @@ namespace DrugStores.Application.Catalog.SanPhams
             throw new NotImplementedException();
         }
 
+        public Task<PagedResult<SanPhamViewModel>> GetAllPaging(GetSanPhamPagingRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<int> Update(SanPhamEditRequest request)
         {
             throw new NotImplementedException();
