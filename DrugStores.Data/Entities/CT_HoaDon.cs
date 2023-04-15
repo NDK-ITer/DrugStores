@@ -11,7 +11,7 @@ namespace DrugStores.Data.Entities
         public Guid SoDH { get; set; }
         public Guid MaSP { get; set; }
         public Nullable<int> SoLuong { get; set; }
-        public HoaDon HoaDon { get; set; }
-        public SanPham SanPham { get; set; }
+        public virtual HoaDon HoaDon { get; set; }
+        public virtual SanPham SanPham { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace DrugStores.Data.Entities
     {
         public Guid MaDM { get; set; }
         public string TenDM { get; set; }
-        public List<SanPham> SanPhams { get; set; }
+        public virtual List<SanPham> SanPhams { get; set; }
     }
 }

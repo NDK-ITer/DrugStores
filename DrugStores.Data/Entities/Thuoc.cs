@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace DrugStores.Data.Entities
 {
-    public class GioHang
+    public class Thuoc
     {
-        public Guid Id { get; set; }
         public Guid MaSP { get; set; }
+        public string DonViTinh { get; set; }
+        public string ThanhPhan { get; set; }
+        public string TacDungPhu { get; set; }
+        public string LieuDung { get; set; }
         public int SoLuong { get; set; }
-        public decimal ThanhTien { get; set; }
         public virtual SanPham SanPham { get; set; }
-        public virtual AppUser AppUser { get; set; }
+
     }
 }

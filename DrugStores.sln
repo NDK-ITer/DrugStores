@@ -5,8 +5,6 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Data", "DrugStores.Data\DrugStores.Data.csproj", "{3AF8946E-EF98-477C-919C-C9FD70DC4445}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStores.Application", "DrugStores.Application\DrugStores.Application.csproj", "{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStore", "DrugStore\DrugStore.csproj", "{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF8946E-EF98-477C-919C-C9FD70DC4445}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31C8A2D1-A684-4422-85A7-EAAB3DDBB0CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{782C6FB1-90A4-4FDE-95D9-CEAC0895856E}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace DrugStores.Data.Entities
 {
-    public class TrangThai
+    public class HangSX
     {
-        public Guid MaTT { get; set; }
-        public string TenTT { get; set; }
-        public virtual List<SanPham> SanPhams { get; set; }
-
+        public Guid MaHSX { get; set; }
+        public string TenHSX { get; set; }
+        public List<SanPham> SanPhams { get; set;}
     }
 }
