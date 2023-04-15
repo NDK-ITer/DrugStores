@@ -7,15 +7,56 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\theme\fonts\ElegantIcons.svg" />
+    <None Include="wwwroot\theme\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\theme\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\theme\js\bootstrap.min.js" />
+    <None Include="wwwroot\theme\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\theme\js\jquery-ui.min.js" />
+    <None Include="wwwroot\theme\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\theme\js\jquery.slicknav.js" />
+    <None Include="wwwroot\theme\js\main.js" />
+    <None Include="wwwroot\theme\js\mixitup.min.js" />
+    <None Include="wwwroot\theme\js\owl.carousel.min.js" />
+    <None Include="wwwroot\theme\sass\style.scss" />
+    <None Include="wwwroot\theme\sass\_base.scss" />
+    <None Include="wwwroot\theme\sass\_blog-details.scss" />
+    <None Include="wwwroot\theme\sass\_blog-sidebar.scss" />
+    <None Include="wwwroot\theme\sass\_blog.scss" />
+    <None Include="wwwroot\theme\sass\_breadcrumb.scss" />
+    <None Include="wwwroot\theme\sass\_checkout.scss" />
+    <None Include="wwwroot\theme\sass\_contact.scss" />
+    <None Include="wwwroot\theme\sass\_footer.scss" />
+    <None Include="wwwroot\theme\sass\_header.scss" />
+    <None Include="wwwroot\theme\sass\_hero.scss" />
+    <None Include="wwwroot\theme\sass\_home-page.scss" />
+    <None Include="wwwroot\theme\sass\_mixins.scss" />
+    <None Include="wwwroot\theme\sass\_responsive.scss" />
+    <None Include="wwwroot\theme\sass\_shop-details.scss" />
+    <None Include="wwwroot\theme\sass\_shop-grid.scss" />
+    <None Include="wwwroot\theme\sass\_shoping-cart.scss" />
+    <None Include="wwwroot\theme\sass\_sidebar.scss" />
+    <None Include="wwwroot\theme\sass\_variable.scss" />
+    <None Include="wwwroot\theme\Source\bootstrap-4.4.1-dist.zip" />
+    <None Include="wwwroot\theme\Source\font-awesome-4.7.0.zip" />
+    <None Include="wwwroot\theme\Source\jquery-nice-select-1.1.0.zip" />
+    <None Include="wwwroot\theme\Source\jquery-ui-1.12.1.zip" />
+    <None Include="wwwroot\theme\Source\OwlCarousel2-2.3.4.zip" />
+    <None Include="wwwroot\theme\Source\sass.zip" />
+    <None Include="wwwroot\theme\Source\SlickNav-master.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DrugStores.Application\DrugStores.Application.csproj" />
+    <!--<ProjectReference Include="..\DrugStores.Application\DrugStores.Application.csproj" />-->
     <ProjectReference Include="..\DrugStores.Data\DrugStores.Data.csproj" />
   </ItemGroup>
 
