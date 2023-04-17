@@ -13,7 +13,5 @@ namespace DrugStore.Models.Entities
         public string Email { get; set; }
         public string SDT { get; set; }
         public virtual List<CT_HoaDon> CTHoaDon { get; set; }
-        public virtual AppUser AppUser { get; set; }
-
     }
 }

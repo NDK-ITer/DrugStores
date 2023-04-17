@@ -13,6 +13,5 @@ namespace DrugStore.Models.Entities
         public int SoLuong { get; set; }
         public decimal ThanhTien { get; set; }
         public virtual SanPham SanPham { get; set; }
-        public virtual AppUser AppUser { get; set; }
     }
 }
