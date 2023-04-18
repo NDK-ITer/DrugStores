@@ -1,20 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DrugStore.Models.Entities
 {
-
+    [Table("SanPham")]
     public partial class SanPham
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanPham()
         {
             CT_HoaDon = new HashSet<CT_HoaDon>();
             GioHangs = new HashSet<GioHang>();
         }
 
+        [Key]
         public Guid MaSP { get; set; }
 
         public string TenSP { get; set; }
