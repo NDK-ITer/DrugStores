@@ -1,4 +1,12 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using DrugStore.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DrugStoreDbContextConnection' not found.");
+
+builder.Services.AddDbContext<DrugStoreDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<AppNetUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DrugStoreDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
