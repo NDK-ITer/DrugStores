@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,25 +6,53 @@ using System.Threading.Tasks;
 
 namespace DrugStore.Models.Entities
 {
-    public class SanPham
+
+    public partial class SanPham
     {
+        public SanPham()
+        {
+            CT_HoaDon = new HashSet<CT_HoaDon>();
+            GioHangs = new HashSet<GioHang>();
+        }
+
         public Guid MaSP { get; set; }
-        public string? TenSP { get; set; }
-        public string? CongDung { get; set; }
-        public string? MoTa { get; set; }
-        public string? AnhDaiDien { get; set; }
-        public Nullable<int> SoLanMua { get; set; }
-        public Guid MaLoaiSP { get; set; }
-        public Guid MaDM { get; set; }
-        public Guid MaTT { get; set; }
-        public Guid MaHSX { get; set; }
-        public decimal GiamGia { get; set; }
-        public decimal DonGia { get; set; }
-        public virtual List<CT_HoaDon>? CTHoaDon { get; set; }
-        public virtual DanhMuc? DanhMuc { get; set; }
-        public virtual List<GioHang>? GioHangs { get; set; }
-        public virtual PhanLoaiSP? PhanLoaiSP { get; set; }
-        public virtual TrangThai? TrangThai { get; set; }
-        public virtual HangSX? HangSX { get; set; }
+
+        public string TenSP { get; set; }
+
+        public string CongDung { get; set; }
+
+        public string MoTa { get; set; }
+
+        public string AnhDaiDien { get; set; }
+
+        public int? SoLanMua { get; set; }
+
+        public Guid? MaLoaiSP { get; set; }
+
+        public Guid? MaDM { get; set; }
+
+        public Guid? MaTT { get; set; }
+
+        public decimal? GiamGia { get; set; }
+
+        public decimal? DonGia { get; set; }
+
+        public Guid? MaHSX { get; set; }
+
+        public int? SoLuong { get; set; }
+
+        public string DSAnhSP { get; set; }
+
+        public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
+
+        public virtual ICollection<GioHang> GioHangs { get; set; }
+
+        public virtual HangSX HangSX { get; set; }
+
+        public virtual LoaiSP LoaiSP { get; set; }
+
+        public virtual TrangThai TrangThai { get; set; }
+
+        public virtual Thuoc Thuoc { get; set; }
     }
 }
