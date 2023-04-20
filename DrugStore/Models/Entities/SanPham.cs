@@ -31,17 +31,17 @@ namespace DrugStore.Models.Entities
 
         public int? SoLanMua { get; set; }
 
-        public Guid? MaLoaiSP { get; set; }
-
-        public Guid? MaDM { get; set; }
-
-        public Guid? MaTT { get; set; }
+        [ForeignKey("LoaiSP")]
+        public string? MaLoaiSP { get; set; }
+        
+        [ForeignKey("TrangThai")]
+        public int? MaTT { get; set; }
+        [ForeignKey("HangSX")]
+        public int? MaHSX { get; set; }
 
         public decimal? GiamGia { get; set; }
 
         public decimal? DonGia { get; set; }
-
-        public Guid? MaHSX { get; set; }
 
         public int? SoLuong { get; set; }
 

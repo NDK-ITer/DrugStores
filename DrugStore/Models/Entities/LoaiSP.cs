@@ -17,7 +17,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
-        public Guid MaLoaiSP { get; set; }
+        public string MaLoaiSP { get; set; }
 
         public string TenLoaiSP { get; set; }
 

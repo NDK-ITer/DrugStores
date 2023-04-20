@@ -42,7 +42,7 @@ namespace DrugStore.Models.Entities
         [Column(TypeName = "ntext")]
         public string GhiChu { get; set; }
 
-        public Guid? MaHT { get; set; }
+        public int? MaHT { get; set; }
 
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
 

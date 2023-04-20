@@ -17,7 +17,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
-        public Guid MaHT { get; set; }
+        public int MaHT { get; set; }
 
         [StringLength(50)]
         public string TenHT { get; set; }

@@ -17,7 +17,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
-        public Guid MaHSX { get; set; }
+        public int MaHSX { get; set; }
 
         public string TenHSX { get; set; }
 

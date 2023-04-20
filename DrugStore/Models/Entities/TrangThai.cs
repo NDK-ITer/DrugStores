@@ -19,7 +19,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
-        public Guid MaTT { get; set; }
+        public int MaTT { get; set; }
 
         public string TenTT { get; set; }
 
