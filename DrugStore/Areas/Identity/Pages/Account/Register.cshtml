@@ -74,6 +74,18 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                     <div class="form-outline mb-4">
+                        <label>Họ</label>
+                        <input asp-for="Input.LastName" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Họ" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label>Tên</label>
+                        <input asp-for="Input.FirstName" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Tên" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-outline mb-4">
                         <label asp-for="Input.Email">Email</label>
                         <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Email" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -81,7 +93,6 @@
                     <div class="form-outline mb-4">
                         <label asp-for="Input.Password">Mật Khẩu</label>
                         <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Nhập Mật Khẩu" />
-
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="form-outline mb-4">
