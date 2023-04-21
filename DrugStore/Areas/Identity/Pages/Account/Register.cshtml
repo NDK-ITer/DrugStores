@@ -70,26 +70,26 @@
             </div>
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    
+
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-outline mb-4">
-                    <label asp-for="Input.Email">Email</label>
-                    <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+
+                    <div class="form-outline mb-4">
+                        <label asp-for="Input.Email">Email</label>
+                        <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Email" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
-                <div class="form-outline mb-4">
-                    <label asp-for="Input.Password">Password</label>
-                    <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="password" />
-                      
+                    <div class="form-outline mb-4">
+                        <label asp-for="Input.Password">Mật Khẩu</label>
+                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Nhập Mật Khẩu" />
+
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-                <div class="form-outline mb-4">
-                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                    <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="password" />
-                       
+                    <div class="form-outline mb-4">
+                        <label asp-for="Input.ConfirmPassword">Xác nhận mật khẩu</label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Nhập Lại Mật Khẩu" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
-                <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+                    <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
                 </form>
                 <div class="divider d-flex align-items-center my-4">
                     <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
