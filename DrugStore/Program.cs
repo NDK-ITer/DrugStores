@@ -22,9 +22,9 @@ services.AddAuthentication().AddFacebook(facebookOptions =>
 
 var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DrugStoreDbContextConnection' not found.");
 
-builder.Services.AddDbContext<DrugStoreDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<AppNetUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DrugStoreDbContext>();
+builder.Services.AddDefaultIdentity<AppNetUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationsDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
