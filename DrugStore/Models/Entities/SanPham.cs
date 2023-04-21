@@ -11,7 +11,6 @@ namespace DrugStore.Models.Entities
     [Table("SanPham")]
     public partial class SanPham
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanPham()
         {
             CT_HoaDon = new HashSet<CT_HoaDon>();

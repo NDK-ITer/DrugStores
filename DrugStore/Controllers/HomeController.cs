@@ -1,4 +1,5 @@
 ﻿using DrugStore.Models;
+using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,7 +8,7 @@ namespace DrugStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private DrugStoreDbContext dbContext = new DrugStoreDbContext();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,7 +16,8 @@ namespace DrugStore.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<LoaiThuoc> loaiThuocs = dbContext.LoaiThuocs.ToList();
+            return View(loaiThuocs);
         }
 
         public IActionResult Privacy()

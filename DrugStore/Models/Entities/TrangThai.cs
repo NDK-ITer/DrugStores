@@ -12,7 +12,6 @@ namespace DrugStore.Models.Entities
     [Table("TrangThai")]
     public partial class TrangThai
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TrangThai()
         {
             SanPhams = new HashSet<SanPham>();
@@ -23,7 +22,6 @@ namespace DrugStore.Models.Entities
 
         public string TenTT { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SanPham> SanPhams { get; set; }
     }
 }

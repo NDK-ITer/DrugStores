@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model IEnumerable<DrugStore.Models.Entities.LoaiThuoc>
 <!-- Hero Section Begin -->
 <section class="hero">
     <div class="container">
@@ -13,7 +13,7 @@
                         <span>All departments</span>
                     </div>
                     <ul>
-                        <li><a href="#">Bổ Gan thanh nhiệt</a></li>
+                        @*<li><a href="#">Bổ Gan thanh nhiệt</a></li>
                         <li><a href="#">Bổ Não</a></li>
                         <li><a href="#">Bổ phế, hô hấp</a></li>
                         <li><a href="#">Bổ trợ xương khớp</a></li>
@@ -23,7 +23,11 @@
                         <li><a href="#">Vitamin và khoáng chất</a></li>
                         <li><a href="#">Thảo dược tự nhiên</a></li>
                         <li><a href="#">Hỗ trợ tim mạch</a></li>
-                        <li><a href="#">Hỗ trợ tiểu đường</a></li>
+                        <li><a href="#">Hỗ trợ tiểu đường</a></li>*@
+                        @foreach (var item in Model)
+                        {
+                            <li><a href="#">@Html.DisplayFor(modelItem => item.TenLoaiThuoc)</a></li>
+                        }
                     </ul>
                 </div>
             </div>

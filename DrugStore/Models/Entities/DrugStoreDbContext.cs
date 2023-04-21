@@ -16,6 +16,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<Thuoc> Thuocs { get; set; }
         public virtual DbSet<TinTuc> TinTucs { get; set; }
         public virtual DbSet<TrangThai> TrangThais { get; set; }
+        public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
+
         private string connectionStrings;
         public DrugStoreDbContext() : base()
         {
