@@ -6,37 +6,36 @@ using Microsoft.EntityFrameworkCore;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HangSXesAdmin : Controller
+    public class TrangThaiAdmin : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
-        // GET: HangSXesAdmin
+        // GET: TrangThaiAdmin
         public ActionResult Index()
         {
-            List<HangSX> hangSXes = dbContext.HangSXes.ToList();
-            return View(hangSXes);
+            return View(dbContext.TrangThais.ToList());
         }
 
-        // GET: HangSXesAdmin/Details/5
+        // GET: TrangThaiAdmin/Details/5
         public ActionResult Details(int id)
         {
-            HangSX hangSX = dbContext.HangSXes.Find(id);
-            return View(hangSX);
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
         }
 
-        // GET: HangSXesAdmin/Create
+        // GET: TrangThaiAdmin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HangSXesAdmin/Create
+        // POST: TrangThaiAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(HangSX hangSX)
+        public ActionResult Create(TrangThai trangThai)
         {
             try
             {
-                dbContext.HangSXes.Add(hangSX);
+                dbContext.TrangThais.Add(trangThai);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -46,21 +45,21 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: HangSXesAdmin/Edit/5
+        // GET: TrangThaiAdmin/Edit/5
         public ActionResult Edit(int id)
         {
-            HangSX hangSX = dbContext.HangSXes.Find(id);
-            return View(hangSX);
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
         }
 
-        // POST: HangSXesAdmin/Edit/5
+        // POST: TrangThaiAdmin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HangSX hangSX)
+        public ActionResult Edit(TrangThai trangThai)
         {
             try
             {
-                dbContext.Entry(hangSX).State = EntityState.Modified;
+                dbContext.Entry(trangThai).State = EntityState.Modified;
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -70,22 +69,22 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: HangSXesAdmin/Delete/5
+        // GET: TrangThaiAdmin/Delete/5
         public ActionResult Delete(int id)
         {
-            HangSX hangSX = dbContext.HangSXes.Find(id);
-            return View(hangSX);
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
         }
 
-        // POST: HangSXesAdmin/Delete/5
+        // POST: TrangThaiAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                HangSX hangSX = dbContext.HangSXes.Find(id);
-                dbContext.HangSXes.Remove(hangSX);
+                TrangThai trangThai = dbContext.TrangThais.Find(id);
+                dbContext.TrangThais.Remove(trangThai);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
