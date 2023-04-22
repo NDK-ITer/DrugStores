@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DrugStore.Models.Entities.LoaiSP>
+
+@{
+    ViewBag.Title = "Loại Sản Phẩm";
+}
+
+<h2>Danh Sách Loại Sản Phẩm</h2>
+
+<p>
+    @Html.ActionLink("Tạo Mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenLoaiSP)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenLoaiSP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaLoaiSP }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaLoaiSP }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaLoaiSP })
+        </td>
+    </tr>
+}
+
+</table>

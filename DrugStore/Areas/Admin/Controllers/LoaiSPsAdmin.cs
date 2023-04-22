@@ -1,20 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class LoaiSPsAdmin : Controller
     {
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         // GET: LoaiSPsAdmin
         public ActionResult Index()
         {
-            return View();
+            List<LoaiSP> loaiSPs = dbContext.LoaiSPs.ToList();
+            return View(loaiSPs);
         }
 
         // GET: LoaiSPsAdmin/Details/5
         public ActionResult Details(string id)
         {
-            return View();
+            LoaiSP loaiSP = dbContext.LoaiSPs.Find(id);
+            return View(loaiSP);
         }
 
         // GET: LoaiSPsAdmin/Create
@@ -26,10 +32,12 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: LoaiSPsAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(LoaiSP loaiSP)
         {
             try
             {
+                dbContext.LoaiSPs.Add(loaiSP);
+                dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -39,18 +47,21 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: LoaiSPsAdmin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            LoaiSP loaiSP = dbContext.LoaiSPs.Find(id);
+            return View(loaiSP);
         }
 
         // POST: LoaiSPsAdmin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, IFormCollection collection)
+        public ActionResult Edit(LoaiSP loaiSP)
         {
             try
             {
+                dbContext.Entry(loaiSP).State = EntityState.Modified;
+                dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -60,18 +71,22 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: LoaiSPsAdmin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            LoaiSP loaiSP = dbContext.LoaiSPs.Find(id);
+            return View(loaiSP);
         }
 
         // POST: LoaiSPsAdmin/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(string id)
         {
             try
             {
+                LoaiSP loaiSP = dbContext.LoaiSPs.Find(id);
+                dbContext.LoaiSPs.Remove(loaiSP);
+                dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
