@@ -32,10 +32,13 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: LoaiSPsAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LoaiSP loaiSP)
+        public ActionResult Create(LoaiSP loaiSPInput)
         {
             try
             {
+                LoaiSP loaiSP = new LoaiSP();
+                loaiSP.MaLoaiSP = loaiSPInput.MaLoaiSP;
+                loaiSP.TenLoaiSP = loaiSPInput.TenLoaiSP;
                 dbContext.LoaiSPs.Add(loaiSP);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
