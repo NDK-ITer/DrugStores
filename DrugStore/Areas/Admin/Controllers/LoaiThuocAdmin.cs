@@ -1,6 +1,7 @@
 ﻿using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
@@ -47,18 +48,21 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: LoaiThuocAdmin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+            return View(loaiThuoc);
         }
 
         // POST: LoaiThuocAdmin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(LoaiThuoc loaiThuoc)
         {
             try
             {
+                dbContext.Entry(loaiThuoc).State = EntityState.Modified;
+                dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
