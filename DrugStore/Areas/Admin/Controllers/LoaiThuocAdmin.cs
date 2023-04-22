@@ -48,7 +48,7 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: LoaiThuocAdmin/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
             return View(loaiThuoc);
