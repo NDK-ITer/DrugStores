@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using DrugStore.Models.Entities;
 
-namespace DrugStore.Areas.Admin.Data
+namespace DrugStore.Areas.Admin.Models
 {
     public partial class ThuocInput : SanPhamInput
     {

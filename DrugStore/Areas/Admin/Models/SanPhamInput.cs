@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace DrugStore.Areas.Admin.Data
+namespace DrugStore.Areas.Admin.Models
 {
     public partial class SanPhamInput
     {
@@ -32,7 +32,7 @@ namespace DrugStore.Areas.Admin.Data
         [ForeignKey("LoaiSP")]
         [DisplayName("Loại Sản Phẩm")]
         public string? MaLoaiSP { get; set; }
-        
+
         [ForeignKey("TrangThai")]
         [DisplayName("Trạng Thái")]
         public int? MaTT { get; set; }
