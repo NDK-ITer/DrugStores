@@ -30,10 +30,14 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: LoaiThuocAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(LoaiThuoc loaiThuocInput)
         {
             try
             {
+                LoaiThuoc loaiThuoc = new LoaiThuoc();
+                loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
+                dbContext.LoaiThuocs.Add(loaiThuoc);
+                dbContext.SaveChanges();    
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -66,16 +70,20 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: LoaiThuocAdmin/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+            return View(loaiThuoc);
         }
 
         // POST: LoaiThuocAdmin/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
+                LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+                dbContext.LoaiThuocs.Remove(loaiThuoc);
+                dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
