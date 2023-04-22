@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -25,7 +26,7 @@ var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbCon
 
 builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<AppNetUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationsDbContext>();
+builder.Services.AddDefaultIdentity<AppNetUser>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true; }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationsDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
