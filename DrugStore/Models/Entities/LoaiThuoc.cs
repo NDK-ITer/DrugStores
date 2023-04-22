@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.Models.Entities
@@ -11,10 +12,12 @@ namespace DrugStore.Models.Entities
             Thuocs = new HashSet<Thuoc>();
         }
         [Key]
-        
+        [DisplayName("Mã Loại Thuốc")]
         public int MaLT { get; set; }
         [StringLength(100)]
+        [DisplayName("Tên Loại Thuốc")]
         public string? TenLoaiThuoc { get; set; }
+        [DisplayName("Các Loại Thuốc")]
         public virtual ICollection<Thuoc> Thuocs { get; set; }
     }
 }

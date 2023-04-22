@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
+        [DisplayName("Mã Hãng Sản Xuất")]
         public int MaHSX { get; set; }
-
+        [DisplayName("Tên Hãng Sản Xuất")]
         public string TenHSX { get; set; }
-
+        [DisplayName("Địa Chỉ")]
         public string DiaChiNSX { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Số Điện Thoại Hãng")]
         public string SDT { get; set; }
 
         public virtual ICollection<SanPham> SanPhams { get; set; }

@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel;
 
 namespace DrugStore.Models.Entities
 {
@@ -15,17 +16,18 @@ namespace DrugStore.Models.Entities
     public partial class TinTuc
     {
         [Key]
+
         public Guid MaTT { get; set; }
-
+        [DisplayName("Ảnh Đại Diện")]
         public string AnhDaiDien { get; set; }
-
+        [DisplayName("Thời Gian Đăng")]
         public DateTime? ThoiGiaDang { get; set; }
-
         [Column(TypeName = "ntext")]
+        [DisplayName("Nội Dung")]
         public string NoiDung { get; set; }
-
+        [DisplayName("Mô Tả Tin Tức")]
         public string MoTaTT { get; set; }
-
+        [DisplayName("Số Lượt Xem")]
         public int? SoLuotXem { get; set; }
     }
 }
