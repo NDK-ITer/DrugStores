@@ -7,57 +7,50 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace DrugStore.Models.Entities
+namespace DrugStore.Areas.Admin.Data
 {
-    [Table("SanPham")]
     public partial class SanPhamInput
     {
-        public SanPhamInput()
-        {
-            CT_HoaDon = new HashSet<CT_HoaDon>();
-            GioHangs = new HashSet<GioHang>();
-        }
-
-        [Key]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
+
         [DisplayName("Tên Sản Phẩm")]
-        public string TenSP { get; set; }
+        public string? TenSP { get; set; }
+
         [DisplayName("Công Dụng")]
-        public string CongDung { get; set; }
+        public string? CongDung { get; set; }
+
         [DisplayName("Mô tả")]
-        public string MoTa { get; set; }
+        public string? MoTa { get; set; }
+
         [DisplayName("Ảnh Đại Diện")]
-        public string AnhDaiDien { get; set; }
+        public string? AnhDaiDien { get; set; }
+
         [DisplayName("Số Lần Mua")]
         public int? SoLanMua { get; set; }
 
         [ForeignKey("LoaiSP")]
+        [DisplayName("Loại Sản Phẩm")]
         public string? MaLoaiSP { get; set; }
         
         [ForeignKey("TrangThai")]
+        [DisplayName("Trạng Thái")]
         public int? MaTT { get; set; }
+
         [ForeignKey("HangSX")]
+        [DisplayName("Hãng Sản Xuất")]
         public int? MaHSX { get; set; }
+
         [DisplayName("Giảm Giá")]
         public decimal? GiamGia { get; set; }
+
         [DisplayName("Đơn Giá")]
         public decimal? DonGia { get; set; }
+
         [DisplayName("Số Lượng")]
         public int? SoLuong { get; set; }
+
         [DisplayName("Danh Sách Ảnh")]
-        public string DSAnhSP { get; set; }
-
-        public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
-
-        public virtual ICollection<GioHang> GioHangs { get; set; }
-        [DisplayName("Hãng Sản Xuất")]
-        public virtual HangSX HangSX { get; set; }
-        [DisplayName("Loại Sản Phẩm")]
-        public virtual LoaiSP LoaiSP { get; set; }
-        [DisplayName("Trạng Thái")]
-        public virtual TrangThai TrangThai { get; set; }
-
-        public virtual ThuocInput Thuoc { get; set; }
+        public string? DSAnhSP { get; set; }
     }
 }

@@ -12,8 +12,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<HinhThucThanhToan> HinhThucThanhToans { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<LoaiSP> LoaiSPs { get; set; }
-        public virtual DbSet<SanPham> SanPhams { get; set; }
-        public virtual DbSet<Thuoc> Thuocs { get; set; }
+        public virtual DbSet<SanPhamInput> SanPhams { get; set; }
+        public virtual DbSet<ThuocInput> Thuocs { get; set; }
         public virtual DbSet<TinTuc> TinTucs { get; set; }
         public virtual DbSet<TrangThai> TrangThais { get; set; }
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
@@ -39,15 +39,15 @@ namespace DrugStore.Models.Entities
                   .HasKey(m => new { m.SoDH, m.MaSP });
             builder.Entity<GioHang>()
                   .HasKey(m => new { m.Id, m.MaSP });
-            builder.Entity<SanPham>()
+            builder.Entity<SanPhamInput>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)
-                    .HasForeignKey<Thuoc>(e => e.MaSP)
+                    .HasForeignKey<ThuocInput>(e => e.MaSP)
                     .IsRequired();
-            builder.Entity<Thuoc>()
+            builder.Entity<ThuocInput>()
                     .HasOne(e => e.SanPham)
                     .WithOne(e => e.Thuoc)
-                    .HasForeignKey<Thuoc>(e => e.MaSP)
+                    .HasForeignKey<ThuocInput>(e => e.MaSP)
                     .IsRequired();
             builder.Entity<TrangThai>()
                     .HasMany(e => e.SanPhams)

@@ -9,7 +9,7 @@ namespace DrugStore.Models.Entities
     {
         public LoaiThuoc()
         {
-            Thuocs = new HashSet<Thuoc>();
+            Thuocs = new HashSet<ThuocInput>();
         }
         [Key]
         [DisplayName("Mã Loại Thuốc")]
@@ -18,6 +18,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Tên Loại Thuốc")]
         public string? TenLoaiThuoc { get; set; }
         [DisplayName("Các Loại Thuốc")]
-        public virtual ICollection<Thuoc> Thuocs { get; set; }
+        public virtual ICollection<ThuocInput> Thuocs { get; set; }
     }
 }

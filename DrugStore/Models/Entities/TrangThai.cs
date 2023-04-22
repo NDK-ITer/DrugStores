@@ -14,7 +14,7 @@ namespace DrugStore.Models.Entities
     {
         public TrangThai()
         {
-            SanPhams = new HashSet<SanPham>();
+            SanPhams = new HashSet<SanPhamInput>();
         }
         [Key]
         [DisplayName("Mã Trạng Thái")]
@@ -22,6 +22,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Tên Trạng Thái")]
         public string TenTT { get; set; }
         [DisplayName("Các Sản Phẩm")]
-        public virtual ICollection<SanPham> SanPhams { get; set; }
+        public virtual ICollection<SanPhamInput> SanPhams { get; set; }
     }
 }
