@@ -73,37 +73,42 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                    <div class="form-outline mb-4">
-                        <label>Họ</label>
-                        <input asp-for="Input.LastName" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Họ" />
-                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    <div class="form-outline mb-3 row">
+                         <div class="col-12 col-md-6">
+                            <label>Họ</label>
+                            <input asp-for="Input.LastName" class="form-control " autocomplete="username" aria-required="true" placeholder="Nhập Họ" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                         </div>
+                        <div class="col-12 col-md-6">
+                            <label>Tên</label>
+                            <input asp-for="Input.FirstName" class="form-control " autocomplete="username" aria-required="true" placeholder="Nhập Tên" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
                     </div>
-
-                    <div class="form-outline mb-4">
-                        <label>Tên</label>
-                        <input asp-for="Input.FirstName" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Tên" />
-                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    <div class="form-outline mb-3">
+                        <label>SĐT</label>
+                        <input asp-for="Input.PhoneNumner" class="form-control " autocomplete="phonenumber" aria-required="true" placeholder="Nhập SĐT" />
+                        <span asp-validation-for="Input.PhoneNumner" class="text-danger"></span>
                     </div>
-
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-3">
                         <label asp-for="Input.Email">Email</label>
-                        <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="Nhập Email" />
+                        <input asp-for="Input.Email" class="form-control " autocomplete="username" aria-required="true" placeholder="Nhập Email" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-3">
                         <label asp-for="Input.Password">Mật Khẩu</label>
-                        <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Nhập Mật Khẩu" />
+                        <input asp-for="Input.Password" class="form-control " autocomplete="new-password" aria-required="true" placeholder="Nhập Mật Khẩu" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-                    <div class="form-outline mb-4">
+                    <div class="form-outline mb-3">
                         <label asp-for="Input.ConfirmPassword">Xác nhận mật khẩu</label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control form-control-lg" autocomplete="new-password" aria-required="true" placeholder="Nhập Lại Mật Khẩu" />
+                        <input asp-for="Input.ConfirmPassword" class="form-control " autocomplete="new-password" aria-required="true" placeholder="Nhập Lại Mật Khẩu" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                     <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
                 </form>
                 <div class="divider d-flex align-items-center my-4">
-                    <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+                    <p class="text-center fw-bold mx-3 mb-0 text-muted">Hoặc Đăng Nhập Với</p>
                 </div>
                 <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
                     <div>

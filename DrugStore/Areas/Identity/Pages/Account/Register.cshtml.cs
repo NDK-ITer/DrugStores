@@ -107,6 +107,12 @@ namespace DrugStore.Areas.Identity.Pages.Account
             [Required]
             public string LastName { get; set; }
 
+            [Required]
+            [StringLength(10, ErrorMessage = "The {0} must be at  equal {1} characters long.", MinimumLength =10)]
+            [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Numner")]
+            public string PhoneNumner { get;set; }
             public DateTime CreateDate { get; set; }=DateTime.Now;
         }
 
@@ -128,10 +134,11 @@ namespace DrugStore.Areas.Identity.Pages.Account
                 user=new AppNetUser {FirstName=Input.LastName,
                  LastName= Input.FirstName,
                  CreateDate=DateTime.Now,
+                 PhoneNumber=Input.PhoneNumner
                  
                 };
 
-                await _userStore.SetUserNameAsync(user, Input.LastName+Input.FirstName, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
