@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HomeAdminController : Controller
+    public class HomeAdmin : Controller
     {
         public IActionResult Index()
         {
