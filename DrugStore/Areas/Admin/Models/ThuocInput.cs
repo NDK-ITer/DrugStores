@@ -21,7 +21,7 @@ namespace DrugStore.Areas.Admin.Models
         public string? TacDungPhu { get; set; }
         [DisplayName("Thành Phần")]
         public string? ThanhPhan { get; set; }
-        [ForeignKey("LoaiThuoc")]
+        
         [DisplayName("Loại Thuốc")]
         public int? MaLT { get; set; }
     }

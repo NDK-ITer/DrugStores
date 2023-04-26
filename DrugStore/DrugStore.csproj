@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\Images\SanPham\Thuoc\" />
+    <Folder Include="wwwroot\Images\TinTuc\" />
   </ItemGroup>
 
 </Project>
