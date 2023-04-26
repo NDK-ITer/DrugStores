@@ -11,6 +11,7 @@ namespace DrugStore.Areas.Admin.Controllers
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         private readonly IWebHostEnvironment environment;
+        private readonly string fileImagePath = "Images/TinTuc/";
         // GET: TinTucs
 
         public TinTucsAdmin(IWebHostEnvironment environment)
@@ -47,7 +48,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                 string extention = Path.GetExtension(fileImage.FileName);
                 fileName = tinTuc.MaTT.ToString() + extention;
-                string uploadFolder = Path.Combine(environment.WebRootPath, "Images/TinTuc/");
+                string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                 var filePath = Path.Combine(uploadFolder, fileName);
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -85,7 +86,7 @@ namespace DrugStore.Areas.Admin.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                     string extention = Path.GetExtension(fileImage.FileName);
                     fileName = tinTuc.MaTT.ToString() + extention;
-                    string uploadFolder = Path.Combine(environment.WebRootPath, "Images/TinTuc/");
+                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                     var filePath = Path.Combine(uploadFolder, fileName);
                     using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
