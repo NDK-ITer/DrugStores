@@ -2,14 +2,21 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class TinTucs : Controller
+    public class TinTucsAdmin : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly IWebHostEnvironment environment;
         // GET: TinTucs
+
+        public TinTucsAdmin(IWebHostEnvironment environment)
+        {
+            this.environment = environment;
+        }
         public ActionResult Index()
         {
             return View(dbContext.TinTucs.ToList());
@@ -31,11 +38,23 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: TinTucs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TinTuc tinTuc, IFormFile Anh)
+        public ActionResult Create(TinTuc tinTuc, IFormFile fileImage)
         {
             try
             {
                 tinTuc.MaTT = Guid.NewGuid();
+
+                string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                string extention = Path.GetExtension(fileImage.FileName);
+                fileName = tinTuc.MaTT.ToString() + extention;
+                string uploadFolder = Path.Combine(environment.WebRootPath, "Images/TinTuc/");
+                var filePath = Path.Combine(uploadFolder, fileName);
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    fileImage.CopyTo(stream);
+                }
+                tinTuc.AnhDaiDien = filePath;
+                tinTuc.ThoiGiaDang = DateTime.Now;
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
