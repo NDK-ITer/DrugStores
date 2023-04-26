@@ -6,62 +6,36 @@ using Microsoft.EntityFrameworkCore;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class LoaiThuocAdmin : Controller
+    public class TrangThaiAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
-        // GET: LoaiThuocAdmin
-        public ActionResult Index(List<LoaiThuoc> loaiThuocs)
+        // GET: TrangThaiAdmin
+        public ActionResult Index()
         {
-            return View(dbContext.LoaiThuocs.ToList());
+            return View(dbContext.TrangThais.ToList());
         }
 
-        // GET: LoaiThuocAdmin/Details/5
-        public ActionResult Details(int? id)
+        // GET: TrangThaiAdmin/Details/5
+        public ActionResult Details(int id)
         {
-            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
-            return View(loaiThuoc);
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
         }
 
-        // GET: LoaiThuocAdmin/Create
+        // GET: TrangThaiAdmin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: LoaiThuocAdmin/Create
+        // POST: TrangThaiAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LoaiThuoc loaiThuocInput)
+        public ActionResult Create(TrangThai trangThai)
         {
             try
             {
-                LoaiThuoc loaiThuoc = new LoaiThuoc();
-                loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
-                dbContext.LoaiThuocs.Add(loaiThuoc);
-                dbContext.SaveChanges();    
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LoaiThuocAdmin/Edit/5
-        public ActionResult Edit(int id)
-        {
-            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
-            return View(loaiThuoc);
-        }
-
-        // POST: LoaiThuocAdmin/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(LoaiThuoc loaiThuoc)
-        {
-            try
-            {
-                dbContext.Entry(loaiThuoc).State = EntityState.Modified;
+                dbContext.TrangThais.Add(trangThai);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -71,22 +45,46 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: LoaiThuocAdmin/Delete/5
-        public ActionResult Delete(int id)
+        // GET: TrangThaiAdmin/Edit/5
+        public ActionResult Edit(int id)
         {
-            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
-            return View(loaiThuoc);
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
         }
 
-        // POST: LoaiThuocAdmin/Delete/5
+        // POST: TrangThaiAdmin/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TrangThai trangThai)
+        {
+            try
+            {
+                dbContext.Entry(trangThai).State = EntityState.Modified;
+                dbContext.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: TrangThaiAdmin/Delete/5
+        public ActionResult Delete(int id)
+        {
+            TrangThai trangThai = dbContext.TrangThais.Find(id);
+            return View(trangThai);
+        }
+
+        // POST: TrangThaiAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
-                dbContext.LoaiThuocs.Remove(loaiThuoc);
+                TrangThai trangThai = dbContext.TrangThais.Find(id);
+                dbContext.TrangThais.Remove(trangThai);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }

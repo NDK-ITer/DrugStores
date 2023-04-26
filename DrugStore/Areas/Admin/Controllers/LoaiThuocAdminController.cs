@@ -6,37 +6,39 @@ using Microsoft.EntityFrameworkCore;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class TrangThaiAdmin : Controller
+    public class LoaiThuocAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
-        // GET: TrangThaiAdmin
-        public ActionResult Index()
+        // GET: LoaiThuocAdmin
+        public ActionResult Index(List<LoaiThuoc> loaiThuocs)
         {
-            return View(dbContext.TrangThais.ToList());
+            return View(dbContext.LoaiThuocs.ToList());
         }
 
-        // GET: TrangThaiAdmin/Details/5
-        public ActionResult Details(int id)
+        // GET: LoaiThuocAdmin/Details/5
+        public ActionResult Details(int? id)
         {
-            TrangThai trangThai = dbContext.TrangThais.Find(id);
-            return View(trangThai);
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+            return View(loaiThuoc);
         }
 
-        // GET: TrangThaiAdmin/Create
+        // GET: LoaiThuocAdmin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: TrangThaiAdmin/Create
+        // POST: LoaiThuocAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TrangThai trangThai)
+        public ActionResult Create(LoaiThuoc loaiThuocInput)
         {
             try
             {
-                dbContext.TrangThais.Add(trangThai);
-                dbContext.SaveChanges();
+                LoaiThuoc loaiThuoc = new LoaiThuoc();
+                loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
+                dbContext.LoaiThuocs.Add(loaiThuoc);
+                dbContext.SaveChanges();    
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,21 +47,21 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: TrangThaiAdmin/Edit/5
+        // GET: LoaiThuocAdmin/Edit/5
         public ActionResult Edit(int id)
         {
-            TrangThai trangThai = dbContext.TrangThais.Find(id);
-            return View(trangThai);
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+            return View(loaiThuoc);
         }
 
-        // POST: TrangThaiAdmin/Edit/5
+        // POST: LoaiThuocAdmin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TrangThai trangThai)
+        public ActionResult Edit(LoaiThuoc loaiThuoc)
         {
             try
             {
-                dbContext.Entry(trangThai).State = EntityState.Modified;
+                dbContext.Entry(loaiThuoc).State = EntityState.Modified;
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -69,22 +71,22 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: TrangThaiAdmin/Delete/5
+        // GET: LoaiThuocAdmin/Delete/5
         public ActionResult Delete(int id)
         {
-            TrangThai trangThai = dbContext.TrangThais.Find(id);
-            return View(trangThai);
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+            return View(loaiThuoc);
         }
 
-        // POST: TrangThaiAdmin/Delete/5
+        // POST: LoaiThuocAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                TrangThai trangThai = dbContext.TrangThais.Find(id);
-                dbContext.TrangThais.Remove(trangThai);
+                LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(id);
+                dbContext.LoaiThuocs.Remove(loaiThuoc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }

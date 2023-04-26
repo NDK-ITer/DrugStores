@@ -7,14 +7,14 @@ using System.IO;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class TinTucsAdmin : Controller
+    public class TinTucsAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/TinTuc/";
         // GET: TinTucs
 
-        public TinTucsAdmin(IWebHostEnvironment environment)
+        public TinTucsAdminController(IWebHostEnvironment environment)
         {
             this.environment = environment;
         }
@@ -88,6 +88,8 @@ namespace DrugStore.Areas.Admin.Controllers
                     fileName = tinTuc.MaTT.ToString() + extention;
                     string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                     var filePath = Path.Combine(uploadFolder, fileName);
+                    FileInfo fileDelete = new FileInfo(fileImagePath + tinTuc.AnhDaiDien);
+                    fileDelete.Delete();
                     using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
                         fileImage.CopyTo(stream);
