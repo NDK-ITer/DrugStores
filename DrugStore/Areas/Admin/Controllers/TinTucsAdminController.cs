@@ -121,8 +121,10 @@ namespace DrugStore.Areas.Admin.Controllers
             try
             {
                 TinTuc tinTuc = dbContext.TinTucs.Find(id);
+                FileInfo fileDelete = new FileInfo(fileImagePath + tinTuc.AnhDaiDien);
                 dbContext.TinTucs.Remove(tinTuc);
                 dbContext.SaveChanges();
+                fileDelete.Delete();
                 return RedirectToAction(nameof(Index));
             }
             catch
