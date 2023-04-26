@@ -53,7 +53,8 @@ namespace DrugStore.Areas.Admin.Controllers
                 {
                     fileImage.CopyTo(stream);
                 }
-                tinTuc.AnhDaiDien = filePath;
+
+                tinTuc.AnhDaiDien = fileName;
                 tinTuc.ThoiGiaDang = DateTime.Now;
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
@@ -75,10 +76,23 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: TinTucs/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TinTuc tinTuc)
+        public ActionResult Edit(TinTuc tinTuc, IFormFile fileImage)
         {
             try
             {
+                if (fileImage != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                    string extention = Path.GetExtension(fileImage.FileName);
+                    fileName = tinTuc.MaTT.ToString() + extention;
+                    string uploadFolder = Path.Combine(environment.WebRootPath, "Images/TinTuc/");
+                    var filePath = Path.Combine(uploadFolder, fileName);
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileImage.CopyTo(stream);
+                    }
+                }
+
                 dbContext.Entry(tinTuc).State = EntityState.Modified;
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
