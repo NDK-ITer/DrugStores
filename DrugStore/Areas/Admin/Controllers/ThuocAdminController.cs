@@ -1,4 +1,5 @@
-﻿using DrugStore.Models.Entities;
+﻿using DrugStore.Areas.Admin.Models;
+using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -43,8 +44,11 @@ namespace DrugStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ThuocInput thuocInput, IFormFile fileImage)
         {
+            SanPham sanPham = new SanPham();
+            Thuoc thuoc = new Thuoc();
             try
             {
+                
                 return RedirectToAction(nameof(Index));
             }
             catch

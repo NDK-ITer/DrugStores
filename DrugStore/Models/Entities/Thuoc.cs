@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace DrugStore.Models.Entities
 {
     [Table("Thuoc")]
-    public partial class ThuocInput
+    public partial class Thuoc
     {
         [Key]
         [DisplayName("Mã Thuốc")]

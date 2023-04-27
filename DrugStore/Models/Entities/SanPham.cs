@@ -10,9 +10,9 @@ using System.ComponentModel;
 namespace DrugStore.Models.Entities
 {
     [Table("SanPham")]
-    public partial class SanPhamInput
+    public partial class SanPham
     {
-        public SanPhamInput()
+        public SanPham()
         {
             CT_HoaDon = new HashSet<CT_HoaDon>();
             GioHangs = new HashSet<GioHang>();
