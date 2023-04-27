@@ -26,7 +26,7 @@ namespace DrugStore.Models.Entities
         public string? ThanhPhan { get; set; }
         [ForeignKey("LoaiThuoc")]
         public int? MaLT { get; set; }
-        public virtual SanPhamInput? SanPham { get; set; }
+        public virtual SanPham SanPham { get; set; }
         [DisplayName("Loại Thuốc")]
         public virtual LoaiThuoc? LoaiThuoc { get; set;}
     }

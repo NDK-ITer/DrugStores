@@ -44,11 +44,51 @@ namespace DrugStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ThuocInput thuocInput, IFormFile fileImage)
         {
-            SanPham sanPham = new SanPham();
-            Thuoc thuoc = new Thuoc();
             try
             {
-                
+                SanPham sanPham = new SanPham();
+                sanPham.MaSP = Guid.NewGuid();
+                Thuoc thuoc = new Thuoc();
+
+                if (fileImage != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                    string extention = Path.GetExtension(fileImage.FileName);
+                    fileName = sanPham.MaSP.ToString() + extention;
+                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                    var filePath = Path.Combine(uploadFolder, fileName);
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileImage.CopyTo(stream);
+                    }
+                    thuocInput.AnhDaiDien = fileName;
+                }
+
+                if (ModelState.IsValid)
+                {
+                    
+                    sanPham.TenSP = thuocInput.TenSP;
+                    sanPham.CongDung = thuocInput.CongDung;
+                    sanPham.MoTa = thuocInput.MoTa;
+                    sanPham.AnhDaiDien = thuocInput.AnhDaiDien;
+                    sanPham.SoLanMua = 0;
+                    sanPham.MaLoaiSP = thuocInput.MaLoaiSP;
+                    sanPham.MaTT = thuocInput.MaTT;
+                    sanPham.GiamGia = thuocInput.GiamGia;
+                    sanPham.DonGia = thuocInput.DonGia;
+                    sanPham.MaHSX = thuocInput.MaHSX;
+                    sanPham.SoLuong = thuocInput.SoLuong;
+
+                    thuoc.DonViTinh = thuocInput.DonViTinh;
+                    thuoc.LieuDung = thuocInput.LieuDung;
+                    thuoc.TacDungPhu = thuocInput.TacDungPhu;
+                    thuoc.ThanhPhan = thuocInput.ThanhPhan;
+                    thuoc.MaLT = thuocInput.MaLT;
+
+                    dbContext.SanPhams.Add(sanPham);
+                    dbContext.SaveChanges();
+                    dbContext.Thuocs.Add(thuoc);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
