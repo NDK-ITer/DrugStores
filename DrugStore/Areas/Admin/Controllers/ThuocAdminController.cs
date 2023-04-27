@@ -88,6 +88,9 @@ namespace DrugStore.Areas.Admin.Controllers
                     dbContext.SanPhams.Add(sanPham);
                     dbContext.SaveChanges();
                     dbContext.Thuocs.Add(thuoc);
+                    dbContext.SaveChanges();
+
+
                 }
                 return RedirectToAction(nameof(Index));
             }
