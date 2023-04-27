@@ -50,23 +50,22 @@ namespace DrugStore.Areas.Admin.Controllers
                 sanPham.MaSP = Guid.NewGuid();
                 Thuoc thuoc = new Thuoc();
 
-                if (fileImage != null)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
-                    string extention = Path.GetExtension(fileImage.FileName);
-                    fileName = sanPham.MaSP.ToString() + extention;
-                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
-                    var filePath = Path.Combine(uploadFolder, fileName);
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        fileImage.CopyTo(stream);
-                    }
-                    thuocInput.AnhDaiDien = fileName;
-                }
-
                 if (ModelState.IsValid)
                 {
-                    
+                    if (fileImage != null)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                        string extention = Path.GetExtension(fileImage.FileName);
+                        fileName = sanPham.MaSP.ToString() + extention;
+                        string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                        var filePath = Path.Combine(uploadFolder, fileName);
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            fileImage.CopyTo(stream);
+                        }
+                        thuocInput.AnhDaiDien = fileName;
+                    }
+
                     sanPham.TenSP = thuocInput.TenSP;
                     sanPham.CongDung = thuocInput.CongDung;
                     sanPham.MoTa = thuocInput.MoTa;
@@ -79,6 +78,7 @@ namespace DrugStore.Areas.Admin.Controllers
                     sanPham.MaHSX = thuocInput.MaHSX;
                     sanPham.SoLuong = thuocInput.SoLuong;
 
+                    thuoc.MaSP = sanPham.MaSP;
                     thuoc.DonViTinh = thuocInput.DonViTinh;
                     thuoc.LieuDung = thuocInput.LieuDung;
                     thuoc.TacDungPhu = thuocInput.TacDungPhu;
