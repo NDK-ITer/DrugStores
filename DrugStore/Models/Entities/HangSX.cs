@@ -14,7 +14,7 @@ namespace DrugStore.Models.Entities
     {
         public HangSX()
         {
-            SanPhams = new HashSet<SanPhamInput>();
+            SanPhams = new HashSet<SanPham>();
         }
 
         [Key]
@@ -29,6 +29,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Số Điện Thoại Hãng")]
         public string SDT { get; set; }
 
-        public virtual ICollection<SanPhamInput> SanPhams { get; set; }
+        public virtual ICollection<SanPham> SanPhams { get; set; }
     }
 }

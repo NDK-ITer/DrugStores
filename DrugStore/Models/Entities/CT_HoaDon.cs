@@ -25,6 +25,6 @@ namespace DrugStore.Models.Entities
 
         public virtual HoaDon HoaDon { get; set; }
 
-        public virtual SanPhamInput SanPham { get; set; }
+        public virtual SanPham SanPham { get; set; }
     }
 }
