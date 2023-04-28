@@ -21,7 +21,7 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: ThuocAdminController
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","SanPhamsAdmin");
         }
 
         // GET: ThuocAdminController/Details/5
@@ -50,6 +50,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 SanPham sanPham = new SanPham();
                 sanPham.MaSP = Guid.NewGuid();
                 Thuoc thuoc = new Thuoc();
+                Random random = new Random();
 
                 if (ModelState.IsValid)
                 {
@@ -57,7 +58,7 @@ namespace DrugStore.Areas.Admin.Controllers
                     {
                         string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                         string extention = Path.GetExtension(fileImage.FileName);
-                        fileName = sanPham.MaSP.ToString() + extention;
+                        fileName = sanPham.MaSP.ToString()+ random.Next().ToString() + extention;
                         string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                         var filePath = Path.Combine(uploadFolder, fileName);
                         using (FileStream stream = new FileStream(filePath, FileMode.Create))

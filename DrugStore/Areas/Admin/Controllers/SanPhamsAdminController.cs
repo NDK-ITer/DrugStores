@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SanPhamsAdminController : Controller
     {
-        public IActionResult Index()
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        public ActionResult Index()
         {
-            return View();
+            List<SanPham> sanPhams = dbContext.SanPhams.ToList();
+
+            return View(sanPhams);
         }
     }
 }
