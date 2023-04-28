@@ -44,10 +44,10 @@ namespace DrugStore.Areas.Admin.Controllers
             try
             {
                 tinTuc.MaTT = Guid.NewGuid();
-
+                Random random = new Random();
                 string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                 string extention = Path.GetExtension(fileImage.FileName);
-                fileName = tinTuc.MaTT.ToString() + extention;
+                fileName = tinTuc.MaTT.ToString() + random.Next().ToString()+ extention;
                 string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                 var filePath = Path.Combine(uploadFolder, fileName);
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
@@ -56,6 +56,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 }
 
                 tinTuc.AnhDaiDien = fileName;
+                tinTuc.SoLuotXem = 0;
                 tinTuc.ThoiGiaDang = DateTime.Now;
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
@@ -83,13 +84,15 @@ namespace DrugStore.Areas.Admin.Controllers
             {
                 if (fileImage != null)
                 {
+                    Random random = new Random();
                     string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTuc.AnhDaiDien;
                     FileInfo fileDelete = new FileInfo(filePathDelete);
                     fileDelete.Delete();
 
                     string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                     string extention = Path.GetExtension(fileImage.FileName);
-                    fileName = tinTuc.MaTT.ToString() + extention;
+                    fileName = tinTuc.MaTT.ToString() + random.Next().ToString() + extention;
+                    tinTuc.AnhDaiDien = fileName;
                     string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                     var filePath = Path.Combine(uploadFolder, fileName);
 
@@ -97,10 +100,10 @@ namespace DrugStore.Areas.Admin.Controllers
                     {
                         fileImage.CopyTo(stream);
                     }
-
                 }
 
-                dbContext.Entry(tinTuc).State = EntityState.Modified;
+                //dbContext.Entry(tinTuc).State = EntityState.Modified;
+                dbContext.TinTucs.Update(tinTuc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -125,7 +128,9 @@ namespace DrugStore.Areas.Admin.Controllers
             try
             {
                 TinTuc tinTuc = dbContext.TinTucs.Find(id);
-                FileInfo fileDelete = new FileInfo(fileImagePath + tinTuc.AnhDaiDien);
+                string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTuc.AnhDaiDien;
+                FileInfo fileDelete = new FileInfo(filePathDelete);
+                fileDelete.Delete();
                 dbContext.TinTucs.Remove(tinTuc);
                 dbContext.SaveChanges();
                 fileDelete.Delete();
