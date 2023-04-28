@@ -83,17 +83,21 @@ namespace DrugStore.Areas.Admin.Controllers
             {
                 if (fileImage != null)
                 {
+                    string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTuc.AnhDaiDien;
+                    FileInfo fileDelete = new FileInfo(filePathDelete);
+                    //System.IO.File.Delete(filePathDelete);
+                    fileDelete.Delete();
                     string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                     string extention = Path.GetExtension(fileImage.FileName);
                     fileName = tinTuc.MaTT.ToString() + extention;
                     string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                     var filePath = Path.Combine(uploadFolder, fileName);
-                    FileInfo fileDelete = new FileInfo(fileImagePath + tinTuc.AnhDaiDien);
-                    fileDelete.Delete();
+
                     using (FileStream stream = new FileStream(filePath, FileMode.Create))
                     {
                         fileImage.CopyTo(stream);
                     }
+
                 }
 
                 dbContext.Entry(tinTuc).State = EntityState.Modified;
