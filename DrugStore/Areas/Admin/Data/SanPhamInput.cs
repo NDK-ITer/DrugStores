@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using DrugStore.Models.Entities;
 
-namespace DrugStore.Areas.Admin.Models
+namespace DrugStore.Areas.Admin.Data
 {
     public partial class SanPhamInput
     {

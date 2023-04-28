@@ -1,8 +1,9 @@
-﻿using DrugStore.Areas.Admin.Models;
+﻿using DrugStore.Areas.Admin.Data;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
@@ -12,10 +13,10 @@ namespace DrugStore.Areas.Admin.Controllers
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/SanPham/Thuoc";
-
         public ThuocAdminController(IWebHostEnvironment environment)
         {
             this.environment = environment;
+            
         }
         // GET: ThuocAdminController
         public ActionResult Index()
