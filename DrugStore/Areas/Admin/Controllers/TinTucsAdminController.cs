@@ -85,8 +85,8 @@ namespace DrugStore.Areas.Admin.Controllers
                 {
                     string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTuc.AnhDaiDien;
                     FileInfo fileDelete = new FileInfo(filePathDelete);
-                    //System.IO.File.Delete(filePathDelete);
                     fileDelete.Delete();
+
                     string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                     string extention = Path.GetExtension(fileImage.FileName);
                     fileName = tinTuc.MaTT.ToString() + extention;
