@@ -19,6 +19,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
+        [ForeignKey("Thuoc")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Tên Sản Phẩm")]
@@ -46,7 +47,7 @@ namespace DrugStore.Models.Entities
         [DisplayName("Số Lượng")]
         public int? SoLuong { get; set; }
         [DisplayName("Danh Sách Ảnh")]
-        public string DSAnhSP { get; set; }
+        public string? DSAnhSP { get; set; }
 
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
 

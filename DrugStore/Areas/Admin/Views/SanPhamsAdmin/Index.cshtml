@@ -13,10 +13,10 @@
             @Html.DisplayNameFor(model => model.AnhDaiDien)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LoaiSP.TenLoaiSP)
+            Loại Sản Phẩm
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TrangThai.TenTT)
+            Trạng Thái
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GiamGia)
@@ -46,7 +46,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TrangThai.TenTT)
             </td>
-            
+
             <td>
                 @Html.DisplayFor(modelItem => item.GiamGia)
             </td>
@@ -54,15 +54,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DonGia)
             </td>
-            
+
             <td>
-                
-                @Html.ActionLink("Details", "Details", new { id=item.MaSP }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.MaSP })
+                @if (item.MaLoaiSP == "T")
+                {
+                    @Html.ActionLink("Edit", "Edit" ,"ThuocAdmin", new { id=item.MaSP })<p> | </p>
+                    @Html.ActionLink("Details", "Details" ,"ThuocAdmin", new { id=item.MaSP })<p> | </p>
+                    @Html.ActionLink("Delete", "Delete" ,"ThuocAdmin", new { id=item.MaSP })<p> | </p>
+                }
             </td>
         </tr>
     }
 
 </table>
 
- 

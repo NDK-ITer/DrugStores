@@ -33,8 +33,8 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: ThuocAdminController/Create
         public ActionResult Create()
         {
-            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
             //ViewBag.MaLoaiSP = new SelectList(dbContext.LoaiSPs, "MaLoaiSP", "TenLoaiSP");
+            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
             ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
             ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
             return View();
@@ -79,7 +79,6 @@ namespace DrugStore.Areas.Admin.Controllers
                     sanPham.DonGia = thuocInput.DonGia;
                     sanPham.MaHSX = thuocInput.MaHSX;
                     sanPham.SoLuong = thuocInput.SoLuong;
-                    sanPham.DSAnhSP = "Defaul";
                     sanPham.MaLoaiSP = "T";
 
                     thuoc.MaSP = sanPham.MaSP;
@@ -107,7 +106,11 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: ThuocAdminController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            return View();
+            Thuoc thuoc = dbContext.Thuocs.Find(id);
+            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
+            ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
+            ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
+            return View(thuoc);
         }
 
         // POST: ThuocAdminController/Edit/5
