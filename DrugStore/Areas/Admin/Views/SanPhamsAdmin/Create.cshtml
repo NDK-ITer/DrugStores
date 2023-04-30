@@ -15,9 +15,9 @@
         <label asp-for="DSAnhSP" class="col-md-2 control-label"></label>
         <div class="col-md-5">
 
-            <span asp-validation-for="DSAnhSP" class="text-danger"></span>
-            <input type="file" name="myfiles" value=""  multiple/>
-
+            <input type="file" name="myfile" value="" id="Upimg1"  />
+            <span asp-validation-for="DSAnhSP" class="text-danger"></span>       
+            <div id="divImageMediaPreview1"></div>
 
         </div>
 
@@ -26,9 +26,10 @@
         <label asp-for="AnhDaiDien" class="col-md-2 control-label"></label>
         <div class="col-md-5">
 
+            
+            <input type="file" name="myfiles" value="" id="Upimg" multiple />
             <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
-            <input type="file" name="myfile" value=""  />
-
+            <div id="divImageMediaPreview"></div>
 
         </div>
 
@@ -42,3 +43,55 @@
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+
+        $("#Upimg").change(function () {
+            if (typeof (FileReader) != "undefined") {
+                console.log("test")
+                var dvPreview = $("#divImageMediaPreview");
+                dvPreview.html("");
+                if ($(this)[0].files.length < 4) {
+                    $($(this)[0].files).each(function () {
+                        var file = $(this);
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = $("<img />");
+                            img.attr("style", "width: 100px; height:100px; padding: 10px");
+                            img.attr("src", e.target.result);
+                            console.log(e.target.result);
+                            dvPreview.append(img);
+                        }
+                        reader.readAsDataURL(file[0]);
+                    });
+                } else {
+                    alert("You can select only 3 images");
+                }
+
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+        $("#Upimg1").change(function () {
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#divImageMediaPreview1");
+                dvPreview.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $("<img />");
+                        img.attr("style", "width: 100px; height:100px; padding: 10px");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+    
+    })
+</script>
