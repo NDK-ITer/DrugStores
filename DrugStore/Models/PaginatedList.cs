@@ -23,6 +23,8 @@ namespace DrugStore.Models
 
         public bool HasNextPage => PageIndex < TotalPages;
 
+      
+
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();
@@ -31,3 +33,4 @@ namespace DrugStore.Models
         }
     }
 }
+
