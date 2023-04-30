@@ -49,6 +49,19 @@ namespace DrugStore.Models.Entities
         [DisplayName("Danh Sách Ảnh")]
         public string? DSAnhSP { get; set; }
 
+        [DisplayName("Ngày Tạo")]
+        public DateTime? NgayTao {get; set; }
+
+        [DisplayName("Người Tạo")]
+        public string? NguoiTao { get;set; }
+
+        [DisplayName("Ngày Cập Nhật")]
+        public DateTime? NgayCapNhat { get; set; }
+
+        [DisplayName("Người Cập Nhật")]
+        public string? NguoiCapNhat { get; set; }
+
+
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
 
         public virtual ICollection<GioHang> GioHangs { get; set; }
