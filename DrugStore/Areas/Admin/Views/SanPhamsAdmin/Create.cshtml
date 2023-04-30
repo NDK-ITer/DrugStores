@@ -1,4 +1,4 @@
-﻿@model DrugStore.Models.Entities.SanPham
+﻿@*@model DrugStore.Models.Entities.SanPham
 
 
 <form asp-action="create" enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
@@ -95,3 +95,13 @@
     
     })
 </script>
+*@
+
+@model IEnumerable<DrugStore.Models.Entities.LoaiSP>
+
+<h1>Chọn Loại Sản Phẩm</h1><br /><br />
+
+@foreach(var item in Model){
+    <a asp-action="CreateType" asp-route-id="@item.MaLoaiSP">@item.TenLoaiSP</a>
+    <br />
+}

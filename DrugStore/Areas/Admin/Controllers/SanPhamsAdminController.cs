@@ -74,31 +74,42 @@ namespace DrugStore.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.MaLoaiSP = new SelectList(dbContext.LoaiSPs, "MaLoaiSP", "TenLoaiSP");
-            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
-            ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
-            return View();
+            //ViewBag.MaLoaiSP = new SelectList(dbContext.LoaiSPs, "MaLoaiSP", "TenLoaiSP");
+            //ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
+            //ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
+            List<LoaiSP> loaiSPs = dbContext.LoaiSPs.ToList();
+            return View(loaiSPs);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(SanPham sanPham ,List<IFormFile> myfiles,IFormFile myfile)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Create(LoaiSP loaiSP)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        string fullPath = Path.Combine(
+        //            Directory.GetCurrentDirectory(),
+        //            "wwwroot", "MyFiles",
+        //            myfiles.FileName
+        //            );
+
+        //        using (var file = new FileStream(fullPath, FileMode.Create))
+        //        {
+        //            myfile.CopyTo(file);
+        //        }
+
+
+        //    }
+        //    return View();
+        //}
+
+        public ActionResult CreateType(string id)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    string fullPath = Path.Combine(
-            //        Directory.GetCurrentDirectory(),
-            //        "wwwroot", "MyFiles",
-            //        myfiles.FileName
-            //        );
-
-            //    using (var file = new FileStream(fullPath, FileMode.Create))
-            //    {
-            //        myfile.CopyTo(file);
-            //    }
-
-               
-            //}
-            return View();
+            if (id == "T")
+            {
+                return RedirectToAction("Create", "ThuocAdmin");
+            }
+            return RedirectToAction("Create");
         }
 
         public static void Compress(Bitmap srcBitMap, string destFile, long level)
