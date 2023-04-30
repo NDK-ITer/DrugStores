@@ -127,8 +127,8 @@ namespace DrugStore.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Thuoc thuoc = dbContext.Thuocs.Find(id);
-            SanPham sanPham = dbContext.SanPhams.Find(id);
-            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
+            //SanPham sanPham = dbContext.SanPhams.Find(id);
+            //LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
             ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
             ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
             ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
