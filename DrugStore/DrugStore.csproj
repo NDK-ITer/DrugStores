@@ -32,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Images\SanPham\Thuoc\" />
     <Folder Include="wwwroot\Images\TinTuc\" />
   </ItemGroup>
 

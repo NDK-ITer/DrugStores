@@ -79,6 +79,7 @@ namespace DrugStore.Areas.Admin.Controllers
                     sanPham.DonGia = thuocInput.DonGia;
                     sanPham.MaHSX = thuocInput.MaHSX;
                     sanPham.SoLuong = thuocInput.SoLuong;
+                    sanPham.NgayTao = DateTime.Now;
                     sanPham.MaLoaiSP = "T";
 
                     thuoc.MaSP = sanPham.MaSP;
