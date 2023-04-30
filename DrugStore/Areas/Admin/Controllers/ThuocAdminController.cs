@@ -43,7 +43,7 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ThuocInput thuocInput, IFormFile fileImage)
+        public ActionResult Create(ThuocInput thuocInput,List<IFormFile> fileImages, IFormFile fileImage)
         {
             try
             {
@@ -67,11 +67,30 @@ namespace DrugStore.Areas.Admin.Controllers
                         }
                         thuocInput.AnhDaiDien = fileName;
                     }
+                    if(fileImages != null)
+                    {
+                        string Listimage = "";
+                        foreach (var image in fileImages)
+                        {
+                            string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                            string extention = Path.GetExtension(image.FileName);
+                            fileName = sanPham.MaSP.ToString() + random.Next().ToString() + extention;
+                            string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                            var filePath = Path.Combine(uploadFolder, fileName);
+                            using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                image.CopyTo(stream);
+                            }
+                            Listimage += fileName +",";
+                        }
+                        thuocInput.DSAnhSP = Listimage;
+                    }
 
                     sanPham.TenSP = thuocInput.TenSP;
                     sanPham.CongDung = thuocInput.CongDung;
                     sanPham.MoTa = thuocInput.MoTa;
                     sanPham.AnhDaiDien = thuocInput.AnhDaiDien;
+                    sanPham.DSAnhSP=thuocInput.DSAnhSP;
                     sanPham.SoLanMua = 0;
                     sanPham.MaLoaiSP = thuocInput.MaLoaiSP;
                     sanPham.MaTT = thuocInput.MaTT;
@@ -153,6 +172,19 @@ namespace DrugStore.Areas.Admin.Controllers
                 string filePathDelete = environment.WebRootPath + "/" + fileImagePath + sanPham.AnhDaiDien;
                 FileInfo fileDelete = new FileInfo(filePathDelete);
                 fileDelete.Delete();
+
+
+                if (!string.IsNullOrEmpty(sanPham.DSAnhSP))
+                {
+                    string[] filesold = sanPham.DSAnhSP.Split(',');
+                    foreach (var fileold in filesold)
+                    {
+                        string filePathDelete1 = environment.WebRootPath + "/" + fileImagePath + fileold;
+                        FileInfo fileDelete1 = new FileInfo(filePathDelete1);
+                        fileDelete1.Delete();
+                    }
+                }
+
                 dbContext.SanPhams.Remove(sanPham);
                 dbContext.SaveChanges();
                 fileDelete.Delete();
