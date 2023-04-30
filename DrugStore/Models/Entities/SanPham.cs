@@ -32,10 +32,8 @@ namespace DrugStore.Models.Entities
         public string? AnhDaiDien { get; set; }
         [DisplayName("Số Lần Mua")]
         public int? SoLanMua { get; set; }
-
         [ForeignKey("LoaiSP")]
         public string? MaLoaiSP { get; set; }
-        
         [ForeignKey("TrangThai")]
         public int? MaTT { get; set; }
         [ForeignKey("HangSX")]

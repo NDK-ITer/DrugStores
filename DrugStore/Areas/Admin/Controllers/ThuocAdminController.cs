@@ -127,8 +127,8 @@ namespace DrugStore.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Thuoc thuoc = dbContext.Thuocs.Find(id);
-            //SanPham sanPham = dbContext.SanPhams.Find(id);
-            //LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
+            SanPham sanPham = dbContext.SanPhams.Find(id);
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
             ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX",thuoc.SanPham.MaHSX);
             ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT", thuoc.SanPham.MaTT);
             ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc", thuoc.MaLT);
@@ -138,11 +138,13 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Guid id, IFormCollection collection)
+        public ActionResult Edit(Thuoc thuoc)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                dbContext.Entry(thuoc).State = EntityState.Modified;
+                dbContext.SaveChanges();
+                return RedirectToAction("Index", "SanPhamAdmin");
             }
             catch
             {
