@@ -47,7 +47,7 @@ namespace DrugStore.Models.Entities
             builder.Entity<Thuoc>()
                     .HasOne(e => e.SanPham)
                     .WithOne(e => e.Thuoc)
-                    .HasForeignKey<Thuoc>(e => e.MaSP)
+                    .HasForeignKey<SanPham>(e => e.MaSP)
                     .IsRequired();
             builder.Entity<TrangThai>()
                     .HasMany(e => e.SanPhams)
