@@ -50,7 +50,7 @@ namespace DrugStore.Models.Entities
         public string? DSAnhSP { get; set; }
 
         [DisplayName("Ngày Tạo")]
-        public DateTime? NgayTao {get; set; }
+        public DateTime NgayTao {get; set; }
 
         [DisplayName("Người Tạo")]
         public string? NguoiTao { get;set; }

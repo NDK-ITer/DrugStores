@@ -1,0 +1,44 @@
+﻿@model DrugStore.Models.Entities.SanPham
+
+
+<form asp-action="create" enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="TenSP" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="TenSP" class="form-control" />
+            <span asp-validation-for="TenSP" class="text-danger"></span>
+        </div>
+    </div>
+  
+    <div class="form-group">
+        <label asp-for="DSAnhSP" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+
+            <span asp-validation-for="DSAnhSP" class="text-danger"></span>
+            <input type="file" name="myfiles" value=""  multiple/>
+
+
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label asp-for="AnhDaiDien" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+
+            <span asp-validation-for="AnhDaiDien" class="text-danger"></span>
+            <input type="file" name="myfile" value=""  />
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Created" />
+        </div>
+    </div>
+</form>
