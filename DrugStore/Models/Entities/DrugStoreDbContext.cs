@@ -36,9 +36,9 @@ namespace DrugStore.Models.Entities
         {
             base.OnModelCreating(builder);
             builder.Entity<CT_HoaDon>()
-                  .HasKey(m => new { m.SoDH, m.MaSP });
+                    .HasKey(m => new { m.SoDH, m.MaSP });
             builder.Entity<GioHang>()
-                  .HasKey(m => new { m.Id, m.MaSP });
+                    .HasKey(m => new { m.Id, m.MaSP });
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)

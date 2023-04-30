@@ -19,7 +19,7 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
-        //[ForeignKey("Thuoc")]
+        [ForeignKey("Thuoc")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Tên Sản Phẩm")]

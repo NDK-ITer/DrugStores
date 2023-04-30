@@ -14,7 +14,8 @@ namespace DrugStore.Models.Entities
     public partial class Thuoc
     {
         [Key]
-        [DisplayName("Mã Thuốc")]
+        [ForeignKey("SanPham")]
+        [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Đơn Vị Tính")]
         public string? DonViTinh { get; set; }
