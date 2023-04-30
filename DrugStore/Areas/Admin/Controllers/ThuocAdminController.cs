@@ -108,6 +108,8 @@ namespace DrugStore.Areas.Admin.Controllers
         public ActionResult Edit(Guid id)
         {
             Thuoc thuoc = dbContext.Thuocs.Find(id);
+            SanPham sanPham = dbContext.SanPhams.Find(id);
+            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
             ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
             ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
             ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
@@ -117,7 +119,7 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
@@ -138,11 +140,24 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(Guid id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Thuoc thuoc = dbContext.Thuocs.Find(id);
+                dbContext.Thuocs.Remove(thuoc);
+                dbContext.SaveChanges();
+
+                SanPham sanPham = dbContext.SanPhams.Find(id);
+
+                string filePathDelete = environment.WebRootPath + "/" + fileImagePath + sanPham.AnhDaiDien;
+                FileInfo fileDelete = new FileInfo(filePathDelete);
+                fileDelete.Delete();
+                dbContext.SanPhams.Remove(sanPham);
+                dbContext.SaveChanges();
+                fileDelete.Delete();
+
+                return RedirectToAction("Index", "SanPhamsAdmin");
             }
             catch
             {
