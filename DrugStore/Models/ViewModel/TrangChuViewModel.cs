@@ -15,7 +15,7 @@ namespace DrugStore.Models.ViewModel
         {
             loaiThuocs = dbContext.LoaiThuocs.ToList();
             loaiSPs = dbContext.LoaiSPs.ToList();
-            dsSanPhamNoiBat = dbContext.SanPhams.ToList();
+            dsSanPhamNoiBat = dbContext.SanPhams.OrderBy(s => s.SoLanMua).ToList();
             tinTucs = dbContext.TinTucs.ToList();
         }
     }
