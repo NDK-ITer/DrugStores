@@ -1,5 +1,11 @@
-﻿  <!-- Hero Section Begin -->
-<section class="hero hero-normal">
+﻿@model X.PagedList.IPagedList<DrugStore.Models.Entities.SanPham> 
+@using X.PagedList.Mvc.Core;
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+<!-- Hero Section Begin -->
+@*<section class="hero hero-normal">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -48,10 +54,10 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Hero Section End -->
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="/theme/img/breadcrumb.jpg">
+@*<section class="breadcrumb-section set-bg" data-setbg="/theme/img/breadcrumb.jpg">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -66,7 +72,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Breadcrumb Section End -->
 <!-- Product Section Begin -->
 <section class="product spad">
@@ -75,7 +81,7 @@
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Department</h4>
+                        @*<h4>Department</h4>
                         <ul>
                             <li><a href="#">Fresh Meat</a></li>
                             <li><a href="#">Vegetables</a></li>
@@ -87,7 +93,7 @@
                             <li><a href="#">Fresh Onion</a></li>
                             <li><a href="#">Papayaya & Crisps</a></li>
                             <li><a href="#">Oatmeal</a></li>
-                        </ul>
+                        </ul>*@
                     </div>
                     <div class="sidebar__item">
                         <h4>Price</h4>
@@ -107,7 +113,7 @@
                         </div>
                     </div>
                     <div class="sidebar__item sidebar__item__color--option">
-                        <h4>Colors</h4>
+                        @*<h4>Colors</h4>
                         <div class="sidebar__item__color sidebar__item__color--white">
                             <label for="white">
                                 White
@@ -143,10 +149,10 @@
                                 Green
                                 <input type="radio" id="green">
                             </label>
-                        </div>
+                        </div>*@
                     </div>
                     <div class="sidebar__item">
-                        <h4>Popular Size</h4>
+                       @* <h4>Popular Size</h4>
                         <div class="sidebar__item__size">
                             <label for="large">
                                 Large
@@ -170,13 +176,13 @@
                                 Tiny
                                 <input type="radio" id="tiny">
                             </label>
-                        </div>
+                        </div>*@
                     </div>
                     <div class="sidebar__item">
                         <div class="latest-product__text">
                             <h4>Latest Products</h4>
                             <div class="latest-product__slider owl-carousel">
-                                <div class="latest-prdouct__slider__item">
+                                @*<div class="latest-prdouct__slider__item">
                                     <a href="#" class="latest-product__item">
                                         <div class="latest-product__item__pic">
                                             <img src="/theme/img/latest-product/lp-1.jpg" alt="">
@@ -233,7 +239,7 @@
                                             <span>$30.00</span>
                                         </div>
                                     </a>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -242,7 +248,7 @@
             <div class="col-lg-9 col-md-7">
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
-                        <h2>Sale Off</h2>
+                        <h2>Giảm giá</h2>
                     </div>
                     <div class="row">
                         <div class="product__discount__slider owl-carousel">
@@ -361,7 +367,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-5">
                             <div class="filter__sort">
-                                <span>Sort By</span>
+                                <span>Sắp xếp theo</span>
                                 <select>
                                     <option value="0">Default</option>
                                     <option value="0">Default</option>
@@ -369,9 +375,9 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4">
-                            <div class="filter__found">
+                            @*<div class="filter__found">
                                 <h6><span>16</span> Products found</h6>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="col-lg-4 col-md-3">
                             <div class="filter__option">
@@ -382,7 +388,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            @if (item.MaLoaiSP == "T")
+                            {
+                                <div class="featured__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
+                                    <ul class="featured__item__pic__hover">
+                                        <li><a href="#"><i class="fa fa-eye"></i></a></li><!--Xem chi tiết-->
+                                        @*<li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
+                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li><!--giỏ hàng-->
+                                    </ul>
+                                </div>
+                            }
+                            <div class="product__item__text">
+                                <h6><a href="#">@item.TenSP</a></h6><!--tên sp-->
+                                <h5>@String.Format(info, "{0:c}", item.DonGia)</h5><!--giá-->
+                            </div>
+                        </div>
+                    }
+                    
+                    @*<div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="/theme/img/product/product-1.jpg">
                                 <ul class="product__item__pic__hover">
@@ -561,13 +587,14 @@
                                 <h5>$30.00</h5>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="product__pagination">
-                    <a href="#">1</a>
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
+                    @*<a href="#">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
-                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>*@
                 </div>
             </div>
         </div>

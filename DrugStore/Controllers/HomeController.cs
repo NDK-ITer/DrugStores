@@ -3,6 +3,7 @@ using DrugStore.Models.Entities;
 using DrugStore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using X.PagedList;
 
 namespace DrugStore.Controllers
@@ -18,7 +19,7 @@ namespace DrugStore.Controllers
 
         public IActionResult Index()
         {
-            TrangChuViewModel trangChuViewModel = new TrangChuViewModel();
+            HomeViewModel trangChuViewModel = new HomeViewModel();
             return View(trangChuViewModel);
         }
 
@@ -36,5 +37,6 @@ namespace DrugStore.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

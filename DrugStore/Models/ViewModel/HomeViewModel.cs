@@ -3,7 +3,7 @@ using X.PagedList;
 
 namespace DrugStore.Models.ViewModel
 {
-    public class TrangChuViewModel
+    public class HomeViewModel
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         public List<SanPham> dsSanPhamNoiBat { get; set; }
@@ -11,7 +11,7 @@ namespace DrugStore.Models.ViewModel
         public List<LoaiSP> loaiSPs { get; set; }
         public List<LoaiThuoc> loaiThuocs { get; set; }
 
-        public TrangChuViewModel()
+        public HomeViewModel()
         {
             loaiThuocs = dbContext.LoaiThuocs.ToList();
             loaiSPs = dbContext.LoaiSPs.ToList();
