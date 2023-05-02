@@ -30,5 +30,11 @@ namespace DrugStore.Controllers
         {
             return View();
         }
+
+        public IActionResult SanPhamGiamGia()
+        {
+            List<SanPham> sanPhamGiamGias = dbContext.SanPhams.Where(s => s.GiamGia != 0).OrderBy(s => s.GiamGia).ToList();
+            return PartialView("_SanPhamGiamGiaPartial", sanPhamGiamGias);
+        }
     }
 }
