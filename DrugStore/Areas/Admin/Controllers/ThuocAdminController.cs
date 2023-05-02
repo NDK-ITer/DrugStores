@@ -128,8 +128,8 @@ namespace DrugStore.Areas.Admin.Controllers
         {
             Thuoc thuoc = dbContext.Thuocs.Find(id);
             SanPham sanPham = dbContext.SanPhams.Find(id);
-            LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
-            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX",thuoc.SanPham.MaHSX);
+            //LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
+            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX", thuoc.SanPham.MaHSX);
             ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT", thuoc.SanPham.MaTT);
             ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc", thuoc.MaLT);
             return View(thuoc);

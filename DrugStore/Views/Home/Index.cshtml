@@ -13,21 +13,11 @@
                         <span>All departments</span>
                     </div>
                     <ul>
-                        @*<li><a href="#">Bổ Gan thanh nhiệt</a></li>
-                        <li><a href="#">Bổ Não</a></li>
-                        <li><a href="#">Bổ phế, hô hấp</a></li>
-                        <li><a href="#">Bổ trợ xương khớp</a></li>
-                        <li><a href="#">Hỗ trợ tiêu hoá</a></li>
-                        <li><a href="#">Kẹo ngậm, viên ngậm</a></li>
-                        <li><a href="#">Làm đẹp, giảm cân</a></li>
-                        <li><a href="#">Vitamin và khoáng chất</a></li>
-                        <li><a href="#">Thảo dược tự nhiên</a></li>
-                        <li><a href="#">Hỗ trợ tim mạch</a></li>
-                        <li><a href="#">Hỗ trợ tiểu đường</a></li>*@
                         @foreach (var item in Model)
                         {
                             <li><a href="#">@Html.DisplayFor(modelItem => item.TenLoaiThuoc)</a></li>
                         }
+
                     </ul>
                 </div>
             </div>
@@ -67,7 +57,7 @@
 </section>
 <!-- Hero Section End -->
 <!-- Categories Section Begin -->
-<section class="categories">
+@*<section class="categories">
     <div class="container">
         <div class="row">
             <div class="categories__slider owl-carousel">
@@ -99,7 +89,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Categories Section End -->
 <!-- Featured Section Begin -->
 <section class="featured spad">
@@ -107,9 +97,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Featured Product</h2>
+                    <h2>Các Sản Phẩm Nổi Bật</h2>
                 </div>
-                <div class="featured__controls">
+                @*<div class="featured__controls">
+                    <!--Các loại Thuốc-->
                     <ul>
                         <li class="active" data-filter="*">All</li>
                         <li data-filter=".oranges">Oranges</li>
@@ -117,26 +108,27 @@
                         <li data-filter=".vegetables">Vegetables</li>
                         <li data-filter=".fastfood">Fastfood</li>
                     </ul>
-                </div>
+                </div>*@
             </div>
         </div>
         <div class="row featured__filter">
+            <!--Sản được nhiều người mua-->
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="/theme/img/featured/feature-1.jpg">
                         <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            @*<li><a href="#"><i class="fa fa-heart"></i></a></li>
+                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
+                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li><!--giỏ hàng-->
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>;<!--tên sp-->
+                        <h5>$30.00</h5><!--giá-->
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+            @*<div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="/theme/img/featured/feature-2.jpg">
                         <ul class="featured__item__pic__hover">
@@ -240,13 +232,13 @@
                         <h5>$30.00</h5>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>
 <!-- Featured Section End -->
 <!-- Banner Begin -->
-<div class="banner">
+@*<div class="banner">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -261,10 +253,11 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <!-- Banner End -->
 <!-- Latest Product Section Begin -->
-<section class="latest-product spad">
+
+@*<section class="latest-product spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6">
@@ -464,7 +457,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>*@
 <!-- Latest Product Section End -->
 <!-- Blog Section Begin -->
 <section class="from-blog spad">
