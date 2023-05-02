@@ -1,7 +1,9 @@
 ﻿using DrugStore.Models;
 using DrugStore.Models.Entities;
+using DrugStore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace DrugStore.Controllers
 {
@@ -16,8 +18,8 @@ namespace DrugStore.Controllers
 
         public IActionResult Index()
         {
-            List<LoaiThuoc> loaiThuocs = dbContext.LoaiThuocs.ToList();
-            return View(loaiThuocs);
+            TrangChuViewModel trangChuViewModel = new TrangChuViewModel();
+            return View(trangChuViewModel);
         }
 
         public IActionResult Privacy()

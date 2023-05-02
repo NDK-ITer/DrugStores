@@ -1,4 +1,5 @@
 ﻿using DrugStore.Models.Entities;
+using X.PagedList;
 
 namespace DrugStore.Models.ViewModel
 {
@@ -15,6 +16,7 @@ namespace DrugStore.Models.ViewModel
             loaiThuocs = dbContext.LoaiThuocs.ToList();
             loaiSPs = dbContext.LoaiSPs.ToList();
             dsSanPhamNoiBat = dbContext.SanPhams.ToList();
+            tinTucs = dbContext.TinTucs.ToList();
         }
     }
 }
