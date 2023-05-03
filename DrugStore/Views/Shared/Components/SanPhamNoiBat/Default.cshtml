@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DrugStore.Models.Entities.SanPham>
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+
+
+<div class="row">
+    <div class="categories__slider owl-carousel">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3">
+                @if (item.MaLoaiSP == "T")
+                {
+                    <div class="featured__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
+                        <ul class="featured__item__pic__hover">
+                            <li><a href="#"><i class="fa fa-eye"></i></a></li><!--Xem chi tiết-->
+                            @*<li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
+                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li><!--giỏ hàng-->
+                        </ul>
+                    </div>
+                }
+                <div class="featured__item__text">
+                    <h6><a href="#">@item.TenSP</a></h6><!--tên sp-->
+                    <h5>@String.Format(info, "{0:c}", item.DonGia)</h5><!--giá-->
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
