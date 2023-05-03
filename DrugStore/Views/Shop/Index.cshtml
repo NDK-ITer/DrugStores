@@ -251,8 +251,9 @@
                         <h2>Giảm giá</h2>
                     </div>
                     @{
-                        Html.RenderPartial("_SanPhamGiamGiaPartial");
+                        //Html.RenderPartial("_SanPhamGiamGiaPartial");
                     }
+                    @await Component.InvokeAsync("SanPhamGiamGia")
                     @*<div class="row">
                         <div class="product__discount__slider owl-carousel">
                             <div class="col-lg-4">
