@@ -69,6 +69,11 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.HinhThucThanhToan)
                     .HasForeignKey(e => e.MaHT)
                     .IsRequired();
+            builder.Entity<HangSX>()
+                    .HasMany(e => e.SanPhams)
+                    .WithOne(e => e.HangSX)
+                    .HasForeignKey(e => e.MaHSX)
+                    .IsRequired();
         }
     }
 }

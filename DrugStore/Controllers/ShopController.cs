@@ -1,5 +1,6 @@
 ﻿using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net.NetworkInformation;
 using X.PagedList;
 using X.PagedList.Mvc;
