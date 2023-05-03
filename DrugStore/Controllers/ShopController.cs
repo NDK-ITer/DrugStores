@@ -11,7 +11,9 @@ namespace DrugStore.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext =  new DrugStoreDbContext().Created();
+        
+        
         public IActionResult Index(int page = 1)
         {
             page  = page < 1 ? 1 : page;
@@ -20,10 +22,8 @@ namespace DrugStore.Controllers
         }
         public IActionResult Product(Guid id)
         {
+
             SanPham sanPham = dbContext.SanPhams.Find(id);
-            LoaiSP loaiSP = dbContext.LoaiSPs.Find(sanPham.MaLoaiSP);
-            TrangThai trangThai = dbContext.TrangThais.Find(sanPham.MaTT);
-            HangSX hangSX = dbContext.HangSXes.Find(sanPham.MaHSX);
             if (sanPham.MaLoaiSP == "T")
             {
                 Thuoc thuoc = dbContext.Thuocs.Find(id) ;

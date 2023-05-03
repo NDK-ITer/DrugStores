@@ -25,6 +25,25 @@ namespace DrugStore.Models.Entities
             builder.AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
             connectionStrings = configuration.GetConnectionString("DrugStoreDbContextConnection").ToString();
+            
+        }
+
+
+        public  DrugStoreDbContext Created()
+        {
+            DrugStoreDbContext dbContext = new DrugStoreDbContext();
+
+            dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
+            dbContext.Thuocs.Include(c => c.LoaiThuoc).Load();
+            dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
+            dbContext.GioHangs.Include(c => c.SanPham).Load();
+            dbContext.LoaiSPs.Include(c => c.SanPhams).Load();
+            dbContext.HangSXes.Include(c => c.SanPhams).Load();
+            dbContext.TrangThais.Include(c => c.SanPhams).Load();
+            dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
+            dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
+
+            return dbContext;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

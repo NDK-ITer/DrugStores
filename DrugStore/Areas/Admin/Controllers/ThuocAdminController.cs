@@ -10,7 +10,7 @@ namespace DrugStore.Areas.Admin.Controllers
     [Area("Admin")]
     public class ThuocAdminController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/SanPham/Thuoc";
         public ThuocAdminController(IWebHostEnvironment environment)
