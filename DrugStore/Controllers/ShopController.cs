@@ -17,9 +17,11 @@ namespace DrugStore.Controllers
             int pageSize = 3;
             return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList(page, pageSize));
         }
-        public IActionResult Product()
+        public IActionResult Product(Guid id)
         {
-            return View();
+            SanPham sanPham = dbContext.SanPhams.Find(id);
+
+            return View(sanPham);
         }
 
         public IActionResult Shopingcart()

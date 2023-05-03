@@ -59,7 +59,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Người Cập Nhật")]
         public string? NguoiCapNhat { get; set; }
 
-
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
 
         public virtual ICollection<GioHang> GioHangs { get; set; }
