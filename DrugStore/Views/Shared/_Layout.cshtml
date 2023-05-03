@@ -147,9 +147,7 @@
         </div>
     </header>
 
-   @* @{
-        await Html.RenderPartialAsync("");
-    }*@
+    @await Component.InvokeAsync("DoanhMucSanPham")
 
     @RenderBody()
     <footer class="footer spad">

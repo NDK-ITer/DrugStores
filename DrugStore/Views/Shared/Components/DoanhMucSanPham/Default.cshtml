@@ -1,0 +1,57 @@
+﻿@model DrugStore.Models.ViewModel.DoanhMucSanPhamViewModel
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Sản Phẩm</span>
+                    </div>
+                    <ul>
+                        @foreach (var item in Model.loaiSPs)
+                        {
+                            <li><a href="#">@Html.DisplayFor(modelItem => item.TenLoaiSP)</a></li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            <div class="hero__search__categories">
+                                Danh Mục
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input type="text" placeholder="Bạn cần gì?">
+                            <button type="submit" class="site-btn">TÌM KIẾM</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0312345678</h5>
+                            <span>hỗ trợ 24/7 </span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="hero__item set-bg" data-setbg="/theme/img/hero/banner.jpg">
+                <div class="hero__text">
+                <span>Trắng Da</span>
+                <h2>Chính Hãng 100%</h2>
+                <p>Giúp Da Khỏe Đẹp</p>
+                <a href="#" class="primary-btn">Xem Ngay</a>
+                </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
