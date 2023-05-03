@@ -74,9 +74,13 @@
                         <li><b>trạng thái</b> <span>@Model.TrangThai.TenTT@*<samp>Free pickup today</samp></span>*@</li>
                         <li><b>Hãng sản xuất</b> <span>@Model.HangSX.TenHSX</span></li>
                         <li><b>Đơn vị tính</b><span>@Model.Thuoc.DonViTinh</span></li>
-                        <li><b>Đơn giá</b><span> đơn giá</span></li>
-                        <li><b>Giảm giá</b><span>giảm giá</span></li>
-                        <li><b>Giá hiện tại</b><span>giá hiện tại</span></li>
+                        <li><b>Đơn giá</b><span> @String.Format(info, "{0:c}", Model.DonGia)</span></li>
+                        @if (true)
+                        {
+                            <li><b>Giảm giá</b><span>-@Model.GiamGia%</span></li>
+                            <li><b>Giá hiện tại</b><span>@String.Format(info, "{0:c}", Model.DonGia-(Model.DonGia*(Model.GiamGia/100)))</span></li>
+                        }
+                        
 
                     </ul>
                     <a href="#" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
@@ -93,25 +97,29 @@
                             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
                                aria-selected="false">Công Dụng</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                               aria-selected="false">Thành Phần</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab"
-                               aria-selected="false">Liều Dùng</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab"
-                               aria-selected="false">Tác dụng phụ</a>
-                        </li>
+                        @if (Model.MaLoaiSP == "T")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                   aria-selected="false">Thành Phần</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab"
+                                   aria-selected="false">Liều Dùng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab"
+                                   aria-selected="false">Tác dụng phụ</a>
+                            </li>
+                        }
+                        
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 @*<h6>Products Infomation</h6>*@
                                 <p>
-                                    MÔ TẢ
+                                    @Model.MoTa
                                 </p>
                             </div>
                         </div>
@@ -119,34 +127,38 @@
                             <div class="product__details__tab__desc">
                                 @*<h6>Products Infomation</h6>*@
                                 <p>
-                                    CÔNG DỤNG
+                                    @Model.CongDung
                                 </p>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tabs-3" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                @*<h6>Products Infomation</h6>*@
-                                <p>
-                                    THÀNH PHẦN
-                                </p>
+                        @if (Model.MaLoaiSP == "T")
+                        {
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    @*<h6>Products Infomation</h6>*@
+                                    <p>
+                                        @Model.Thuoc.ThanhPhan
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tabs-4" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                @*<h6>Products Infomation</h6>*@
-                                <p>
-                                    LIỀU DÙNG
-                                </p>
+                            <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    @*<h6>Products Infomation</h6>*@
+                                    <p>
+                                        @Model.Thuoc.LieuDung
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="tab-pane" id="tabs-5" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                @*<h6>Products Infomation</h6>*@
-                                <p>
-                                    TÁC DỤNG PHỤ
-                                </p>
+                            <div class="tab-pane" id="tabs-5" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    @*<h6>Products Infomation</h6>*@
+                                    <p>
+                                        @Model.Thuoc.TacDungPhu
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        
                     </div>
                 </div>
             </div>

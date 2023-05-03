@@ -20,7 +20,13 @@ namespace DrugStore.Controllers
         public IActionResult Product(Guid id)
         {
             SanPham sanPham = dbContext.SanPhams.Find(id);
-
+            LoaiSP loaiSP = dbContext.LoaiSPs.Find(sanPham.MaLoaiSP);
+            TrangThai trangThai = dbContext.TrangThais.Find(sanPham.MaTT);
+            HangSX hangSX = dbContext.HangSXes.Find(sanPham.MaHSX);
+            if (sanPham.MaLoaiSP == "T")
+            {
+                Thuoc thuoc = dbContext.Thuocs.Find(id) ;
+            }
             return View(sanPham);
         }
 
