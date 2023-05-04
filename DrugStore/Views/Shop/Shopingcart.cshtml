@@ -32,6 +32,7 @@
                             <tr>
                                 <th class="shoping__product">Sản Phẩm</th>
                                 <th>Đơn Giá</th>
+                                <th>Giảm Giá</th>
                                 <th>Số Lượng</th>
                                 <th>Thành Tiền</th>
                                 <th></th>
@@ -50,13 +51,16 @@
                                     @if (item.SanPham.MaLoaiSP == "T")
                                     {
                                         <td class="shoping__cart__item">
-                                            <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" alt="">
-                                            <h5>@item.SanPham.TenSP</h5>
+                                            <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" alt="" width="100px" height="100px">
+                                            <h5 class="pt-2">@item.SanPham.TenSP</h5>
                                         </td>
                                     }
                                     
                                     <td class="shoping__cart__price">
                                         @String.Format(info, "{0:c}", item.SanPham.DonGia)
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        @item.SanPham.GiamGia%
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         @*<div class="quantity">
