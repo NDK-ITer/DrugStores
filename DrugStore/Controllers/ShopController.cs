@@ -69,13 +69,13 @@ namespace DrugStore.Controllers
             }
             foreach (var item in gioHangs)
             {
-                SanPham doiTuongKD = dbContext.SanPhams.Find(item.MaSP);
+                SanPham sanPham = dbContext.SanPhams.Find(item.MaSP);
                 //if (doiTuongKD.GiamGia == 0)
                 //{
                 //    result = (double)((int)item.SoLuong * (doiTuongKD.DonGia)) + result;
                 //    continue;
                 //}
-                result = (double)((int)item.SoLuong * (doiTuongKD.DonGia - (doiTuongKD.DonGia * doiTuongKD.GiamGia))) + result;
+                result = (double)((int)item.SoLuong * (sanPham.DonGia - (sanPham.DonGia * sanPham.GiamGia/100))) + result;
             }
             return result;
         }
@@ -88,6 +88,7 @@ namespace DrugStore.Controllers
             if (spGioHang != null)
             {
                 spGioHang.SoLuong++;
+                spGioHang.ThanhTien = spGioHang.ThanhTien + (spGioHang.SanPham.DonGia - (spGioHang.SanPham.DonGia*spGioHang.SanPham.GiamGia/100));
                 dbContext.GioHangs.Update(spGioHang);
                 dbContext.SaveChanges();
                 TakeShopingCart(_userManager.GetUserId(User));
@@ -95,10 +96,12 @@ namespace DrugStore.Controllers
             }
             else if (spGioHang == null)
             {
+                SanPham sp = dbContext.SanPhams.FirstOrDefault(n => n.MaSP == id);
                 spGioHang = new GioHang();
                 spGioHang.MaSP = id;
                 spGioHang.Id = _userManager.GetUserId(User);
                 spGioHang.SoLuong = 1;
+                spGioHang.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100))*spGioHang.SoLuong;
                 dbContext.GioHangs.Add(spGioHang);
                 dbContext.SaveChanges();
                 TakeShopingCart(_userManager.GetUserId(User));
@@ -106,6 +109,19 @@ namespace DrugStore.Controllers
             }
             return RedirectToAction("Index");
 
+        }
+
+        [Authorize]
+        public ActionResult DeleteFromCart(Guid id)
+        {
+            TakeShopingCart(_userManager.GetUserId(User));
+            GioHang sanPham = gioHangs.FirstOrDefault(n => n.MaSP == id);
+            if (sanPham != null)
+            {
+                dbContext.GioHangs.Remove(sanPham);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         [Authorize]
