@@ -81,7 +81,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id)
+        public ActionResult AddToCart(Guid id,string strURL)
         {
             TakeShopingCart(_userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -107,7 +107,7 @@ namespace DrugStore.Controllers
                 TakeShopingCart(_userManager.GetUserId(User));
 
             }
-            return RedirectToAction("Index");
+            return Redirect(strURL);
 
         }
 
@@ -121,7 +121,7 @@ namespace DrugStore.Controllers
                 dbContext.GioHangs.Remove(sanPham);
                 dbContext.SaveChanges();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Shopingcart");
         }
 
         [Authorize]

@@ -230,7 +230,9 @@
                             }
                             <li><a href="@Url.Action("Product","Shop", new{ id = item.MaSP})"><i class="fa fa-eye"></i></a></li><!--Xem chi tiết-->
                             @*<li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
-                            <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP})"><i class="fa fa-shopping-cart"></i></a></li><!--giỏ hàng-->
+                            <li>
+                                <a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP, @strURL = Context.Request.GetDisplayUrl().ToString() })"><i class="fa fa-shopping-cart"></i></a>
+                            </li><!--giỏ hàng-->
                             <div class="product__item__text">
                                 <h6><a href="#">@item.TenSP</a></h6><!--tên sp-->
                                 <h5>@String.Format(info, "{0:c}", item.DonGia)</h5><!--giá-->
