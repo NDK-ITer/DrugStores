@@ -227,8 +227,8 @@
                                             <div class="product__discount__percent">-@item.GiamGia%</div>
                                         }                                       
                                         <ul class="product__item__pic__hover">
-                                            <li><a href="#"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                 }
