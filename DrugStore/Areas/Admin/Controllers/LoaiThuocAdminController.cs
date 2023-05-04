@@ -12,7 +12,8 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: LoaiThuocAdmin
         public ActionResult Index(List<LoaiThuoc> loaiThuocs)
         {
-            return View(dbContext.LoaiThuocs.ToList());
+            ViewBag.DsLoaiThuoc = dbContext.LoaiThuocs.ToList();
+            return View();
         }
 
         // GET: LoaiThuocAdmin/Details/5

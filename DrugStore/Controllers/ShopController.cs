@@ -7,6 +7,7 @@ using X.PagedList.Mvc;
 using Microsoft.AspNetCore.Identity;
 using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Drawing.Printing;
 
 namespace DrugStore.Controllers
 {
@@ -33,7 +34,7 @@ namespace DrugStore.Controllers
             return View(sanPham);
         }
 
-        public void TakeShopingcart(string idUser)
+        public void TakeShopingCart(string idUser)
         {
             
             gioHangs = dbContext.GioHangs.Where(s => s.Id == idUser).ToList();
@@ -43,11 +44,79 @@ namespace DrugStore.Controllers
             }
         }
 
-        [Authorize]
-        public IActionResult Shopingcart()
+        private int CountCart()
         {
-            TakeShopingcart(_userManager.GetUserId(User));
-            return View();
+            TakeShopingCart(_userManager.GetUserId(User));
+            int result = 0;
+            if (gioHangs.Count == 0)
+            {
+                return result;
+            }
+            foreach (var item in gioHangs)
+            {
+                result = result + (int)item.SoLuong;
+            }
+            return result;
+        }
+
+        private double SumPriceCart()
+        {
+            TakeShopingCart(_userManager.GetUserId(User));
+            double result = 0;
+            if (gioHangs.Count == 0)
+            {
+                return result;
+            }
+            foreach (var item in gioHangs)
+            {
+                SanPham doiTuongKD = dbContext.SanPhams.Find(item.MaSP);
+                //if (doiTuongKD.GiamGia == 0)
+                //{
+                //    result = (double)((int)item.SoLuong * (doiTuongKD.DonGia)) + result;
+                //    continue;
+                //}
+                result = (double)((int)item.SoLuong * (doiTuongKD.DonGia - (doiTuongKD.DonGia * doiTuongKD.GiamGia))) + result;
+            }
+            return result;
+        }
+
+        [Authorize]
+        public ActionResult AddToCart(Guid id)
+        {
+            TakeShopingCart(_userManager.GetUserId(User));
+            GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
+            if (spGioHang != null)
+            {
+                spGioHang.SoLuong++;
+                dbContext.GioHangs.Update(spGioHang);
+                dbContext.SaveChanges();
+                TakeShopingCart(_userManager.GetUserId(User));
+                
+            }
+            else if (spGioHang == null)
+            {
+                spGioHang = new GioHang();
+                spGioHang.MaSP = id;
+                spGioHang.Id = _userManager.GetUserId(User);
+                spGioHang.SoLuong = 1;
+                dbContext.GioHangs.Add(spGioHang);
+                dbContext.SaveChanges();
+                TakeShopingCart(_userManager.GetUserId(User));
+
+            }
+            return RedirectToAction("Index");
+
+        }
+
+        [Authorize]
+        public IActionResult Shopingcart(int page = 1)
+        {
+            TakeShopingCart(_userManager.GetUserId(User));
+            page = page < 1 ? 1 : page;
+            int pageSize = 3;
+            ViewBag.CountCart = CountCart();
+            ViewBag.SumPriceCart = SumPriceCart();
+            return View(gioHangs.ToPagedList((int)page, (int)pageSize));
         }
         public IActionResult CheckOut()
         {
