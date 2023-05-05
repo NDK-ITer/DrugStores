@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using DrugStore.Models.Entities;
 
-namespace DrugStore.Areas.Admin.Models
+namespace DrugStore.Areas.Admin.Data
 {
     public partial class SanPhamInput
     {
@@ -29,15 +30,12 @@ namespace DrugStore.Areas.Admin.Models
         [DisplayName("Số Lần Mua")]
         public int? SoLanMua { get; set; }
 
-        [ForeignKey("LoaiSP")]
         [DisplayName("Loại Sản Phẩm")]
         public string? MaLoaiSP { get; set; }
 
-        [ForeignKey("TrangThai")]
         [DisplayName("Trạng Thái")]
         public int? MaTT { get; set; }
 
-        [ForeignKey("HangSX")]
         [DisplayName("Hãng Sản Xuất")]
         public int? MaHSX { get; set; }
 
@@ -52,5 +50,10 @@ namespace DrugStore.Areas.Admin.Models
 
         [DisplayName("Danh Sách Ảnh")]
         public string? DSAnhSP { get; set; }
+        public virtual HangSX? HangSX { get; set; }
+        [DisplayName("Loại Sản Phẩm")]
+        public virtual LoaiSP? LoaiSP { get; set; }
+        [DisplayName("Trạng Thái")]
+        public virtual TrangThai? TrangThai { get; set; }
     }
 }

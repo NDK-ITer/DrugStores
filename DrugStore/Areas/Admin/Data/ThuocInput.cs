@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using DrugStore.Models.Entities;
 
-namespace DrugStore.Areas.Admin.Models
+namespace DrugStore.Areas.Admin.Data
 {
     public partial class ThuocInput : SanPhamInput
     {
@@ -21,7 +21,7 @@ namespace DrugStore.Areas.Admin.Models
         public string? TacDungPhu { get; set; }
         [DisplayName("Thành Phần")]
         public string? ThanhPhan { get; set; }
-        [ForeignKey("LoaiThuoc")]
+
         [DisplayName("Loại Thuốc")]
         public int? MaLT { get; set; }
     }

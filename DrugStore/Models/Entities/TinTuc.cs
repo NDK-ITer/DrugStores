@@ -17,16 +17,16 @@ namespace DrugStore.Models.Entities
     {
         [Key]
 
-        public Guid MaTT { get; set; }
+        public Guid? MaTT { get; set; }
         [DisplayName("Ảnh Đại Diện")]
-        public string AnhDaiDien { get; set; }
+        public string? AnhDaiDien { get; set; }
         [DisplayName("Thời Gian Đăng")]
         public DateTime? ThoiGiaDang { get; set; }
         [Column(TypeName = "ntext")]
         [DisplayName("Nội Dung")]
-        public string NoiDung { get; set; }
+        public string? NoiDung { get; set; }
         [DisplayName("Mô Tả Tin Tức")]
-        public string MoTaTT { get; set; }
+        public string? MoTaTT { get; set; }
         [DisplayName("Số Lượt Xem")]
         public int? SoLuotXem { get; set; }
     }

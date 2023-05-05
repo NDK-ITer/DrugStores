@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class LoaiThuocAdmin : Controller
+    public class LoaiThuocAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         // GET: LoaiThuocAdmin
         public ActionResult Index(List<LoaiThuoc> loaiThuocs)
         {
-            return View(dbContext.LoaiThuocs.ToList());
+            ViewBag.DsLoaiThuoc = dbContext.LoaiThuocs.ToList();
+            return View();
         }
 
         // GET: LoaiThuocAdmin/Details/5

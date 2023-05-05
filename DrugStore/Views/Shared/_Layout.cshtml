@@ -127,7 +127,7 @@
                                 </ul>
                             </li>*@
                             <li><a asp-controller="Blog" asp-action="Index">Tin Tức</a></li>
-                            <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                            <li><a asp-controller="Home" asp-action="Contact">Liên Hệ</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -146,6 +146,9 @@
             </div>
         </div>
     </header>
+
+    @await Component.InvokeAsync("DoanhMucSanPham")
+
     @RenderBody()
     <footer class="footer spad">
         <div class="container">

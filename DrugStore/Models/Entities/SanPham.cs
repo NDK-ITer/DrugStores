@@ -10,31 +10,30 @@ using System.ComponentModel;
 namespace DrugStore.Models.Entities
 {
     [Table("SanPham")]
-    public partial class SanPhamInput
+    public partial class SanPham
     {
-        public SanPhamInput()
+        public SanPham()
         {
             CT_HoaDon = new HashSet<CT_HoaDon>();
             GioHangs = new HashSet<GioHang>();
         }
 
         [Key]
+        [ForeignKey("Thuoc")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Tên Sản Phẩm")]
-        public string TenSP { get; set; }
+        public string? TenSP { get; set; }
         [DisplayName("Công Dụng")]
-        public string CongDung { get; set; }
+        public string? CongDung { get; set; }
         [DisplayName("Mô tả")]
-        public string MoTa { get; set; }
+        public string? MoTa { get; set; }
         [DisplayName("Ảnh Đại Diện")]
-        public string AnhDaiDien { get; set; }
+        public string? AnhDaiDien { get; set; }
         [DisplayName("Số Lần Mua")]
         public int? SoLanMua { get; set; }
-
         [ForeignKey("LoaiSP")]
         public string? MaLoaiSP { get; set; }
-        
         [ForeignKey("TrangThai")]
         public int? MaTT { get; set; }
         [ForeignKey("HangSX")]
@@ -46,7 +45,19 @@ namespace DrugStore.Models.Entities
         [DisplayName("Số Lượng")]
         public int? SoLuong { get; set; }
         [DisplayName("Danh Sách Ảnh")]
-        public string DSAnhSP { get; set; }
+        public string? DSAnhSP { get; set; }
+
+        [DisplayName("Ngày Tạo")]
+        public DateTime NgayTao {get; set; }
+
+        [DisplayName("Người Tạo")]
+        public string? NguoiTao { get;set; }
+
+        [DisplayName("Ngày Cập Nhật")]
+        public DateTime? NgayCapNhat { get; set; }
+
+        [DisplayName("Người Cập Nhật")]
+        public string? NguoiCapNhat { get; set; }
 
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
 
@@ -57,7 +68,6 @@ namespace DrugStore.Models.Entities
         public virtual LoaiSP LoaiSP { get; set; }
         [DisplayName("Trạng Thái")]
         public virtual TrangThai TrangThai { get; set; }
-
-        public virtual ThuocInput Thuoc { get; set; }
+        public virtual Thuoc Thuoc { get; set; }
     }
 }

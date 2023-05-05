@@ -12,8 +12,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<HinhThucThanhToan> HinhThucThanhToans { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<LoaiSP> LoaiSPs { get; set; }
-        public virtual DbSet<SanPhamInput> SanPhams { get; set; }
-        public virtual DbSet<ThuocInput> Thuocs { get; set; }
+        public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<Thuoc> Thuocs { get; set; }
         public virtual DbSet<TinTuc> TinTucs { get; set; }
         public virtual DbSet<TrangThai> TrangThais { get; set; }
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
@@ -25,6 +25,25 @@ namespace DrugStore.Models.Entities
             builder.AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
             connectionStrings = configuration.GetConnectionString("DrugStoreDbContextConnection").ToString();
+            
+        }
+
+
+        public  DrugStoreDbContext Created()
+        {
+            DrugStoreDbContext dbContext = new DrugStoreDbContext();
+
+            dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
+            dbContext.Thuocs.Include(c => c.LoaiThuoc).Load();
+            dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
+            dbContext.GioHangs.Include(c => c.SanPham).Load();
+            dbContext.LoaiSPs.Include(c => c.SanPhams).Load();
+            dbContext.HangSXes.Include(c => c.SanPhams).Load();
+            dbContext.TrangThais.Include(c => c.SanPhams).Load();
+            dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
+            dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
+
+            return dbContext;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,18 +55,18 @@ namespace DrugStore.Models.Entities
         {
             base.OnModelCreating(builder);
             builder.Entity<CT_HoaDon>()
-                  .HasKey(m => new { m.SoDH, m.MaSP });
+                    .HasKey(m => new { m.SoDH, m.MaSP });
             builder.Entity<GioHang>()
-                  .HasKey(m => new { m.Id, m.MaSP });
-            builder.Entity<SanPhamInput>()
+                    .HasKey(m => new { m.Id, m.MaSP });
+            builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)
-                    .HasForeignKey<ThuocInput>(e => e.MaSP)
+                    .HasForeignKey<Thuoc>(e => e.MaSP)
                     .IsRequired();
-            builder.Entity<ThuocInput>()
+            builder.Entity<Thuoc>()
                     .HasOne(e => e.SanPham)
                     .WithOne(e => e.Thuoc)
-                    .HasForeignKey<ThuocInput>(e => e.MaSP)
+                    .HasForeignKey<SanPham>(e => e.MaSP)
                     .IsRequired();
             builder.Entity<TrangThai>()
                     .HasMany(e => e.SanPhams)
@@ -68,6 +87,11 @@ namespace DrugStore.Models.Entities
                     .HasMany(e => e.HoaDons)
                     .WithOne(e => e.HinhThucThanhToan)
                     .HasForeignKey(e => e.MaHT)
+                    .IsRequired();
+            builder.Entity<HangSX>()
+                    .HasMany(e => e.SanPhams)
+                    .WithOne(e => e.HangSX)
+                    .HasForeignKey(e => e.MaHSX)
                     .IsRequired();
         }
     }

@@ -14,7 +14,7 @@ namespace DrugStore.Models.Entities
     {
         public LoaiSP()
         {
-            SanPhams = new HashSet<SanPhamInput>();
+            SanPhams = new HashSet<SanPham>();
         }
 
         [Key]
@@ -23,6 +23,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Tên Loại Sản Phẩm")]
         public string TenLoaiSP { get; set; }
         [DisplayName("Các Sản Phẩm")]
-        public virtual ICollection<SanPhamInput> SanPhams { get; set; }
+        public virtual ICollection<SanPham> SanPhams { get; set; }
     }
 }

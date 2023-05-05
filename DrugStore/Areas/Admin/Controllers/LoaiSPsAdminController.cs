@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class LoaiSPsAdmin : Controller
+    public class LoaiSPsAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         // GET: LoaiSPsAdmin

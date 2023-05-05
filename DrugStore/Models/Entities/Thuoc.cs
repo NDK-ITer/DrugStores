@@ -11,10 +11,11 @@ using System.ComponentModel;
 namespace DrugStore.Models.Entities
 {
     [Table("Thuoc")]
-    public partial class ThuocInput
+    public partial class Thuoc
     {
         [Key]
-        [DisplayName("Mã Thuốc")]
+        [ForeignKey("SanPham")]
+        [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Đơn Vị Tính")]
         public string? DonViTinh { get; set; }
@@ -26,7 +27,7 @@ namespace DrugStore.Models.Entities
         public string? ThanhPhan { get; set; }
         [ForeignKey("LoaiThuoc")]
         public int? MaLT { get; set; }
-        public virtual SanPhamInput? SanPham { get; set; }
+        public virtual SanPham SanPham { get; set; }
         [DisplayName("Loại Thuốc")]
         public virtual LoaiThuoc? LoaiThuoc { get; set;}
     }
