@@ -134,10 +134,42 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a  asp-controller ="Shop" asp-action="ShopingCart"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            @*<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>*@
+                            <li><a  asp-controller ="Shop" asp-action="ShopingCart">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    @{
+                                        @using Microsoft.AspNetCore.Identity
+                                        @using DrugStore.Areas.Identity.Data
+                                        @inject SignInManager<AppNetUser> SignInManager
+                                        @inject UserManager<AppNetUser> UserManager
+                                    }
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        @await Component.InvokeAsync("CountCart",new{ id = @UserManager.GetUserId(User)})
+                                    }
+                                    
+                                </a>
+                            </li>
                         </ul>
-                        <div class="header__cart__price">Tổng Tiền: <span>150.000 VND</span></div>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="header__cart__price">
+                                Tổng Tiền:
+                                <span>
+                                    @await Component.InvokeAsync("SumPriceCart",new{ id = @UserManager.GetUserId(User)})
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="header__cart__price">
+                                TỔNG TIỀN: (Hiện Chưa Đăng nhập)
+                                @*<span>
+                                    
+                                </span>*@
+                            </div>
+                        }
+                        
                     </div>
                 </div>
             </div>

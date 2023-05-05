@@ -36,33 +36,40 @@
                     <div class="product__details__pic__slider owl-carousel">
 
                         @{
-
-                            try
+                            @if (Model.MaLoaiSP == "T")
                             {
-                                var Listimage = Model.DSAnhSP.Split(',');
-
-                                if (!string.IsNullOrEmpty(Model.DSAnhSP))
+                                try
                                 {
-
-
-                                    if (@Listimage.Count() > 0)
+                                    if (Model.DSAnhSP != null)
                                     {
-                                        foreach (var item in Listimage)
+                                        var Listimage = Model.DSAnhSP.Split(',');
+
+                                        if (!string.IsNullOrEmpty(Model.DSAnhSP))
                                         {
-                                            if (!string.IsNullOrEmpty(item))
+
+
+                                            if (@Listimage.Count() > 0)
                                             {
-                                                <img data-imgbigurl="/images/sanpham/thuoc/@item"
-                                                     src="/images/sanpham/thuoc/@item" alt="">
+                                                foreach (var item in Listimage)
+                                                {
+                                                    if (!string.IsNullOrEmpty(item))
+                                                    {
+                                                        <img data-imgbigurl="/images/sanpham/thuoc/@item"
+                                                             src="/images/sanpham/thuoc/@item" alt="">
+                                                    }
+
+                                                }
                                             }
-                                           
                                         }
                                     }
+                                    
+                                }
+                                catch (Exception ex)
+                                {
+
                                 }
                             }
-                            catch (Exception ex)
-                            {
-
-                            }
+                            
 
                         }
                     </div>
