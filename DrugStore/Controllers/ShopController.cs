@@ -180,7 +180,6 @@ namespace DrugStore.Controllers
                 hoaDon.DaThanhToan = false;
             }
             LoginPay(hoaDon);
-            hoaDon = Session[hoaDon.Id] as HoaDon;
         }
 
         public void TakeListProductIsBougth()
