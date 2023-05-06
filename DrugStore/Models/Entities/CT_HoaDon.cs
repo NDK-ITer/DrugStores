@@ -14,7 +14,7 @@ namespace DrugStore.Models.Entities
         [Key]
         [Column(Order = 0)]
         [DisplayName("Số Hóa Đơn")]
-        public Guid SoDH { get; set; }
+        public Guid? SoDH { get; set; }
 
         [Key]
         [Column(Order = 1)]
