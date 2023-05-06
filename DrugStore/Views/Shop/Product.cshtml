@@ -97,6 +97,7 @@
                             </div>
                         </div>
                     </div>
+                    <a href="@Url.Action("AddProductIsBought","Shop",new { @idSP = Model.MaSP} )" class="primary-btn">MUA NGAY</a>
                     <a href="@Url.Action("AddToCart","Shop",new { @id = Model.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
                    @* <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>*@
                     <ul>

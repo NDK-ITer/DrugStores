@@ -15,18 +15,24 @@ namespace DrugStore.Controllers
     {
         private readonly DrugStoreDbContext dbContext =  new DrugStoreDbContext().Created();
         List<GioHang> gioHangs;
+        List<CT_HoaDon> cT_HoaDons;
+        private HoaDon hoaDon;
 
-        private UserManager<AppNetUser> _userManager;
-        public ShopController(UserManager<AppNetUser> userManager)
+        private UserManager<AppNetUser> userManager;
+        private SignInManager<AppNetUser> signInManager;
+
+        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager)
         {
-            _userManager = userManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             //var user = userManager.Users.ToList();
         }
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int? page)
         {
+            if (page == null) { page = 1;}
             page  = page < 1 ? 1 : page;
             int pageSize = 3;
-            return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList(page, pageSize));
+            return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
         {
@@ -44,9 +50,11 @@ namespace DrugStore.Controllers
             }
         }
 
+        
+
         private int CountCart()
         {
-            TakeShopingCart(_userManager.GetUserId(User));
+            TakeShopingCart(userManager.GetUserId(User));
             int result = 0;
             if (gioHangs.Count == 0)
             {
@@ -61,7 +69,7 @@ namespace DrugStore.Controllers
 
         private double SumPriceCart()
         {
-            TakeShopingCart(_userManager.GetUserId(User));
+            TakeShopingCart(userManager.GetUserId(User));
             double result = 0;
             if (gioHangs.Count == 0)
             {
@@ -83,7 +91,7 @@ namespace DrugStore.Controllers
         [Authorize]
         public ActionResult AddToCart(Guid id,string strURL)
         {
-            TakeShopingCart(_userManager.GetUserId(User));
+            TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
             if (spGioHang != null)
             {
@@ -91,7 +99,7 @@ namespace DrugStore.Controllers
                 spGioHang.ThanhTien = spGioHang.ThanhTien + (spGioHang.SanPham.DonGia - (spGioHang.SanPham.DonGia*spGioHang.SanPham.GiamGia/100));
                 dbContext.GioHangs.Update(spGioHang);
                 dbContext.SaveChanges();
-                TakeShopingCart(_userManager.GetUserId(User));
+                TakeShopingCart(userManager.GetUserId(User));
                 
             }
             else if (spGioHang == null)
@@ -99,12 +107,12 @@ namespace DrugStore.Controllers
                 SanPham sp = dbContext.SanPhams.FirstOrDefault(n => n.MaSP == id);
                 spGioHang = new GioHang();
                 spGioHang.MaSP = id;
-                spGioHang.Id = _userManager.GetUserId(User);
+                spGioHang.Id = userManager.GetUserId(User);
                 spGioHang.SoLuong = 1;
                 spGioHang.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100))*spGioHang.SoLuong;
                 dbContext.GioHangs.Add(spGioHang);
                 dbContext.SaveChanges();
-                TakeShopingCart(_userManager.GetUserId(User));
+                TakeShopingCart(userManager.GetUserId(User));
 
             }
             return Redirect(strURL);
@@ -114,7 +122,7 @@ namespace DrugStore.Controllers
         [Authorize]
         public ActionResult DeleteFromCart(Guid id)
         {
-            TakeShopingCart(_userManager.GetUserId(User));
+            TakeShopingCart(userManager.GetUserId(User));
             GioHang sanPham = gioHangs.FirstOrDefault(n => n.MaSP == id);
             if (sanPham != null)
             {
@@ -127,16 +135,93 @@ namespace DrugStore.Controllers
         [Authorize]
         public IActionResult Shopingcart(int page = 1)
         {
-            TakeShopingCart(_userManager.GetUserId(User));
+            TakeShopingCart(userManager.GetUserId(User));
             page = page < 1 ? 1 : page;
             int pageSize = 3;
             ViewBag.CountCart = CountCart();
             ViewBag.SumPriceCart = SumPriceCart();
             return View(gioHangs.ToPagedList((int)page, (int)pageSize));
         }
-        public IActionResult CheckOut()
+        public IActionResult Pay()
         {
+            if (cT_HoaDons != null)
+            {
+                ViewBag.ListProducIsBought = cT_HoaDons;
+            }
             return View();
+        }
+
+        public void LoginPay(HoaDon hoaDon)
+        {
+            if (signInManager.IsSignedIn(User))
+            {
+                hoaDon.Id = userManager.GetUserId(User);
+                AspNetUser aspNetUser = dbContext.AspNetUsers.Find(userManager.GetUserId(User));
+                hoaDon.TenNguoiMua = aspNetUser.FirstName + aspNetUser.LastName;
+                hoaDon.Email = aspNetUser.Email;
+                hoaDon.SDT = aspNetUser.PhoneNumber;
+            }
+            else
+            {
+                hoaDon.Id = null;
+                hoaDon.TenNguoiMua = null;
+                hoaDon.Email = null;
+                hoaDon.SDT = null;
+            }
+        }
+
+        public void TakeBill()
+        {
+            if (hoaDon == null) 
+            { 
+                hoaDon = new HoaDon();
+                hoaDon.SoDH = Guid.NewGuid();
+                hoaDon.NgayLap = DateTime.Now;
+                hoaDon.DaThanhToan = false;
+            }
+            LoginPay(hoaDon);
+            hoaDon = Session[hoaDon.Id] as HoaDon;
+        }
+
+        public void TakeListProductIsBougth()
+        {
+            TakeBill();
+            if (cT_HoaDons == null)
+            {
+                cT_HoaDons = new List<CT_HoaDon>();
+                return;
+            }
+        } 
+
+        public ActionResult AddProductIsBought(Guid idSP)
+        {
+            if (idSP == null)
+            {
+                return RedirectToAction("Index");
+            }
+            SanPham sp = dbContext.SanPhams.Find(idSP);
+            TakeListProductIsBougth();
+
+            if (sp != null)
+            {
+                CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
+                if (spDuocMua == null)
+                {
+                    spDuocMua = new CT_HoaDon();
+                    spDuocMua.SoDH = hoaDon.SoDH;
+                    spDuocMua.MaSP = sp.MaSP;
+                    spDuocMua.SoLuong = 1;
+                    spDuocMua.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spDuocMua.SoLuong;
+                }
+                else
+                {
+                    spDuocMua.SoLuong++;
+                    spDuocMua.ThanhTien = spDuocMua.ThanhTien + (sp.DonGia - (sp.DonGia * sp.GiamGia / 100));
+                }
+               
+            }
+            return RedirectToAction("Pay", "Shop");
+
         }
     }
 }
