@@ -9,6 +9,7 @@ using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Drawing.Printing;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DrugStore.Controllers
 {
@@ -158,6 +159,7 @@ namespace DrugStore.Controllers
                 hoaDon.CT_HoaDon = cT_HoaDons;
                 ViewBag.CountProductBought = CountProductBought();
                 ViewBag.SumProductBought = SumProductBought();
+                ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
             }
             
             return View(hoaDon);
@@ -168,6 +170,9 @@ namespace DrugStore.Controllers
         {
             hoaDon.CT_HoaDon = TakeListProductIsBougth();
             hoaDon.TongThanhTien = (decimal)SumProductBought();
+            hoaDon.NgayLap = DateTime.Now;
+            LoginPay(hoaDon);
+
             return RedirectToAction("Index");
         }
 
