@@ -25,31 +25,35 @@ namespace DrugStore.Models.Entities
         [Required]
         [StringLength(400)]
         [DisplayName("Mã Người Dùng")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [DisplayName("Ngày Lập")]
         public DateTime? NgayLap { get; set; }
         [DisplayName("Tổng Thành Tiền")]
         public decimal? TongThanhTien { get; set; }
         [DisplayName("Tên Người Mua")]
-        public string TenNguoiMua { get; set; }
+        public string? TenNguoiMua { get; set; }
         [DisplayName("Địa Chỉ Email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [DisplayName("Số Điện Thoại Người Mua")]
-        public string SDT { get; set; }
+        public string? SDT { get; set; }
         [DisplayName("Địa Chỉ Giao")]
-        public string DiaChiGiao { get; set; }
+        public string? DiaChiGiao { get; set; }
         [DisplayName("Ngày Giao")]
         public DateTime? NgayGiao { get; set; }
 
         [Column(TypeName = "ntext")]
         [DisplayName("Ghi Chú")]
-        public string GhiChu { get; set; }
+        public string? GhiChu { get; set; }
 
         public int? MaHT { get; set; }
 
         public virtual ICollection<CT_HoaDon> CT_HoaDon { get; set; }
         [DisplayName("Hình Thức Thanh Toán")]
-        public virtual HinhThucThanhToan HinhThucThanhToan { get; set; }
+        public virtual HinhThucThanhToan? HinhThucThanhToan { get; set; }
+
+        public bool? DaThanhToan { get; set; }
+
+        public AspNetUser? User { get; set; }
     }
 }

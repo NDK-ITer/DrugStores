@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DrugStore.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
 
@@ -17,6 +18,7 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<TinTuc> TinTucs { get; set; }
         public virtual DbSet<TrangThai> TrangThais { get; set; }
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()
@@ -42,6 +44,7 @@ namespace DrugStore.Models.Entities
             dbContext.TrangThais.Include(c => c.SanPhams).Load();
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
+            dbContext.AspNetUsers.Include(c => c.HoaDons);
 
             return dbContext;
         }
@@ -93,6 +96,12 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.HangSX)
                     .HasForeignKey(e => e.MaHSX)
                     .IsRequired();
+            builder.Entity<AspNetUser>()
+                    .HasMany(e => e.HoaDons)
+                    .WithOne(e => e.User)
+                    .HasForeignKey(e => e.Id) 
+                    .IsRequired();
+            
         }
     }
 }

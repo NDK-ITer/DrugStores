@@ -134,10 +134,42 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a  asp-controller ="Shop" asp-action="ShopingCart"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            @*<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>*@
+                            <li><a  asp-controller ="Shop" asp-action="ShopingCart">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    @{
+                                        @using Microsoft.AspNetCore.Identity
+                                        @using DrugStore.Areas.Identity.Data
+                                        @inject SignInManager<AppNetUser> SignInManager
+                                        @inject UserManager<AppNetUser> UserManager
+                                    }
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        @await Component.InvokeAsync("CountCart",new{ id = @UserManager.GetUserId(User)})
+                                    }
+                                    
+                                </a>
+                            </li>
                         </ul>
-                        <div class="header__cart__price">Tổng Tiền: <span>150.000 VND</span></div>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="header__cart__price">
+                                Tổng Tiền:
+                                <span>
+                                    @await Component.InvokeAsync("SumPriceCart",new{ id = @UserManager.GetUserId(User)})
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="header__cart__price">
+                                TỔNG TIỀN: (Hiện Chưa Đăng nhập)
+                                @*<span>
+                                    
+                                </span>*@
+                            </div>
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -203,6 +235,36 @@
                     </div>
                 </div>
             </div>
+            <!-- Messenger Plugin chat Code -->
+            <div id="fb-root"></div>
+
+            <!-- Your Plugin chat code -->
+            <div id="fb-customer-chat" class="fb-customerchat">
+            </div>
+
+            <script>
+                var chatbox = document.getElementById('fb-customer-chat');
+                chatbox.setAttribute("page_id", "101070539659393");
+                chatbox.setAttribute("attribution", "biz_inbox");
+            </script>
+
+            <!-- Your SDK code -->
+            <script>
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        xfbml: true,
+                        version: 'v16.0'
+                    });
+                };
+
+                (function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright">

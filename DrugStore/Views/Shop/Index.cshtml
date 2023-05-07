@@ -217,25 +217,33 @@
                 <div class="row">
                     @foreach (var item in Model)
                     {
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            @if (item.MaLoaiSP == "T")
-                            {
-                                <div class="featured__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="@Url.Action("Product","Shop", new{ id = item.MaSP})"><i class="fa fa-eye"></i></a></li><!--Xem chi tiết-->
-                                        @*<li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li><!--giỏ hàng-->
-                                    </ul>
+                        <div class="col-lg-4">
+                            <div class="product__discount__item">
+                                @if (item.MaLoaiSP == "T")
+                                {
+                                    <div class="product__discount__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
+                                        @if (@item.GiamGia > 0)
+                                        {
+                                            <div class="product__discount__percent">-@item.GiamGia%</div>
+                                        }                                       
+                                        <ul class="product__item__pic__hover">
+                                            <li><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                }
+                                <div class="product__discount__item__text">
+                                    <h5><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP">@item.TenSP</a></h5>
+                                    <div class="product__item__price">
+                                        @String.Format(info, "{0:c}", item.DonGia-(item.DonGia*(item.GiamGia/100)))
+                                        @if (@item.GiamGia > 0)
+                                        {
+                                            <span>
+                                                @String.Format(info, "{0:c}", item.DonGia)
+                                            </span>
+                                        }
+                                     </div>
                                 </div>
-                            }
-                            <li><a href="@Url.Action("Product","Shop", new{ id = item.MaSP})"><i class="fa fa-eye"></i></a></li><!--Xem chi tiết-->
-                            @*<li><a href="#"><i class="fa fa-retweet"></i></a></li>*@
-                            <li>
-                                <a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP, @strURL = Context.Request.GetDisplayUrl().ToString() })"><i class="fa fa-shopping-cart"></i></a>
-                            </li><!--giỏ hàng-->
-                            <div class="product__item__text">
-                                <h6><a href="#">@item.TenSP</a></h6><!--tên sp-->
-                                <h5>@String.Format(info, "{0:c}", item.DonGia)</h5><!--giá-->
                             </div>
                         </div>
                     }

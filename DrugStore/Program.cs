@@ -9,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddDistributedMemoryCache();
+
 services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
@@ -22,6 +26,13 @@ services.AddAuthentication().AddFacebook(facebookOptions =>
 });
 
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DrugStoreDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(connectionString));
@@ -29,9 +40,10 @@ builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlSe
 builder.Services.AddDefaultIdentity<AppNetUser>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true; }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationsDbContext>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
+builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
 builder.Services.AddSession(options =>
 {

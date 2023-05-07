@@ -5,23 +5,27 @@
 }
 
 <div class="row">
-    <div class="product__discount__slider owl-carousel">
+    <div class="categories__slider owl-carousel">
         @foreach (var item in Model)
         {
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="product__discount__item">
                     @if (item.MaLoaiSP == "T")
                     {
                         <div class="product__discount__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
-                            <div class="product__discount__percent">-@item.GiamGia%</div>
+                            @if (item.GiamGia > 0)
+                            {
+                                <div class="product__discount__percent">-@item.GiamGia%</div>
+                            }
+
                             <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-eye"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP"><i class="fa fa-eye"></i></a></li>
+                                <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                     }
                     <div class="product__discount__item__text">
-                        <h5><a asp-controller="Shop" asp-action="Product">@item.TenSP</a></h5>
+                        <h5><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP">@item.TenSP</a></h5>
                         <div class="product__item__price">@String.Format(info, "{0:c}", item.DonGia-(item.DonGia*(item.GiamGia/100)))<span>@String.Format(info, "{0:c}", item.DonGia)</span></div>
                     </div>
                 </div>
@@ -29,3 +33,4 @@
         }
     </div>
 </div>
+
