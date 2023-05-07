@@ -9,6 +9,7 @@ using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Drawing.Printing;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DrugStore.Controllers
 {
@@ -51,8 +52,6 @@ namespace DrugStore.Controllers
                 gioHangs = new List<GioHang>();
             }
         }
-
-        
 
         private int CountCart()
         {
@@ -148,11 +147,43 @@ namespace DrugStore.Controllers
         {
             TakeBill();
             cT_HoaDons = TakeListProductIsBougth();
+
             if (cT_HoaDons != null)
             {
-                ViewBag.ListProducIsBought = cT_HoaDons;
+                foreach (var item in cT_HoaDons)
+                {
+                    item.SanPham = dbContext.SanPhams.Find(item.MaSP);
+                }
+                hoaDon.CT_HoaDon = cT_HoaDons;
+                ViewBag.CountProductBought = CountProductBought();
+                ViewBag.SumProductBought = SumProductBought();
+                ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
             }
-            return View();
+            
+            return View(hoaDon);
+        }
+
+        [HttpPost]
+        public IActionResult Pay(HoaDon hoaDon)
+        {
+            hoaDon.CT_HoaDon = TakeListProductIsBougth();
+            hoaDon.TongThanhTien = (decimal)SumProductBought();
+            hoaDon.NgayLap = DateTime.Now;
+            if (signInManager.IsSignedIn(User))
+            {
+                hoaDon.Id = userManager.GetUserId(User);
+            }
+            SaveBill(hoaDon);   
+            return RedirectToAction("Index");
+        }
+
+        public void SaveBill(HoaDon hoaDon)
+        {
+            if (hoaDon != null)
+            {
+                dbContext.HoaDons.Add(hoaDon);
+                dbContext.SaveChanges();
+            }
         }
 
         public void LoginPay(HoaDon hoaDon)
@@ -192,26 +223,21 @@ namespace DrugStore.Controllers
         {
             //TakeBill();
             string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
-
+            List<CT_HoaDon> cT_HoaDons = new List<CT_HoaDon>();
             if (dsSpMuaString == null)
             {
-                cT_HoaDons = new List<CT_HoaDon>();
                 contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
             }
             else
             {
-                List<CT_HoaDon>? cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
-
+                cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
             }
             return cT_HoaDons;
-        } 
 
-        public ActionResult AddProductIsBought(Guid idSP)
+        }
+
+        public void AddProductIsBought(Guid idSP, int? soLuong)
         {
-            if (idSP == null)
-            {
-                return RedirectToAction("Index");
-            }
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
 
@@ -222,19 +248,64 @@ namespace DrugStore.Controllers
                 {
                     spDuocMua = new CT_HoaDon();
                     spDuocMua.MaSP = sp.MaSP;
-                    spDuocMua.SoLuong = 1;
+                    if (soLuong == 0)
+                    {
+                        spDuocMua.SoLuong = 1;
+                    }
+                    else
+                    {
+                        spDuocMua.SoLuong = (int)soLuong;
+                    }
                     spDuocMua.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spDuocMua.SoLuong;
                     cT_HoaDons.Add(spDuocMua);
+                    contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+
                 }
                 else
                 {
                     spDuocMua.SoLuong++;
                     spDuocMua.ThanhTien = spDuocMua.ThanhTien + (sp.DonGia - (sp.DonGia * sp.GiamGia / 100));
+                    contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+
                 }
-               
+
             }
+        }
+        [HttpPost]
+        public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
+        {
+            
+            if (soLuong > (int)dbContext.SanPhams.Find(idSP).SoLuong)
+            {
+                return Redirect(strURL);
+            }
+            AddProductIsBought(idSP, soLuong);
             return RedirectToAction("Pay", "Shop");
 
+        }
+
+        public int CountProductBought()
+        {
+            cT_HoaDons = TakeListProductIsBougth();
+            return cT_HoaDons.Count();
+        }
+
+        public double SumProductBought()
+        {
+            cT_HoaDons = TakeListProductIsBougth();
+            return (double)cT_HoaDons.Sum(s => s.ThanhTien);
+        }
+
+        public IActionResult PayForShopingCart()
+        {
+            var id = userManager.GetUserId(User);
+            List<GioHang> shopingCart = dbContext.GioHangs.Where(s => s.Id == id).ToList();
+            cT_HoaDons = TakeListProductIsBougth();
+            foreach (var item in shopingCart)
+            {
+                AddProductIsBought(item.MaSP, item.SoLuong);
+            }
+            return RedirectToAction("Pay", "Shop");
         }
     }
 }
