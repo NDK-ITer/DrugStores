@@ -166,10 +166,8 @@ namespace DrugStore.Controllers
         [HttpPost]
         public IActionResult Pay(HoaDon hoaDon)
         {
-            if(ModelState.IsValid)
-            {
-                
-            }
+            hoaDon.CT_HoaDon = TakeListProductIsBougth();
+            hoaDon.TongThanhTien = (decimal)SumProductBought();
             return RedirectToAction("Index");
         }
 

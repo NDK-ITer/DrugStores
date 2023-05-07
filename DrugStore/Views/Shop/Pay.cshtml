@@ -40,7 +40,9 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Họ Tên<span>*</span></p>
-                                        <input type="text" value="@Model.TenNguoiMua" readonly>
+                                        @*<input type="text" value="@Model.TenNguoiMua" readonly>*@
+                                        @Html.TextBoxFor(model => model.TenNguoiMua, new {type = "text", value = @Model.TenNguoiMua, @readonly = "readonly"})
+
                                     </div>
                                 </div>
                             }
@@ -50,7 +52,7 @@
                                     <div class="checkout__input">
                                         <p>Họ Tên<span>*</span></p>
                                         @*<input type="text" value="@Model.TenNguoiMua">*@
-                                        @Html.EditorFor(model => model.TenNguoiMua, new { type = "text"})
+                                        @Html.TextBoxFor(model => model.TenNguoiMua, new { type = "text"})
                                     </div>
                                 </div>
                             }
@@ -66,13 +68,17 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>SĐT<span>*</span></p>
-                                        <input type="text" value="@Model.SDT" readonly>
+                                        @*<input type="text" value="@Model.SDT" readonly>*@
+                                        @Html.TextBoxFor(model => model.SDT, new { type = "text", value=@Model.SDT, @readonly = "readonly"})
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text" value="@Model.Email" readonly>
+                                        @*<input type="text" value="@Model.Email" readonly>*@
+                                        @Html.TextBoxFor(model => model.Email, new { type = "text", value = @Model.Email, @readonly = "readonly"})
+
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +90,7 @@
                                     <div class="checkout__input">
                                         <p>SĐT<span>*</span></p>
                                         @*<input type="text" value="@Model.SDT">*@
-                                        @Html.EditorFor(model => model.SDT, new { type = "text"})
+                                        @Html.TextBoxFor(model => model.SDT, new { type = "text"})
 
                                     </div>
                                 </div>
@@ -92,7 +98,7 @@
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
                                         @*<input type="text" value="@Model.Email">*@
-                                        @Html.EditorFor(model => model.Email, new { type = "text"})
+                                        @Html.TextBoxFor(model => model.Email, new { type = "text"})
 
                                     </div>
                                 </div>
@@ -102,12 +108,12 @@
                         <div class="checkout__input">
                             <p>Địa Chỉ Giao<span>*</span></p>
                             @*<input type="text" placeholder="Địa Chỉ Giao" class="checkout__input__add" id="DiaChiGiao">*@
-                            @Html.EditorFor(model => model.DiaChiGiao, new { type = "text", @class="checkout__input__add"})
+                            @Html.TextBoxFor(model => model.DiaChiGiao, new { type = "text", @class="checkout__input__add"})
                         </div>
                         <div class="checkout__input">
                             <p>Ngày Nhận Dự Kiến<span>*</span></p>
                             @*<input type="date" class="checkout__input__add" id="NgayGiao">*@
-                            @Html.EditorFor(model => model.NgayGiao, new { type = "date", @class="checkout__input__add"})
+                            @Html.TextBoxFor(model => model.NgayGiao, new { type = "date", @class="checkout__input__add"})
                         </div>
                         @*<div class="checkout__input">
                         <p>Town/City<span>*</span></p>
@@ -191,6 +197,8 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>*@
+                            @Html.HiddenFor(model => model.CT_HoaDon, new{value=@Model.CT_HoaDon})
+                            @Html.HiddenFor(model => model.TongThanhTien, new{value=@ViewBag.SumProductBought})
 
                             <button type="submit" class="site-btn">Thanh Toán</button>
                         </div>
