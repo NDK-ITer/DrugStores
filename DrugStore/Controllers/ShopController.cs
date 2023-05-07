@@ -259,12 +259,13 @@ namespace DrugStore.Controllers
 
             }
         }
-
-        public ActionResult ProductIsBought(Guid idSP, int soLuong)
+        [HttpPost]
+        public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
         {
-            if (idSP == null)
+            
+            if (soLuong > (int)dbContext.SanPhams.Find(idSP).SoLuong)
             {
-                return RedirectToAction("Index");
+                return Redirect(strURL);
             }
             AddProductIsBought(idSP, soLuong);
             return RedirectToAction("Pay", "Shop");

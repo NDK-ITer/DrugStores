@@ -90,23 +90,29 @@
                     <p>
                        @Model.MoTa
                     </p>
-                    <div class="product__details__quantity">
-                        <div class="quantity">
-                            <div class="pro-qty">
-                                <input type="text" value="1">
+                    <form asp-action="ProductIsBought" asp-controller="Shop" method="post">
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input type="text" value="1" name="soLuong">
+                                    <input type="hidden" value="@Model.MaSP" name="idSP" />
+                                    <input type="hidden" value="@Context.Request.GetDisplayUrl().ToString()" name="strURL" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <a href="@Url.Action("ProductIsBought","Shop",new { @idSP = Model.MaSP} )" class="primary-btn">MUA NGAY</a>
+                        <input type="submit" class="primary-btn" value="MUA NGAY" class="primary-btn">
+                    </form>
+                    @*<a href="@Url.Action("ProductIsBought","Shop",new { @idSP = Model.MaSP} )" class="primary-btn">MUA NGAY</a>*@
                     <a href="@Url.Action("AddToCart","Shop",new { @id = Model.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
                    @* <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>*@
                     <ul>
+                        <li><b>Số lượng có sẵn</b><span>@Model.SoLuong</span></li>
                         <li><b>Loại sản phẩm</b> <span>@Model.LoaiSP.TenLoaiSP</span></li>
                         <li><b>trạng thái</b> <span>@Model.TrangThai.TenTT@*<samp>Free pickup today</samp></span>*@</li>
                         <li><b>Hãng sản xuất</b> <span>@Model.HangSX.TenHSX</span></li>
                         <li><b>Đơn vị tính</b><span>@Model.Thuoc.DonViTinh</span></li>
                         <li><b>Đơn giá</b><span> @String.Format(info, "{0:c}", Model.DonGia)</span></li>
-                        @if (true)
+                        @if (Model.GiamGia != 0)
                         {
                             <li><b>Giảm giá</b><span>-@Model.GiamGia%</span></li>
                             <li><b>Giá hiện tại</b><span>@String.Format(info, "{0:c}", Model.DonGia-(Model.DonGia*(Model.GiamGia/100)))</span></li>
