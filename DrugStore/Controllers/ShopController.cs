@@ -53,8 +53,6 @@ namespace DrugStore.Controllers
             }
         }
 
-        
-
         private int CountCart()
         {
             TakeShopingCart(userManager.GetUserId(User));
@@ -172,7 +170,7 @@ namespace DrugStore.Controllers
             hoaDon.TongThanhTien = (decimal)SumProductBought();
             hoaDon.NgayLap = DateTime.Now;
             LoginPay(hoaDon);
-
+            
             return RedirectToAction("Index");
         }
 
@@ -226,12 +224,8 @@ namespace DrugStore.Controllers
 
         }
 
-        public ActionResult AddProductIsBought(Guid idSP)
+        public void AddProductIsBought(Guid idSP, int? soLuong)
         {
-            if (idSP == null)
-            {
-                return RedirectToAction("Index");
-            }
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
 
@@ -242,7 +236,14 @@ namespace DrugStore.Controllers
                 {
                     spDuocMua = new CT_HoaDon();
                     spDuocMua.MaSP = sp.MaSP;
-                    spDuocMua.SoLuong = 1;
+                    if (soLuong == 0)
+                    {
+                        spDuocMua.SoLuong = 1;
+                    }
+                    else
+                    {
+                        spDuocMua.SoLuong = (int)soLuong;
+                    }
                     spDuocMua.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spDuocMua.SoLuong;
                     cT_HoaDons.Add(spDuocMua);
                     contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
@@ -257,6 +258,15 @@ namespace DrugStore.Controllers
                 }
 
             }
+        }
+
+        public ActionResult ProductIsBought(Guid idSP, int soLuong)
+        {
+            if (idSP == null)
+            {
+                return RedirectToAction("Index");
+            }
+            AddProductIsBought(idSP, soLuong);
             return RedirectToAction("Pay", "Shop");
 
         }
@@ -271,6 +281,18 @@ namespace DrugStore.Controllers
         {
             cT_HoaDons = TakeListProductIsBougth();
             return (double)cT_HoaDons.Sum(s => s.ThanhTien);
+        }
+
+        public IActionResult PayForShopingCart()
+        {
+            var id = userManager.GetUserId(User);
+            List<GioHang> shopingCart = dbContext.GioHangs.Where(s => s.Id == id).ToList();
+            cT_HoaDons = TakeListProductIsBougth();
+            foreach (var item in shopingCart)
+            {
+                AddProductIsBought(item.MaSP, item.SoLuong);
+            }
+            return RedirectToAction("Pay", "Shop");
         }
     }
 }
