@@ -169,21 +169,9 @@ namespace DrugStore.Controllers
             hoaDon.CT_HoaDon = TakeListProductIsBougth();
             hoaDon.TongThanhTien = (decimal)SumProductBought();
             hoaDon.NgayLap = DateTime.Now;
-            if (signInManager.IsSignedIn(User))
-            {
-                hoaDon.Id = userManager.GetUserId(User);
-            }
-            SaveBill(hoaDon);   
+            LoginPay(hoaDon);
+            
             return RedirectToAction("Index");
-        }
-
-        public void SaveBill(HoaDon hoaDon)
-        {
-            if (hoaDon != null)
-            {
-                dbContext.HoaDons.Add(hoaDon);
-                dbContext.SaveChanges();
-            }
         }
 
         public void LoginPay(HoaDon hoaDon)
