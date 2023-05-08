@@ -13,11 +13,13 @@ namespace DrugStore.Models.Entities
     {
         [Key]
         [Column(Order = 0)]
+        [ForeignKey("HoaDon")]
         [DisplayName("Số Hóa Đơn")]
         public Guid? SoDH { get; set; }
 
         [Key]
         [Column(Order = 1)]
+        [ForeignKey("SanPham")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Số Lượng")]
