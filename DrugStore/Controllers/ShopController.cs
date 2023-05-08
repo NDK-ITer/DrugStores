@@ -181,6 +181,11 @@ namespace DrugStore.Controllers
         {
             if (hoaDon != null)
             {
+                List<CT_HoaDon> dsSpMua = hoaDon.CT_HoaDon.ToList();
+                foreach (var item in dsSpMua)
+                {
+
+                }
                 dbContext.HoaDons.Add(hoaDon);
                 dbContext.SaveChanges();
             }
@@ -274,7 +279,11 @@ namespace DrugStore.Controllers
         [HttpPost]
         public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
         {
-            
+            if(soLuong <= 0)
+            {
+                return Redirect(strURL);
+            }
+
             if (soLuong > (int)dbContext.SanPhams.Find(idSP).SoLuong)
             {
                 return Redirect(strURL);
