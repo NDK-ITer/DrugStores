@@ -28,6 +28,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Thành Tiền")]
         public decimal? ThanhTien { get; set; }
 
-        public virtual SanPham SanPham { get; set; }
+        public virtual SanPham? SanPham { get; set; }
     }
 }

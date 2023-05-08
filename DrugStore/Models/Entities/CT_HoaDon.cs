@@ -24,8 +24,7 @@ namespace DrugStore.Models.Entities
         public int? SoLuong { get; set; }
         [DisplayName("Thành Tiền")]
         public decimal? ThanhTien { get; set; }
-        public virtual HoaDon HoaDon { get; set; }
-
-        public virtual SanPham SanPham { get; set; }
+        public virtual HoaDon? HoaDon { get; set; }
+        public virtual SanPham? SanPham { get; set; }
     }
 }
