@@ -28,7 +28,7 @@ services.AddAuthentication().AddFacebook(facebookOptions =>
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(1200);
+    options.IdleTimeout = TimeSpan.FromHours(3);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
