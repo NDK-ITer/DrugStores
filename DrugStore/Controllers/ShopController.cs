@@ -262,12 +262,7 @@ namespace DrugStore.Controllers
         [HttpPost]
         public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
         {
-            if(soLuong <= 0)
-            {
-                return Redirect(strURL);
-
-            }
-
+            
             if (soLuong > (int)dbContext.SanPhams.Find(idSP).SoLuong)
             {
                 return Redirect(strURL);
