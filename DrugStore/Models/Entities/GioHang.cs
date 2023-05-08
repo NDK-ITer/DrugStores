@@ -21,6 +21,7 @@ namespace DrugStore.Models.Entities
 
         [Key]
         [Column(Order = 1)]
+        [ForeignKey("SanPham")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Số Lượng")]

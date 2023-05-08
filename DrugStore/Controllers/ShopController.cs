@@ -184,9 +184,17 @@ namespace DrugStore.Controllers
                 List<CT_HoaDon> dsSpMua = hoaDon.CT_HoaDon.ToList();
                 foreach (var item in dsSpMua)
                 {
-
+                    SanPham temp = dbContext.SanPhams.Find(item.MaSP);
+                    temp.SoLanMua = item.SoLuong + temp.SoLanMua;
+                    temp.SoLuong = temp.SoLuong- item.SoLuong;
+                    if (temp.SoLanMua <= 0)
+                    {
+                        temp.MaTT = 2;
+                    }
+                    dbContext.SanPhams.Update(temp);
                 }
                 dbContext.HoaDons.Add(hoaDon);
+
                 dbContext.SaveChanges();
             }
         }
@@ -268,8 +276,8 @@ namespace DrugStore.Controllers
                 }
                 else
                 {
-                    spDuocMua.SoLuong++;
-                    spDuocMua.ThanhTien = spDuocMua.ThanhTien + (sp.DonGia - (sp.DonGia * sp.GiamGia / 100));
+                    spDuocMua.SoLuong = spDuocMua.SoLuong + soLuong;
+                    spDuocMua.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spDuocMua.SoLuong;
                     contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
 
                 }
