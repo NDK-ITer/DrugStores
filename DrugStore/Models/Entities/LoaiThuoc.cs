@@ -12,6 +12,7 @@ namespace DrugStore.Models.Entities
             Thuocs = new HashSet<Thuoc>();
         }
         [Key]
+        [ForeignKey("TongHopLoaiSP")]
         [DisplayName("Mã Loại Thuốc")]
         public int MaLT { get; set; }
         [StringLength(100)]
@@ -19,5 +20,6 @@ namespace DrugStore.Models.Entities
         public string? TenLoaiThuoc { get; set; }
         [DisplayName("Các Loại Thuốc")]
         public virtual ICollection<Thuoc> Thuocs { get; set; }
+        public TongHopLoaiSP? TongHopLoaiSP { get; set; }
     }
 }
