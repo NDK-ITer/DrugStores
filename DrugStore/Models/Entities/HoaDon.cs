@@ -19,10 +19,12 @@ namespace DrugStore.Models.Entities
         }
 
         [Key]
+        [ForeignKey("CT_HoaDon")]
         [DisplayName("Mã Hóa Đơn")]
         public Guid SoDH { get; set; }
 
         [Required]
+        [ForeignKey("User")]
         [StringLength(400)]
         [DisplayName("Mã Người Dùng")]
         public string? Id { get; set; }
