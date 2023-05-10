@@ -106,16 +106,16 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.Id) 
                     .IsRequired();
-            //builder.Entity<TongHopLoaiSP>()
-            //        .HasOne(e => e.LoaiThuoc)
-            //        .WithOne(e => e.TongHopLoaiSP)
-            //        .HasForeignKey<LoaiThuoc>(e => e.MaLT)
-            //        .IsRequired();
-            //builder.Entity<LoaiThuoc>()
-            //        .HasOne(e => e.TongHopLoaiSP)
-            //        .WithOne(e => e.LoaiThuoc)
-            //        .HasForeignKey<TongHopLoaiSP>(e => e.MaTHLSP)
-            //        .IsRequired();
+            builder.Entity<TongHopLoaiSP>()
+                    .HasOne(e => e.LoaiThuoc)
+                    .WithOne(e => e.TongHopLoaiSP)
+                    .HasForeignKey<LoaiThuoc>(e => e.MaLT)
+                    .IsRequired();
+            builder.Entity<LoaiThuoc>()
+                    .HasOne(e => e.TongHopLoaiSP)
+                    .WithOne(e => e.LoaiThuoc)
+                    .HasForeignKey<TongHopLoaiSP>(e => e.MaTHLSP)
+                    .IsRequired();
 
         }
     }
