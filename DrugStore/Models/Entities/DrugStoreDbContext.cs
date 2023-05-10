@@ -19,7 +19,6 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<TrangThai> TrangThais { get; set; }
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<TongHopLoaiSP> TongHopLoaiSPs { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()
@@ -46,8 +45,6 @@ namespace DrugStore.Models.Entities
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
             dbContext.AspNetUsers.Include(c => c.HoaDons);
-            dbContext.TongHopLoaiSPs.Include(c => c.LoaiThuoc);
-            dbContext.LoaiThuocs.Include(c => c.TongHopLoaiSP);
 
             return dbContext;
         }
@@ -64,8 +61,6 @@ namespace DrugStore.Models.Entities
                     .HasKey(m => new { m.SoDH, m.MaSP });
             builder.Entity<GioHang>()
                     .HasKey(m => new { m.Id, m.MaSP });
-            builder.Entity<CT_CaNhanHoa>()
-                    .HasKey(m => new { m.MaTHLSP, m.id });
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)

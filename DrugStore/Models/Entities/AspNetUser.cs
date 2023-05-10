@@ -6,8 +6,6 @@ namespace DrugStore.Models.Entities
 {
     public class AspNetUser
     {
-        [Key]
-        [ForeignKey("HoaDons")]
         [StringLength(400)]
         public string Id { get; set; }
 
