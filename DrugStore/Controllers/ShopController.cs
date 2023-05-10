@@ -40,12 +40,24 @@ namespace DrugStore.Controllers
         public IActionResult Product(Guid id)
         {
             SanPham sanPham = dbContext.SanPhams.Find(id);
-            //if (signInManager.IsSignedIn(User) && (sanPham.Thuoc != null))
-            //{
-            //    CT_CaNhanHoa cT_CaNhanHoa = new CT_CaNhanHoa();
-            //    cT_CaNhanHoa.MaTHLSP = (int)sanPham.Thuoc.MaLT;
-            //    cT_CaNhanHoa
-            //}
+            if (signInManager.IsSignedIn(User) && (sanPham.Thuoc != null))
+            {
+                CT_CaNhanHoa cT_CaNhanHoa = dbContext.CT_CaNhanHoas.FirstOrDefault(c => c.Id == userManager.GetUserId(User) && c.MaTHLSP == sanPham.Thuoc.MaLT);
+                if (cT_CaNhanHoa != null)
+                {
+                    cT_CaNhanHoa.SoLanXem++;
+                    dbContext.SaveChanges();
+                }
+                else
+                {
+                    cT_CaNhanHoa = new CT_CaNhanHoa();
+                    cT_CaNhanHoa.MaTHLSP = (Guid)sanPham.Thuoc.MaLT;
+                    cT_CaNhanHoa.SoLanXem = 1;
+                    cT_CaNhanHoa.Id = userManager.GetUserId(User);
+                    dbContext.CT_CaNhanHoas.Add(cT_CaNhanHoa);
+                    dbContext.SaveChanges();
+                }
+            }
             return View(sanPham);
         }
 

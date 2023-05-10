@@ -20,6 +20,7 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<TongHopLoaiSP> TongHopLoaiSPs { get; set; }
+        public virtual DbSet<CT_CaNhanHoa> CT_CaNhanHoas { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()
@@ -47,7 +48,7 @@ namespace DrugStore.Models.Entities
             dbContext.TongHopLoaiSPs.Include(c => c.LoaiThuoc);
             dbContext.LoaiThuocs.Include(c => c.TongHopLoaiSP);
             dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
-
+            dbContext.CT_CaNhanHoas.Include(c => c.TongHopLoaiSP).Load();
             //dbContext.AspNetUsers.Include(c => c.HoaDons);
 
             return dbContext;
@@ -66,7 +67,7 @@ namespace DrugStore.Models.Entities
             builder.Entity<GioHang>()
                     .HasKey(m => new { m.Id, m.MaSP });
             builder.Entity<CT_CaNhanHoa>()
-                    .HasKey(m => new { m.MaTHLSP, m.id });
+                    .HasKey(m => new { m.MaTHLSP, m.Id });
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)

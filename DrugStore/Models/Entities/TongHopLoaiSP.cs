@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.Models.Entities
 {
+    [Table("TongHopLoaiSP")]
     public class TongHopLoaiSP
     {
         public TongHopLoaiSP()

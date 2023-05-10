@@ -3,17 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.Models.Entities
 {
+    [Table("CT_CaNhanHoa")]
     public partial class CT_CaNhanHoa
     {
-        public CT_CaNhanHoa() { }
         [Key]
+        [Column(Order = 0)]
         [ForeignKey("TongHopLoaiSP")]
         public Guid MaTHLSP { get; set; }
         [Key]
-        [ForeignKey("user")]
-        public string id { get; set; }
+        [Column(Order = 1)]
+        //[ForeignKey("user")]
+        public string Id { get; set; }
         public int SoLanXem { get; set; }
-        public TongHopLoaiSP TongHopLoaiSP { get; set; }
-        public AspNetUser user { get; set; }
+        public TongHopLoaiSP? TongHopLoaiSP { get; set; }
+        //public AspNetUser user { get; set; }
     }
 }
