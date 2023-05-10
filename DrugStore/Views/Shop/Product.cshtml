@@ -3,16 +3,16 @@
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 
 }
-<section class="breadcrumb-section set-bg" data-setbg="/theme/img/breadcrumb.jpg">
+<section class="breadcrumb-section set-bg" data-setbg="/theme/img/wallpaper.jpg">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Vegetable’s Package</h2>
+                    <h2>Chi tiết sản phẩm</h2>
                     <div class="breadcrumb__option">
-                        <a asp-controller="Home" asp-action="Index">Home</a>
-                        <a href="./index.html">Vegetables</a>
-                        <span>Vegetable’s Package</span>
+                        <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        <a href="./index.html">Sản phẩm</a>
+                        <span>Chi tiết sản phẩm</span>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                     <ul>
                         <li><b>Số lượng có sẵn</b><span>@Model.SoLuong</span></li>
                         <li><b>Loại sản phẩm</b> <span>@Model.LoaiSP.TenLoaiSP</span></li>
-                        <li><b>trạng thái</b> <span>@Model.TrangThai.TenTT@*<samp>Free pickup today</samp></span>*@</li>
+                        <li><b>Trạng thái</b> <span>@Model.TrangThai.TenTT@*<samp>Free pickup today</samp></span>*@</li>
                         <li><b>Hãng sản xuất</b> <span>@Model.HangSX.TenHSX</span></li>
                         <li><b>Đơn vị tính</b><span>@Model.Thuoc.DonViTinh</span></li>
                         <li><b>Đơn giá</b><span> @String.Format(info, "{0:c}", Model.DonGia)</span></li>
@@ -210,7 +210,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title related__product__title">
-                    <h2>Related Product</h2>
+                    <h2>Sản phẩm liên quan</h2>
                 </div>
             </div>
         </div>
