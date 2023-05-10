@@ -23,6 +23,6 @@ namespace DrugStore.Areas.Admin.Data
         public string? ThanhPhan { get; set; }
 
         [DisplayName("Loại Thuốc")]
-        public int? MaLT { get; set; }
+        public Guid? MaLT { get; set; }
     }
 }

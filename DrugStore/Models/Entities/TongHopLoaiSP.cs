@@ -12,7 +12,7 @@ namespace DrugStore.Models.Entities
 
         [Key]
         [ForeignKey("LoaiThuoc")]
-        public int MaTHLSP { get; set; }
+        public Guid MaTHLSP { get; set; }
         public virtual LoaiThuoc? LoaiThuoc { get; set; }
         public virtual ICollection<CT_CaNhanHoa> CT_CaNhanHoas { get; set; }
     }

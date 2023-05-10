@@ -8,7 +8,7 @@ namespace DrugStore.Models.Entities
         public CT_CaNhanHoa() { }
         [Key]
         [ForeignKey("TongHopLoaiSP")]
-        public int MaTHLSP { get; set; }
+        public Guid MaTHLSP { get; set; }
         [Key]
         [ForeignKey("user")]
         public string id { get; set; }

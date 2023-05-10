@@ -14,7 +14,7 @@ namespace DrugStore.Models.Entities
         [Key]
         [ForeignKey("TongHopLoaiSP")]
         [DisplayName("Mã Loại Thuốc")]
-        public int MaLT { get; set; }
+        public Guid MaLT { get; set; }
         [StringLength(100)]
         [DisplayName("Tên Loại Thuốc")]
         public string? TenLoaiThuoc { get; set; }

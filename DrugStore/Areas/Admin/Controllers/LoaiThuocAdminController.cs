@@ -37,6 +37,7 @@ namespace DrugStore.Areas.Admin.Controllers
             try
             {
                 LoaiThuoc loaiThuoc = new LoaiThuoc();
+                loaiThuoc.MaLT = Guid.NewGuid();
                 loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
                 dbContext.LoaiThuocs.Add(loaiThuoc);
                 dbContext.SaveChanges();    

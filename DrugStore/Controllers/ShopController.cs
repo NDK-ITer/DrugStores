@@ -40,6 +40,12 @@ namespace DrugStore.Controllers
         public IActionResult Product(Guid id)
         {
             SanPham sanPham = dbContext.SanPhams.Find(id);
+            //if (signInManager.IsSignedIn(User) && (sanPham.Thuoc != null))
+            //{
+            //    CT_CaNhanHoa cT_CaNhanHoa = new CT_CaNhanHoa();
+            //    cT_CaNhanHoa.MaTHLSP = (int)sanPham.Thuoc.MaLT;
+            //    cT_CaNhanHoa
+            //}
             return View(sanPham);
         }
 
@@ -184,7 +190,14 @@ namespace DrugStore.Controllers
                 List<CT_HoaDon> dsSpMua = hoaDon.CT_HoaDon.ToList();
                 foreach (var item in dsSpMua)
                 {
-
+                    SanPham temp = dbContext.SanPhams.Find(item.MaSP);
+                    temp.SoLanMua = item.SoLuong + temp.SoLanMua;
+                    temp.SoLuong = temp.SoLuong - item.SoLuong;
+                    if (temp.SoLanMua <= 0)
+                    {
+                        temp.MaTT = 2;
+                    }
+                    dbContext.SanPhams.Update(temp);
                 }
                 dbContext.HoaDons.Add(hoaDon);
                 dbContext.SaveChanges();
