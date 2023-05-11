@@ -6,7 +6,7 @@ namespace DrugStore.Components
 {
     public class DoanhMucSanPhamViewComponent:ViewComponent
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         public async Task<IViewComponentResult> InvokeAsync()
         {
             DoanhMucSanPhamViewModel DoanhMucSP = new DoanhMucSanPhamViewModel();

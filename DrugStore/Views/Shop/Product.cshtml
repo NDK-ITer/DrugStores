@@ -93,7 +93,8 @@
                     <form asp-action="ProductIsBought" asp-controller="Shop" method="post">
                         <div class="product__details__quantity">
                             <div class="quantity">
-                                <div class="pro-qty">
+                                <div class="pro-qtyy">
+                                    <label>Nhập Số Lượng: </label>
                                     <input type="text" value="1" name="soLuong">
                                     <input type="hidden" value="@Model.MaSP" name="idSP" />
                                     @*@Html.TextBoxFor(model => model.MaSP, new { type = "hidden", value=@Model.MaTT, @readonly = "readonly", @name="idSP"})*@
@@ -101,10 +102,10 @@
                                 </div>
                             </div>
                         </div>
+                        <br /><a href="@Url.Action("AddToCart","Shop",new { @id = Model.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
                         <input type="submit" class="primary-btn" value="MUA NGAY" class="primary-btn">
                     </form>
                     @*<a href="@Url.Action("ProductIsBought","Shop",new { @idSP = Model.MaSP} )" class="primary-btn">MUA NGAY</a>*@
-                    <a href="@Url.Action("AddToCart","Shop",new { @id = Model.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
                    @* <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>*@
                     <ul>
                         <li><b>Số lượng có sẵn</b><span>@Model.SoLuong</span></li>

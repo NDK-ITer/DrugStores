@@ -36,12 +36,13 @@ namespace DrugStore.Areas.Admin.Controllers
         {
             try
             {
+                TongHopLoaiSP tongHopLoaiSP = new TongHopLoaiSP();
+                tongHopLoaiSP.MaTHLSP = Guid.NewGuid();
                 LoaiThuoc loaiThuoc = new LoaiThuoc();
-                loaiThuoc.MaLT = Guid.NewGuid();
+                loaiThuoc.MaLT = tongHopLoaiSP.MaTHLSP;
                 loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
-                loaiThuoc.TongHopLoaiSP = new TongHopLoaiSP();
-                loaiThuoc.TongHopLoaiSP.MaTHLSP = loaiThuoc.MaLT;
-                dbContext.LoaiThuocs.Add(loaiThuoc);
+                tongHopLoaiSP.LoaiThuoc = loaiThuoc;
+                dbContext.TongHopLoaiSPs.Add(tongHopLoaiSP);
                 dbContext.SaveChanges();    
                 return RedirectToAction(nameof(Index));
             }
