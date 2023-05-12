@@ -208,14 +208,7 @@
 <!-- Related Product Section Begin -->
 <section class="categories">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <h2>Sản phẩm liên quan</h2>
-                </div>
-            </div>
-        </div>
-        @await Component.InvokeAsync("SanPhamLienQuan",new{ maLSP = Model.Thuoc.MaLT, maHSX = Model.MaHSX})
+        @await Component.InvokeAsync("SanPhamLienQuan",new{ idSP = Model.MaSP, maLSP = Model.Thuoc.MaLT, maHSX = Model.MaHSX})
     </div>><br />
     @if (SignInManager.IsSignedIn(User))
     {
