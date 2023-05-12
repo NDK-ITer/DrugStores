@@ -21,6 +21,7 @@ namespace DrugStore.Models.Entities
 
         [Key]
         [Column(Order = 1)]
+        [ForeignKey("SanPham")]
         [DisplayName("Mã Sản Phẩm")]
         public Guid MaSP { get; set; }
         [DisplayName("Số Lượng")]
@@ -28,6 +29,6 @@ namespace DrugStore.Models.Entities
         [DisplayName("Thành Tiền")]
         public decimal? ThanhTien { get; set; }
 
-        public virtual SanPham SanPham { get; set; }
+        public virtual SanPham? SanPham { get; set; }
     }
 }

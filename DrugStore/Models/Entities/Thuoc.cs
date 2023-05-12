@@ -26,8 +26,8 @@ namespace DrugStore.Models.Entities
         [DisplayName("Thành Phần")]
         public string? ThanhPhan { get; set; }
         [ForeignKey("LoaiThuoc")]
-        public int? MaLT { get; set; }
-        public virtual SanPham SanPham { get; set; }
+        public Guid? MaLT { get; set; }
+        public virtual SanPham? SanPham { get; set; }
         [DisplayName("Loại Thuốc")]
         public virtual LoaiThuoc? LoaiThuoc { get; set;}
     }

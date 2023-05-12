@@ -1,0 +1,40 @@
+﻿@*@model X.PagedList.IPagedList<DrugStore.Models.Entities.SanPham>
+@using X.PagedList.Mvc.Core;*@
+@model IEnumerable<DrugStore.Models.Entities.SanPham>
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="product__discount__item">
+                @if (item.Thuoc != null)
+                {
+                    <div class="product__discount__item__pic set-bg" data-setbg="/images/sanpham/thuoc/@item.AnhDaiDien">
+                        @if (@item.GiamGia > 0)
+                        {
+                            <div class="product__discount__percent">-@item.GiamGia%</div>
+                        }
+                        <ul class="product__item__pic__hover">
+                            <li><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP"><i class="fa fa-eye"></i></a></li>
+                            <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
+                        </ul>
+                    </div>
+                }
+                <div class="product__discount__item__text">
+                    <h5><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP">@item.TenSP</a></h5>
+                    <div class="product__item__price">
+                        @String.Format(info, "{0:c}", item.DonGia-(item.DonGia*(item.GiamGia/100)))
+                        @if (@item.GiamGia > 0)
+                        {
+                            <span>
+                                @String.Format(info, "{0:c}", item.DonGia)
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

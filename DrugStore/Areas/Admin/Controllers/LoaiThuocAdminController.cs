@@ -8,7 +8,7 @@ namespace DrugStore.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoaiThuocAdminController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         // GET: LoaiThuocAdmin
         public ActionResult Index(List<LoaiThuoc> loaiThuocs)
         {
@@ -36,9 +36,13 @@ namespace DrugStore.Areas.Admin.Controllers
         {
             try
             {
+                TongHopLoaiSP tongHopLoaiSP = new TongHopLoaiSP();
+                tongHopLoaiSP.MaTHLSP = Guid.NewGuid();
                 LoaiThuoc loaiThuoc = new LoaiThuoc();
+                loaiThuoc.MaLT = tongHopLoaiSP.MaTHLSP;
                 loaiThuoc.TenLoaiThuoc = loaiThuocInput.TenLoaiThuoc;
-                dbContext.LoaiThuocs.Add(loaiThuoc);
+                tongHopLoaiSP.LoaiThuoc = loaiThuoc;
+                dbContext.TongHopLoaiSPs.Add(tongHopLoaiSP);
                 dbContext.SaveChanges();    
                 return RedirectToAction(nameof(Index));
             }
