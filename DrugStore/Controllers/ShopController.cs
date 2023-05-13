@@ -370,7 +370,7 @@ namespace DrugStore.Controllers
             return RedirectToAction("Pay", "Shop");
         }
 
-        public IActionResult Payment()
+        public IActionResult Momo()
         {
 
 
