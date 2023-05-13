@@ -1,4 +1,6 @@
-﻿@*<!-- Hero Section Begin -->
+﻿@model X.PagedList.IPagedList<DrugStore.Models.Entities.TinTuc>
+@using X.PagedList.Mvc.Core;
+@*<!-- Hero Section Begin -->
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
@@ -124,10 +126,10 @@
                     <div class="blog__sidebar__item">
                         <h4>Tìm theo danh mục</h4>
                         <div class="blog__sidebar__item__tags">
-                            <a href="#">Làm đẹp</a>
+                            @*<a href="#">Làm đẹp</a>
                             <a href="#">Thực phẩm</a>
                             <a href="#">Đời sống</a>
-                            <a href="#">Du lịch</a>
+                            <a href="#">Du lịch</a>*@
                             @*<a href="#">Healthy Food</a>
                             <a href="#">Lifestyle</a>*@
                         </div>
@@ -136,7 +138,28 @@
             </div>
             <div class="col-lg-8 col-md-7">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="blog__item">
+                                <div class="blog__item__pic">
+                                    <img src="/images/tintuc/@item.AnhDaiDien" alt="">
+                                </div>
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i> Đăng ngày @item.ThoiGiaDang</li>
+                                        @*<li><i class="fa fa-comment-o"></i> 5</li>*@
+                                    </ul>
+                                    <h5><a href="#">@item.MoTaTT</a></h5>
+                                    <p>
+                                        @item.NoiDung
+                                    </p>
+                                    <a asp-controller="Blog" asp-action="BlogDetail" class="blog__btn">ĐỌC THÊM <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*<div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic">
                                 <img src="/theme/img/blog/blog-2.jpg" alt="">
@@ -249,13 +272,10 @@
                                 <a asp-controller="Blog" asp-action="BlogDetail" class="blog__btn">ĐỌC THÊM <span class="arrow_right"></span></a>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-lg-12">
                         <div class="product__pagination blog__pagination">
-                            <a href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
                         </div>
                     </div>
                 </div>
