@@ -32,6 +32,7 @@
         <div class="checkout__form">
             <h4>Hóa Đơn</h4>
             <form action="Pay" method="post">
+                @Html.TextBoxFor(model => model.SoDH, new {type = "hidden", value = Model.SoDH, @readonly = "readonly"})
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="row">
