@@ -10,7 +10,7 @@ namespace DrugStore.Components
         public async Task<IViewComponentResult> InvokeAsync(Guid idSP, Guid maLSP, int? maHSX)
         {
             List<SanPham> sanPhamLienQuans = dbContext.SanPhams.Where(s => s.Thuoc.MaLT == maLSP && s.MaSP != idSP).ToList();
-            foreach (var item in sanPhamLienQuans)
+            foreach (SanPham item in sanPhamLienQuans.ToList())
             {
                 SanPham newItem = dbContext.SanPhams.FirstOrDefault(c => c.MaHSX == maHSX);
                 if (sanPhamLienQuans.Contains(newItem) == false)
