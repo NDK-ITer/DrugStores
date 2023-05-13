@@ -33,7 +33,7 @@
             <h4>Hóa Đơn</h4>
             <form action="Pay" method="post">
                 <div class="row">
-                    <div class="col-lg-8 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="row">
                             @if (SignInManager.IsSignedIn(User))
                             {
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         }
-                        
+
                         <div class="checkout__input">
                             <p>Địa Chỉ Giao<span>*</span></p>
                             @*<input type="text" placeholder="Địa Chỉ Giao" class="checkout__input__add" id="DiaChiGiao">*@
@@ -156,52 +156,56 @@
 
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="checkout__order">
                             <h4>Đơn Đặt Hàng</h4>
-                            <div class="checkout__order__products">Sản Phẩm <span>Giá Tiền</span><span>Số Lượng</span></div>
-                            <ul>
+
+                            <table class="table-Prize" cellpadding="7" cellspacing="0">
+                                <col width="40%" />
+
+                                <col width="30%" />
+
+                                <col width="20%" />
+
+                                <col width="10%" />
+                                <tr valign="top">
+                                    <td class="text-bold" align="center">
+                                        Sản Phẩm
+                                    </td>                                 
+                                    <td class="text-bold" align="center">
+                                        Số Lượng
+                                    </td>
+                                    <td class="text-bold" align="center">
+                                        Giá Tiền
+                                    </td>
+                                    <td class="text-bold" align="center">
+                                    </td>
+                                </tr>
                                 @foreach (var item in Model.CT_HoaDon)
                                 {
-                                    <li>@item.SanPham.TenSP<span>@item.SoLuong</span><span>@String.Format(info, "{0:c}", @item.ThanhTien)</span></li>
+                                    <tr>
+                                        <td align="center">@item.SanPham.TenSP</td>
+                                        <td align="center">@item.SoLuong</td>
+                                        <td align="center">@String.Format(info, "{0:c}", @item.ThanhTien)</td>
+                                        <td align="center">
+                                            <a href="@Url.Action("RemoveProductIsBought","Shop",new { @idSP = item.SanPham.MaSP })">
+                                                <span class="icon_close"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+
                                 }
-                                @*<li>Vegetable’s Package <span>$75.99</span></li>
-                                <li>Fresh Vegetable <span>$151.99</span></li>
-                                <li>Organic Bananas <span>$53.99</span></li>*@
-                            </ul>
+
+                            </table>
                             <div class="checkout__order__subtotal">Số Lượng Sản Phẩm <span>@ViewBag.CountProductBought</span></div>
                             <div class="checkout__order__total">Tổng Tiền <span> @String.Format(info, "{0:c}", @ViewBag.SumProductBought)</span></div>
-                            @* <div class="checkout__input__checkbox">
-                            <label for="acc-or">
-                            Create an account?
-                            <input type="checkbox" id="acc-or">
-                            <span class="checkmark"></span>
-                            </label>
-                            </div>
-                            <p>
-                            Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua.
-                            </p>*@
-                            
+
                             <div class="checkout__input__checkbox">
                                 @Html.DropDownList("MaHT", (IEnumerable<SelectListItem>)ViewBag.HinhThucThanhToan, htmlAttributes: new { @class = "form-control" })
                             </div>
 
-                            @*<div class="checkout__input__checkbox">
-                                <label for="payment">
-                                    Check Payment
-                                    <input type="checkbox" id="payment">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="paypal">
-                                    Paypal
-                                    <input type="checkbox" id="paypal">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>*@
-                            
+
+
                             <button type="submit" class="site-btn">Thanh Toán</button>
                         </div>
                     </div>

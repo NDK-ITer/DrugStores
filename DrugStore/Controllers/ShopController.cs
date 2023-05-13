@@ -293,7 +293,14 @@ namespace DrugStore.Controllers
                 }
                 else
                 {
-                    spDuocMua.SoLuong++;
+                    if (soLuong > 1)
+                    {
+                        spDuocMua.SoLuong += (int)soLuong;
+                    }
+                    else
+                    {
+                        spDuocMua.SoLuong++;
+                    }
                     spDuocMua.ThanhTien = spDuocMua.ThanhTien + (sp.DonGia - (sp.DonGia * sp.GiamGia / 100));
                     contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
 
@@ -301,6 +308,26 @@ namespace DrugStore.Controllers
 
             }
         }
+
+       public IActionResult RemoveProductIsBought(Guid idSP)
+        {
+            SanPham sp = dbContext.SanPhams.Find(idSP);
+            cT_HoaDons = TakeListProductIsBougth();
+
+            if (sp != null)
+            {
+                CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
+                if(spDuocMua != null)
+                {
+                    cT_HoaDons.Remove(spDuocMua);
+                }
+                contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+
+            }
+
+                return RedirectToAction("Pay", "Shop");
+        }
+
         [HttpPost]
         public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
         {
