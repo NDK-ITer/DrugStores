@@ -160,7 +160,7 @@
                         <div class="checkout__order">
                             <h4>Đơn Đặt Hàng</h4>
 
-                            <table class="table-Prize" cellpadding="7" cellspacing="0">
+                            <table class="" cellpadding="7" cellspacing="0">
                                 <col width="40%" />
 
                                 <col width="30%" />
@@ -187,10 +187,21 @@
                                         <td align="center">@item.SanPham.TenSP</td>
                                         <td align="center">@item.SoLuong</td>
                                         <td align="center">@String.Format(info, "{0:c}", @item.ThanhTien)</td>
-                                        <td align="center">
-                                            <a href="@Url.Action("RemoveProductIsBought","Shop",new { @idSP = item.SanPham.MaSP })">
-                                                <span class="icon_close"></span>
-                                            </a>
+                                        <td align="center" >
+                                            @if (SignInManager.IsSignedIn(User))
+                                            {
+                                                <a class="shoping__cart__item__close"
+                                                    href="@Url.Action("DeleteFromCart","Shop",new { @id = item.SanPham.MaSP })">
+                                                    <span class="icon_close"></span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="shoping__cart__item__close" href="@Url.Action("RemoveProductIsBought","Shop",new { @idSP = item.SanPham.MaSP })">
+                                                    <span class="icon_close"></span>
+                                                </a>
+                                            }
+                                           
                                         </td>
                                     </tr>
 
@@ -214,4 +225,12 @@
         </div>
     </div>
 </section>
+
+<style>
+    .shoping__cart__item__close{
+                font-size: 24px;
+                color: #b2b2b2;
+                cursor: pointer;
+    }
+</style>
 <!-- Checkout Section End -->
