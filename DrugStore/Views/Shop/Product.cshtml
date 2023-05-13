@@ -27,7 +27,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item" style="max-width:450px">
-                        @if (Model.MaLoaiSP == "T")
+                        @if (Model.Thuoc != null)
                         {
                             <img class="product__details__pic__item--large"
                                  src="/images/sanpham/thuoc/@Model.AnhDaiDien" alt="">
@@ -36,7 +36,7 @@
                     <div class="product__details__pic__slider owl-carousel">
 
                         @{
-                            @if (Model.MaLoaiSP == "T")
+                            @if (Model.Thuoc != null)
                             {
                                 try
                                 {
@@ -136,7 +136,7 @@
                             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
                                aria-selected="false">Công Dụng</a>
                         </li>
-                        @if (Model.MaLoaiSP == "T")
+                        @if (Model.Thuoc != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
@@ -170,7 +170,7 @@
                                 </p>
                             </div>
                         </div>
-                        @if (Model.MaLoaiSP == "T")
+                        @if (Model.Thuoc != null)
                         {
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
@@ -206,77 +206,38 @@
 </section>
 <!-- Product Details Section End -->
 <!-- Related Product Section Begin -->
-<section class="related-product">
+<section class="categories">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title related__product__title">
-                    <h2>Sản phẩm liên quan</h2>
+        @await Component.InvokeAsync("SanPhamLienQuan",new{ idSP = Model.MaSP, maLSP = Model.Thuoc.MaLT, maHSX = Model.MaHSX})
+    </div>><br />
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Đề Xuất cho bạn</h2>
+                    </div>
                 </div>
             </div>
+            @await Component.InvokeAsync("CaNhanHoa",new{ idUser = @UserManager.GetUserId(User)})
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/theme/img/product/product-1.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
+        <br />
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Các Sản Phẩm Nổi Bật</h2>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/theme/img/product/product-2.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/theme/img/product/product-3.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="/theme/img/product/product-7.jpg">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a asp-controller="Shop" asp-action="Product">Crab Pool Security</a></h6>
-                        <h5>$30.00</h5>
-                    </div>
-                </div>
-            </div>
+            @await Component.InvokeAsync("SanPhamNoiBat")
         </div>
-    </div>
+
+        <br />
+    }
 </section>
 <!-- Related Product Section End -->

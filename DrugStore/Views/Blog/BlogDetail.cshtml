@@ -1,4 +1,6 @@
-﻿ @*<!-- Hero Section Begin -->
+﻿@model DrugStore.Models.Entities.TinTuc
+
+ @*<!-- Hero Section Begin -->
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
@@ -137,18 +139,11 @@
             </div>
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
                 <div class="blog__details__text">
-                    <img src="/theme/img/blog/details/details-pic.jpg" alt="">
+                    <img src="/images/tintuc/@Model.AnhDaiDien" alt="">
                     <p>
-                        Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet
-                        dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Mauris blandit
-                        aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna justo, lacinia eget consectetur
-                        sed, convallis at tellus. Sed porttitor lectus nibh. Donec sollicitudin molestie malesuada.
-                        Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget tortor risus.
-                        Donec rutrum congue leo eget malesuada. Curabitur non nulla sit amet nisl tempus convallis
-                        quis ac lectus. Donec sollicitudin molestie malesuada. Nulla quis lorem ut libero malesuada
-                        feugiat. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+                        @Model.NoiDung
                     </p>
-                    <h3>
+                    @*<h3>
                         The corner window forms a place within a place that is a resting point within the large
                         space.
                     </h3>
@@ -157,26 +152,26 @@
                         buildings, a congruent story has been managed in which the whole has a reinforcing effect on
                         the components. The use of materials seeks connection to the main house, the adjacent
                         stables
-                    </p>
+                    </p>*@
                 </div>
                 <div class="blog__details__content">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="blog__details__author">
                                 <div class="blog__details__author__pic">
-                                    <img src="/theme/img/blog/details/details-author.jpg" alt="">
+                                    @*<img src="/theme/img/blog/details/details-author.jpg" alt="">*@
                                 </div>
                                 <div class="blog__details__author__text">
-                                    <h6>Michael Scofield</h6>
-                                    <span>Admin</span>
+                                    @*<h6>Michael Scofield</h6>
+                                    <span>Admin</span>*@
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="blog__details__widget">
                                 <ul>
-                                    <li><span>Categories:</span> Food</li>
-                                    <li><span>Tags:</span> All, Trending, Cooking, Healthy Food, Life Style</li>
+                                    @*<li><span>Categories:</span> Food</li>*@
+                                    @*<li><span>Tags:</span> All, Trending, Cooking, Healthy Food, Life Style</li>*@
                                 </ul>
                                 <div class="blog__details__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
