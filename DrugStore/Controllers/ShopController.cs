@@ -192,7 +192,11 @@ namespace DrugStore.Controllers
             {
                 hoaDon.Id = userManager.GetUserId(User);
             }
-            SaveBill(hoaDon);   
+            SaveBill(hoaDon);
+            if (hoaDon.HinhThucThanhToan.MaHT == 1)
+            {
+                return RedirectToAction("Momo", "Shop", hoaDon);
+            }
             return RedirectToAction("Index");
         }
 
@@ -370,23 +374,22 @@ namespace DrugStore.Controllers
             return RedirectToAction("Pay", "Shop");
         }
 
-        public IActionResult Momo()
+        public IActionResult Momo(HoaDon hoaDon)
         {
 
 
-            var order ="" ;
-
+           
             //request params need to request to MoMo system
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
-            string orderInfo = "1000";
+            string orderInfo = hoaDon.Id.ToString();
             string returnUrl = "https://localhost:1844/Home/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
-            string amount = "1000";
-            string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
+            string amount = hoaDon.TongThanhTien.ToString();
+            string orderid = hoaDon.Id.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString();
             string extraData = "";
 
