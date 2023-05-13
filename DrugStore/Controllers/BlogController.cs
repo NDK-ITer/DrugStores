@@ -20,9 +20,10 @@ namespace DrugStore.Controllers
             return View(dsTinTuc.ToPagedList((int)page, pageSize));
         }
 
-        public IActionResult BlogDetail()
+        public IActionResult BlogDetail(Guid id)
         {
-            return View();
+            TinTuc tinTuc = dbContext.TinTucs.Find(id);
+            return View(tinTuc);
         }
     }
 }

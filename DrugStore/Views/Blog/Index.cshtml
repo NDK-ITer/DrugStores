@@ -151,10 +151,10 @@
                                         @*<li><i class="fa fa-comment-o"></i> 5</li>*@
                                     </ul>
                                     <h5><a href="#">@item.MoTaTT</a></h5>
-                                    <p>
+                                    @*<p>
                                         @item.NoiDung
-                                    </p>
-                                    <a asp-controller="Blog" asp-action="BlogDetail" class="blog__btn">ĐỌC THÊM <span class="arrow_right"></span></a>
+                                    </p>*@
+                                    <a href="@Url.Action("BlogDetail","Blog",new{id = @item.MaTT})" class="blog__btn" id="@item.MaTT">ĐỌC THÊM <span class="arrow_right"></span></a>
                                 </div>
                             </div>
                         </div>
