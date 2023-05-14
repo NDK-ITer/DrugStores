@@ -186,8 +186,7 @@ namespace DrugStore.Controllers
         public IActionResult Pay(HoaDon hoaDon)
         {
 
-            if (ModelState.IsValid)
-            {
+            
                 hoaDon.CT_HoaDon = TakeListProductIsBougth();
                 hoaDon.TongThanhTien = (decimal)SumProductBought();
                 hoaDon.NgayLap = DateTime.Now;
@@ -201,23 +200,7 @@ namespace DrugStore.Controllers
                     return RedirectToAction("Momo", "Shop", hoaDon);
                 }
                 return RedirectToAction("Index");
-            }
-            TakeBill();
-            cT_HoaDons = TakeListProductIsBougth();
-
-            if (cT_HoaDons != null)
-            {
-                foreach (var item in cT_HoaDons)
-                {
-                    item.SanPham = dbContext.SanPhams.Find(item.MaSP);
-                }
-                hoaDon.CT_HoaDon = cT_HoaDons;
-                ViewBag.CountProductBought = CountProductBought();
-                ViewBag.SumProductBought = SumProductBought();
-                ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
-            }
-
-            return View(hoaDon);
+           
 
         }
 
