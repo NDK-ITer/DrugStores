@@ -38,17 +38,19 @@ namespace DrugStore.Models.Entities
             DrugStoreDbContext dbContext = new DrugStoreDbContext();
 
             dbContext.Thuocs.Include(c => c.LoaiThuoc).Load();
-            dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
             dbContext.GioHangs.Include(c => c.SanPham).Load();
             dbContext.LoaiSPs.Include(c => c.SanPhams).Load();
             dbContext.HangSXes.Include(c => c.SanPhams).Load();
             dbContext.TrangThais.Include(c => c.SanPhams).Load();
-            dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
             dbContext.TongHopLoaiSPs.Include(c => c.LoaiThuoc);
             dbContext.LoaiThuocs.Include(c => c.TongHopLoaiSP);
             dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
             dbContext.CT_CaNhanHoas.Include(c => c.TongHopLoaiSP).Load();
+            dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
+            dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
+
+
             //dbContext.AspNetUsers.Include(c => c.HoaDons);
 
             return dbContext;

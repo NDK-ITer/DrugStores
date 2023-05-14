@@ -166,7 +166,7 @@ namespace DrugStore.Controllers
         {
             TakeBill();
             cT_HoaDons = TakeListProductIsBougth();
-
+            
             if (cT_HoaDons != null)
             {
                 foreach (var item in cT_HoaDons)
@@ -185,19 +185,40 @@ namespace DrugStore.Controllers
         [HttpPost]
         public IActionResult Pay(HoaDon hoaDon)
         {
-            hoaDon.CT_HoaDon = TakeListProductIsBougth();
-            hoaDon.TongThanhTien = (decimal)SumProductBought();
-            hoaDon.NgayLap = DateTime.Now;
-            if (signInManager.IsSignedIn(User))
+
+            if (ModelState.IsValid)
             {
-                hoaDon.Id = userManager.GetUserId(User);
+                hoaDon.CT_HoaDon = TakeListProductIsBougth();
+                hoaDon.TongThanhTien = (decimal)SumProductBought();
+                hoaDon.NgayLap = DateTime.Now;
+                if (signInManager.IsSignedIn(User))
+                {
+                    hoaDon.Id = userManager.GetUserId(User);
+                }
+                SaveBill(hoaDon);
+                if (hoaDon.HinhThucThanhToan.MaHT == 1)
+                {
+                    return RedirectToAction("Momo", "Shop", hoaDon);
+                }
+                return RedirectToAction("Index");
             }
-            SaveBill(hoaDon);
-            if (hoaDon.HinhThucThanhToan.MaHT == 1)
+            TakeBill();
+            cT_HoaDons = TakeListProductIsBougth();
+
+            if (cT_HoaDons != null)
             {
-                return RedirectToAction("Momo", "Shop", hoaDon);
+                foreach (var item in cT_HoaDons)
+                {
+                    item.SanPham = dbContext.SanPhams.Find(item.MaSP);
+                }
+                hoaDon.CT_HoaDon = cT_HoaDons;
+                ViewBag.CountProductBought = CountProductBought();
+                ViewBag.SumProductBought = SumProductBought();
+                ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
             }
-            return RedirectToAction("Index");
+
+            return View(hoaDon);
+
         }
 
         public void SaveBill(HoaDon hoaDon)
@@ -384,12 +405,13 @@ namespace DrugStore.Controllers
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
-            string orderInfo = hoaDon.Id.ToString();
+            string orderInfo = hoaDon.SoDH.ToString();
             string returnUrl = "https://localhost:1844/Home/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
+
             string amount = hoaDon.TongThanhTien.ToString();
-            string orderid = hoaDon.Id.ToString(); //mã đơn hàng
+            string orderid =hoaDon.SoDH.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString();
             string extraData = "";
 
