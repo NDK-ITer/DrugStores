@@ -109,7 +109,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id,string strURL)
+        public ActionResult AddToCart(Guid id,string strURL, string type = "Normal")
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -134,6 +134,11 @@ namespace DrugStore.Controllers
                 dbContext.SaveChanges();
                 TakeShopingCart(userManager.GetUserId(User));
 
+            }
+
+            if (type == "ajax")
+            {
+                return Json(CountCart());
             }
             return Redirect(strURL);
 
@@ -455,6 +460,7 @@ namespace DrugStore.Controllers
             string rMessage = result.message;
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
+            //đổi trạng thái hóa đơn
             return View();
         }
 
