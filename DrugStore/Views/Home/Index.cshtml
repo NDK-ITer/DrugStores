@@ -522,4 +522,40 @@
         </div>
     </div>
 </section>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".ajax-add-to-cart").click(function () {
+                $.ajax({
+                    url: "@Url.Action("AddToCart","Shop")",
+                    data: {
+                        id: $(this).data("id"),
+                        type: "ajax",
+                        strURL: $(this).data("strURL"),
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Thêm giỏ hàng thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thêm giỏ hàng thất bại',
+                            text: 'Vui lòng thử lại',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        });
+                    }
+                });
+            })
+        })
+    </script>
+}
 <!-- Blog Section End -->
