@@ -11,6 +11,7 @@ using System.Drawing.Printing;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
+using DrugStore.Mail;
 
 namespace DrugStore.Controllers
 {
@@ -21,14 +22,16 @@ namespace DrugStore.Controllers
         List<CT_HoaDon> cT_HoaDons;
         private HoaDon hoaDon;
         private readonly IHttpContextAccessor contx;
+        private readonly IEmailSender emailSender;
         private UserManager<AppNetUser> userManager;
         private SignInManager<AppNetUser> signInManager;
 
-        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx)
+        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx,IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.contx = contx;
+            this.emailSender = emailSender;
             //var user = userManager.Users.ToList();
         }
         public IActionResult Index(int? page)
@@ -183,9 +186,9 @@ namespace DrugStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Pay(HoaDon hoaDon)
+        public async Task<IActionResult> Pay(HoaDon hoaDon)
         {
-    
+                
             
                 hoaDon.CT_HoaDon = TakeListProductIsBougth();
                 hoaDon.TongThanhTien = (decimal)SumProductBought();
@@ -215,10 +218,16 @@ namespace DrugStore.Controllers
                
             }
             SaveBill(hoaDon);
+
+            var mail = "nguyenngoccuong.16122002@gmail.com";
+            var subject = "test";
+            var mess = "helloworld";
+            await emailSender.SendEmailAsync(mail, subject, mess);
             if (hoaDon.HinhThucThanhToan.MaHT == 1)
             {
                 return RedirectToAction("Momo", "Shop", hoaDon);
             }
+
             return RedirectToAction("Index");
 
         }

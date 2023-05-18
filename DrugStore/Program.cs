@@ -4,6 +4,7 @@ using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
+using DrugStore.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -11,6 +12,7 @@ var configuration = builder.Configuration;
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddDistributedMemoryCache();
 
 services.AddAuthentication().AddGoogle(googleOptions =>
