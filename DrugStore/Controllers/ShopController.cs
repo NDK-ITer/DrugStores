@@ -35,7 +35,7 @@ namespace DrugStore.Controllers
         {
             if (page == null) { page = 1;}
             page  = page < 1 ? 1 : page;
-            int pageSize = 3;
+            int pageSize = 6;
             return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
