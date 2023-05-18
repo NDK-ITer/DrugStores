@@ -61,9 +61,11 @@
             </td>
 
             <td>
-                @Html.ActionLink("Details", "Details", new { id=item.SoDH })
+                @Html.ActionLink("Chi Tiết", "Details", new { SoDH=item.SoDH })
             </td>
         </tr>
     }
-
 </table>
+<div class="product__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
+</div>

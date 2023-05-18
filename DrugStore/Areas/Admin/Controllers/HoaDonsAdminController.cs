@@ -40,6 +40,10 @@ namespace DrugStore.Areas.Admin.Controllers
             int pageSize = 5;
             return View(hoaDons.ToPagedList((int)page, pageSize));
         }
+        public IActionResult Details(Guid SoDH)
+        {
+            return View();
+        }
 
     }
 }
