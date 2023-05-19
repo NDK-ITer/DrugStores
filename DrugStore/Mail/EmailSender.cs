@@ -11,15 +11,19 @@ namespace DrugStore.Mail
             {
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("cuongnguyen.16122002@gmail.com", "kuxovsiukdmldkvv")
+                Credentials = new NetworkCredential("cuongnguyen.16122002@gmail.com", "kuxovsiukdmldkvv"),
+                
             };
-
+           
             return client.SendMailAsync(
                 new MailMessage(from: "cuongnguyen.16122002@gmail.com",
                                 to: email,
                                 subject,
                                 message
-                                ));
+                                )
+                {
+                    IsBodyHtml=true
+                });
         }
     }
 }
