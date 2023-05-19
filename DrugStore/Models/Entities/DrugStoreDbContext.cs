@@ -21,6 +21,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<TongHopLoaiSP> TongHopLoaiSPs { get; set; }
         public virtual DbSet<CT_CaNhanHoa> CT_CaNhanHoas { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()
@@ -49,9 +51,9 @@ namespace DrugStore.Models.Entities
             dbContext.CT_CaNhanHoas.Include(c => c.TongHopLoaiSP).Load();
             dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
-
-
-            //dbContext.AspNetUsers.Include(c => c.HoaDons);
+            dbContext.AspNetRoles.Include(c => c.Users).Load();
+            dbContext.AspNetUserRoles.Include(c => c.Users).Include(c => c.Roles).Load();
+            dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Load();
 
             return dbContext;
         }
@@ -70,6 +72,8 @@ namespace DrugStore.Models.Entities
                     .HasKey(m => new { m.Id, m.MaSP });
             builder.Entity<CT_CaNhanHoa>()
                     .HasKey(m => new { m.MaTHLSP, m.Id });
+            builder.Entity<AspNetUserRoles>()
+                    .HasKey(m => new { m.UserId, m.RoleId });
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)
@@ -120,7 +124,6 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.LoaiThuoc)
                     .HasForeignKey<TongHopLoaiSP>(e => e.MaTHLSP)
                     .IsRequired();
-
         }
     }
 }

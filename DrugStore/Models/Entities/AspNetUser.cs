@@ -4,8 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DrugStore.Models.Entities
 {
+    [Table("AspNetUsers")]
     public class AspNetUser
     {
+        public AspNetUser()
+        {
+            Roles = new HashSet<AspNetUserRoles>();
+        }
+        [Key]
         [StringLength(400)]
         public string Id { get; set; }
 
@@ -54,5 +60,6 @@ namespace DrugStore.Models.Entities
         public int? AccessFailedCount { get; set; }
 
         public ICollection<HoaDon>? HoaDons { get; set; }
+        public virtual ICollection<AspNetUserRoles>? Roles { get; set; }
     }
 }
