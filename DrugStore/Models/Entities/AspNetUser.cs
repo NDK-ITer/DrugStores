@@ -10,6 +10,7 @@ namespace DrugStore.Models.Entities
         public AspNetUser()
         {
             Roles = new HashSet<AspNetUserRoles>();
+            TinTucs = new HashSet<TinTuc>();
         }
         [Key]
         [StringLength(400)]
@@ -61,5 +62,6 @@ namespace DrugStore.Models.Entities
 
         public ICollection<HoaDon>? HoaDons { get; set; }
         public virtual ICollection<AspNetUserRoles>? Roles { get; set; }
+        public virtual ICollection<TinTuc>? TinTucs { get; set; }
     }
 }

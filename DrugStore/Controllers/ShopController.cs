@@ -21,8 +21,8 @@ namespace DrugStore.Controllers
         List<GioHang> gioHangs;
         List<CT_HoaDon> cT_HoaDons;
         private HoaDon hoaDon;
-        private readonly IHttpContextAccessor contx;
         private readonly IEmailSender emailSender;
+        private readonly IHttpContextAccessor contx;
         private UserManager<AppNetUser> userManager;
         private SignInManager<AppNetUser> signInManager;
 

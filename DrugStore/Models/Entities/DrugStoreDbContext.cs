@@ -53,8 +53,8 @@ namespace DrugStore.Models.Entities
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.AspNetRoles.Include(c => c.Users).Load();
             dbContext.AspNetUserRoles.Include(c => c.Users).Include(c => c.Roles).Load();
-            dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Load();
-
+            dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Include(c=>c.TinTucs).Load();
+            dbContext.TinTucs.Include(c => c.Users).Load();
             return dbContext;
         }
 
@@ -74,6 +74,9 @@ namespace DrugStore.Models.Entities
                     .HasKey(m => new { m.MaTHLSP, m.Id });
             builder.Entity<AspNetUserRoles>()
                     .HasKey(m => new { m.UserId, m.RoleId });
+            builder.Entity<TagTinTuc>()
+                    .HasKey(m => new { m.IdTag, m.MaTT });
+
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)
@@ -114,6 +117,12 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.Id) 
                     .IsRequired();
+            builder.Entity<TinTuc>()
+                    .HasOne(e => e.Users)
+                    .WithMany(e => e.TinTucs)
+                    .HasForeignKey(e => e.IdNguoiDang)
+                    .IsRequired();
+
             builder.Entity<TongHopLoaiSP>()
                     .HasOne(e => e.LoaiThuoc)
                     .WithOne(e => e.TongHopLoaiSP)
