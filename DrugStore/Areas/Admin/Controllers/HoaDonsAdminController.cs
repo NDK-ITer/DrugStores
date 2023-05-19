@@ -42,8 +42,10 @@ namespace DrugStore.Areas.Admin.Controllers
         }
         public IActionResult Details(Guid SoDH)
         {
-            return View();
+            HoaDon hoaDon = dbContext.HoaDons.Find(SoDH);
+            return View(hoaDon);
         }
+
 
     }
 }
