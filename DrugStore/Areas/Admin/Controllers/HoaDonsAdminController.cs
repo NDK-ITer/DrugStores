@@ -3,6 +3,7 @@ using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using X.PagedList;
 
 namespace DrugStore.Areas.Admin.Controllers
@@ -26,7 +27,7 @@ namespace DrugStore.Areas.Admin.Controllers
         public IActionResult Index(int? page, string? keySearch)
         {
             List<HoaDon> hoaDons;
-            if (keySearch != null)
+            if (!keySearch.IsNullOrEmpty())
             {
                 hoaDons = dbContext.HoaDons.Where(c=>c.HinhThucThanhToan.TenHT.Contains(keySearch) || c.TenNguoiMua.Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch)).OrderBy(c => c.NgayLap).ToList();
             }

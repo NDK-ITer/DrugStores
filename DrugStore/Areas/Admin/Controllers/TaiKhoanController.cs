@@ -3,6 +3,7 @@ using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using X.PagedList;
 
 namespace DrugStore.Areas.Admin.Controllers
@@ -25,9 +26,9 @@ namespace DrugStore.Areas.Admin.Controllers
         public ActionResult Index(int? page, string? keySearch)
         {
             List<AspNetUser> Users;
-            if (keySearch != null)
+            if (!keySearch.IsNullOrEmpty())
             {
-                Users = dbContext.AspNetUsers.Where(c => c.FirstName.Contains(keySearch) || c.LastName.Contains(keySearch) || c.Email.ToString().Contains(keySearch) || c.PhoneNumber.ToString().Contains(keySearch)).OrderBy(c => c.FirstName + c.LastName).ToList();
+                Users = dbContext.AspNetUsers.Where(c => c.Email.Contains(keySearch)||(c.FirstName+c.LastName).Contains(keySearch)|| c.PhoneNumber.Contains(keySearch)).OrderBy(c => c.FirstName+c.LastName).ToList();
             }
             else
             {
