@@ -22,7 +22,7 @@ namespace DrugStore.Models.Entities
         [DisplayName("Mã Hóa Đơn")]
         public Guid SoDH { get; set; }
 
-        [Required]
+       
         [StringLength(400)]
         [DisplayName("Mã Người Dùng")]
         public string? Id { get; set; }
@@ -31,14 +31,19 @@ namespace DrugStore.Models.Entities
         public DateTime? NgayLap { get; set; }
         [DisplayName("Tổng Thành Tiền")]
         public decimal? TongThanhTien { get; set; }
+        [Required]
         [DisplayName("Tên Người Mua")]
         public string? TenNguoiMua { get; set; }
+        [Required]
         [DisplayName("Địa Chỉ Email")]
         public string? Email { get; set; }
         [DisplayName("Số Điện Thoại Người Mua")]
+        [Required]
         public string? SDT { get; set; }
+        [Required]
         [DisplayName("Địa Chỉ Giao")]
         public string? DiaChiGiao { get; set; }
+        [Required]
         [DisplayName("Ngày Giao")]
         public DateTime? NgayGiao { get; set; }
 

@@ -153,43 +153,43 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: ThuocAdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ThuocAdminController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult Delete(Guid id)
         {
             try
             {
-                Thuoc thuoc = dbContext.Thuocs.Find(id);
-                dbContext.Thuocs.Remove(thuoc);
-                dbContext.SaveChanges();
-
                 SanPham sanPham = dbContext.SanPhams.Find(id);
-
-                string filePathDelete = environment.WebRootPath + "/" + fileImagePath + sanPham.AnhDaiDien;
-                FileInfo fileDelete = new FileInfo(filePathDelete);
-                fileDelete.Delete();
-
-
-                if (!string.IsNullOrEmpty(sanPham.DSAnhSP))
+                Thuoc thuoc = dbContext.Thuocs.Find(id);
+                if (sanPham != null && thuoc!=null)
                 {
-                    string[] filesold = sanPham.DSAnhSP.Split(',');
-                    foreach (var fileold in filesold)
+                    if (!string.IsNullOrEmpty(sanPham.AnhDaiDien))
                     {
-                        string filePathDelete1 = environment.WebRootPath + "/" + fileImagePath + fileold;
-                        FileInfo fileDelete1 = new FileInfo(filePathDelete1);
-                        fileDelete1.Delete();
-                    }
-                }
+                        string filePathDelete = environment.WebRootPath + "/" + fileImagePath + "/" + sanPham.AnhDaiDien;
+                        FileInfo fileDelete = new FileInfo(filePathDelete);
+                        fileDelete.Delete();
 
-                dbContext.SanPhams.Remove(sanPham);
-                dbContext.SaveChanges();
-                fileDelete.Delete();
+                    }
+
+
+                    if (!string.IsNullOrEmpty(sanPham.DSAnhSP))
+                    {
+                        string[] filesold = sanPham.DSAnhSP.Split(',');
+                        foreach (var fileold in filesold)
+                        {
+                            if (!string.IsNullOrEmpty(fileold))
+                            {
+                                string filePathDelete1 = environment.WebRootPath + "/" + fileImagePath + "/" + fileold;
+                                FileInfo fileDelete1 = new FileInfo(filePathDelete1);
+                                fileDelete1.Delete();
+                            }
+                            
+                        }
+                    }
+                    dbContext.Thuocs.Remove(thuoc);
+                    dbContext.SaveChanges();
+                    dbContext.SanPhams.Remove(sanPham);
+                    dbContext.SaveChanges();
+
+                }
 
                 return RedirectToAction("Index", "SanPhamsAdmin");
             }

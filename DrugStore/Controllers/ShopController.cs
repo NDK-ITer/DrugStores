@@ -11,6 +11,7 @@ using System.Drawing.Printing;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
+using DrugStore.Mail;
 
 namespace DrugStore.Controllers
 {
@@ -21,21 +22,23 @@ namespace DrugStore.Controllers
         List<CT_HoaDon> cT_HoaDons;
         private HoaDon hoaDon;
         private readonly IHttpContextAccessor contx;
+        private readonly IEmailSender emailSender;
         private UserManager<AppNetUser> userManager;
         private SignInManager<AppNetUser> signInManager;
 
-        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx)
+        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx,IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.contx = contx;
+            this.emailSender = emailSender;
             //var user = userManager.Users.ToList();
         }
         public IActionResult Index(int? page)
         {
             if (page == null) { page = 1;}
             page  = page < 1 ? 1 : page;
-            int pageSize = 6;
+            int pageSize = 3;
             return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
@@ -109,7 +112,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id,string strURL, string type = "Normal")
+        public ActionResult AddToCart(Guid id,string strURL)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -134,11 +137,6 @@ namespace DrugStore.Controllers
                 dbContext.SaveChanges();
                 TakeShopingCart(userManager.GetUserId(User));
 
-            }
-
-            if (type == "ajax")
-            {
-                return Json(CountCart());
             }
             return Redirect(strURL);
 
@@ -188,9 +186,9 @@ namespace DrugStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Pay(HoaDon hoaDon)
+        public async Task<IActionResult> Pay(HoaDon hoaDon)
         {
-
+                
             
                 hoaDon.CT_HoaDon = TakeListProductIsBougth();
                 hoaDon.TongThanhTien = (decimal)SumProductBought();
@@ -199,13 +197,38 @@ namespace DrugStore.Controllers
                 {
                     hoaDon.Id = userManager.GetUserId(User);
                 }
-                SaveBill(hoaDon);
-                if (hoaDon.HinhThucThanhToan.MaHT == 1)
+            if (!ModelState.IsValid)
+            {
+                TakeBill();
+                cT_HoaDons = TakeListProductIsBougth();
+
+                if (cT_HoaDons != null)
                 {
-                    return RedirectToAction("Momo", "Shop", hoaDon);
+                    foreach (var item in cT_HoaDons)
+                    {
+                        item.SanPham = dbContext.SanPhams.Find(item.MaSP);
+                    }
+                    hoaDon.CT_HoaDon = cT_HoaDons;
+                    ViewBag.CountProductBought = CountProductBought();
+                    ViewBag.SumProductBought = SumProductBought();
+                    ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
                 }
-                return RedirectToAction("Index");
-           
+
+                return View(hoaDon);
+               
+            }
+            SaveBill(hoaDon);
+
+            var mail = "nguyenngoccuong.16122002@gmail.com";
+            var subject = "test";
+            var mess = "helloworld";
+            await emailSender.SendEmailAsync(mail, subject, mess);
+            if (hoaDon.HinhThucThanhToan.MaHT == 1)
+            {
+                return RedirectToAction("Momo", "Shop", hoaDon);
+            }
+
+            return RedirectToAction("Index");
 
         }
 
@@ -460,7 +483,6 @@ namespace DrugStore.Controllers
             string rMessage = result.message;
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
-            //đổi trạng thái hóa đơn
             return View();
         }
 

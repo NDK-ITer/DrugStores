@@ -43,7 +43,7 @@
                                         <p>Họ Tên<span>*</span></p>
                                         @*<input type="text" value="@Model.TenNguoiMua" readonly>*@
                                         @Html.TextBoxFor(model => model.TenNguoiMua, new {type = "text", value = @Model.TenNguoiMua, @readonly = "readonly"})
-
+                                        @Html.ValidationMessageFor(model => model.TenNguoiMua, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             }
@@ -54,6 +54,7 @@
                                         <p>Họ Tên<span>*</span></p>
                                         @*<input type="text" value="@Model.TenNguoiMua">*@
                                         @Html.TextBoxFor(model => model.TenNguoiMua, new { type = "text"})
+                                        @Html.ValidationMessageFor(model => model.TenNguoiMua, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             }
@@ -71,7 +72,7 @@
                                         <p>SĐT<span>*</span></p>
                                         @*<input type="text" value="@Model.SDT" readonly>*@
                                         @Html.TextBoxFor(model => model.SDT, new { type = "text", value=@Model.SDT, @readonly = "readonly"})
-
+                                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -79,7 +80,7 @@
                                         <p>Email<span>*</span></p>
                                         @*<input type="text" value="@Model.Email" readonly>*@
                                         @Html.TextBoxFor(model => model.Email, new { type = "text", value = @Model.Email, @readonly = "readonly"})
-
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +93,7 @@
                                         <p>SĐT<span>*</span></p>
                                         @*<input type="text" value="@Model.SDT">*@
                                         @Html.TextBoxFor(model => model.SDT, new { type = "text"})
-
+                                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -100,6 +101,7 @@
                                         <p>Email<span>*</span></p>
                                         @*<input type="text" value="@Model.Email">*@
                                         @Html.TextBoxFor(model => model.Email, new { type = "text"})
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                                     </div>
                                 </div>
@@ -110,11 +112,13 @@
                             <p>Địa Chỉ Giao<span>*</span></p>
                             @*<input type="text" placeholder="Địa Chỉ Giao" class="checkout__input__add" id="DiaChiGiao">*@
                             @Html.TextBoxFor(model => model.DiaChiGiao, new { type = "text", @class="checkout__input__add"})
+                            @Html.ValidationMessageFor(model => model.DiaChiGiao, "", new { @class = "text-danger" })
                         </div>
                         <div class="checkout__input">
                             <p>Ngày Nhận Dự Kiến<span>*</span></p>
                             @*<input type="date" class="checkout__input__add" id="NgayGiao">*@
                             @Html.TextBoxFor(model => model.NgayGiao, new { type = "date", @class="checkout__input__add"})
+                            @Html.ValidationMessageFor(model => model.NgayGiao, "", new { @class = "text-danger" })
                         </div>
                         @*<div class="checkout__input">
                         <p>Town/City<span>*</span></p>
