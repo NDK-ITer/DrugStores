@@ -1,7 +1,10 @@
 ﻿@model DrugStore.Models.Entities.TinTuc
+@using DrugStore.Models.Entities
 
 @{
     ViewBag.Title = "Create";
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
+    List<Tag> tagTinTucs = dbContext.Tags.ToList();
 }
 
 <h2>Create</h2>

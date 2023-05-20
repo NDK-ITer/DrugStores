@@ -23,6 +23,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<CT_CaNhanHoa> CT_CaNhanHoas { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<TagTinTuc> TagTinTucs { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()

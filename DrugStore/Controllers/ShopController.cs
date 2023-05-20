@@ -36,6 +36,7 @@ namespace DrugStore.Controllers
         }
         public IActionResult Index(int? page)
         {
+            List<SanPham> sanPhams; 
             if (page == null) { page = 1;}
             page  = page < 1 ? 1 : page;
             int pageSize = 3;
@@ -112,7 +113,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id,string strURL)
+        public ActionResult AddToCart(Guid id/*,string strURL*/)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -138,8 +139,8 @@ namespace DrugStore.Controllers
                 TakeShopingCart(userManager.GetUserId(User));
 
             }
-            return Redirect(strURL);
-
+            //return Redirect(strURL);
+            return RedirectToAction("Index");
         }
 
         [Authorize]
