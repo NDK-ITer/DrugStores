@@ -1,7 +1,10 @@
 ﻿@model DrugStore.Models.Entities.TinTuc
+@using DrugStore.Models.Entities
 
 @{
     ViewBag.Title = "Create";
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
+    List<Tag> tagTinTucs = dbContext.Tags.ToList();
 }
 
 <h2>Create</h2>
@@ -44,6 +47,15 @@
                 <img id="preview" src="https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg" width="150" height="100" class="hidden" />
             </div>
         </div>
+
+        @*<div class="form-group">
+            <label class="control-label col-md-2">Tag </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TagTinTucs, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="checkbox" name/>
+                @Html.ValidationMessageFor(model => model.TagTinTucs, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

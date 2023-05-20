@@ -13,7 +13,7 @@ namespace DrugStore.Areas.Admin.Controllers
     [Area("Admin")]
     public class SanPhamsAdminController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
 
 
         public async Task<IActionResult> Index(
@@ -40,7 +40,8 @@ namespace DrugStore.Areas.Admin.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var sanPhams = from s in dbContext.SanPhams select s;
+            var sanPhams = from s in dbContext.SanPhams 
+                           select s;
 
            
 
@@ -64,7 +65,7 @@ namespace DrugStore.Areas.Admin.Controllers
                     sanPhams = sanPhams.OrderBy(s => s.TenSP);
                     break;
             }
-            var list = sanPhams.Include(s => s.HangSX).Include(s=>s.TrangThai).Include(s=>s.LoaiSP);
+            var list = sanPhams.Include(s => s.HangSX).Include(s=>s.TrangThai).Include(s=>s.LoaiSP).Include(s => s.Thuoc);
             int pageSize = 3;
             return View(await PaginatedList<SanPham>.CreateAsync(list.AsNoTracking(), pageNumber ?? 1, pageSize));
 

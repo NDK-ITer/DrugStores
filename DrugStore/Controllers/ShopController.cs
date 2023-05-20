@@ -12,11 +12,6 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using DrugStore.Mail;
-using Microsoft.AspNetCore.Mvc.Routing;
-using System.Reflection.Metadata;
-using Microsoft.IdentityModel.Tokens;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DrugStore.Controllers
 {
@@ -31,7 +26,6 @@ namespace DrugStore.Controllers
         private UserManager<AppNetUser> userManager;
         private SignInManager<AppNetUser> signInManager;
 
-
         public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx,IEmailSender emailSender)
         {
             this.userManager = userManager;
@@ -42,6 +36,7 @@ namespace DrugStore.Controllers
         }
         public IActionResult Index(int? page)
         {
+            List<SanPham> sanPhams; 
             if (page == null) { page = 1;}
             page  = page < 1 ? 1 : page;
             int pageSize = 3;
@@ -118,7 +113,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id,string strURL)
+        public ActionResult AddToCart(Guid id/*,string strURL*/)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -144,9 +139,8 @@ namespace DrugStore.Controllers
                 TakeShopingCart(userManager.GetUserId(User));
 
             }
-            return Redirect(strURL);
-
-
+            //return Redirect(strURL);
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -187,7 +181,6 @@ namespace DrugStore.Controllers
                 ViewBag.CountProductBought = CountProductBought();
                 ViewBag.SumProductBought = SumProductBought();
                 ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
-
             }
             
             return View(hoaDon);
@@ -227,45 +220,19 @@ namespace DrugStore.Controllers
             }
             SaveBill(hoaDon);
 
-           
+            var mail = "nguyenngoccuong.16122002@gmail.com";
+            var subject = "test";
+            var mess = "helloworld";
+            await emailSender.SendEmailAsync(mail, subject, mess);
             if (hoaDon.HinhThucThanhToan.MaHT == 1)
             {
                 return RedirectToAction("Momo", "Shop", hoaDon);
             }
-            else
-            {
-                SendMail(hoaDon);
-            }
+
             return RedirectToAction("Index");
 
         }
-        public async void SendMail(HoaDon hoaDon)
-        {
-            var url = "https://localhost:7254/Mail/MailPay/Index/" + hoaDon.SoDH;
 
-            using (HttpClient client1 = new HttpClient())
-            {
-                try
-                {
-                    // Send a GET request to the URL
-                    HttpResponseMessage response = await client1.GetAsync(url);
-
-                    // Ensure a successful response
-                    response.EnsureSuccessStatusCode();
-
-                    // Read the HTML content as a string
-                    string htmlContent = await response.Content.ReadAsStringAsync();
-
-                    await emailSender.SendEmailAsync(hoaDon.Email, "Đơn Hàng", htmlContent);
-                }
-                catch (Exception ex)
-                {
-                }
-
-
-
-            }
-        }
         public void SaveBill(HoaDon hoaDon)
         {
             if (hoaDon != null)
@@ -316,8 +283,8 @@ namespace DrugStore.Controllers
                 hoaDon.DaThanhToan = false;
             }
             LoginPay(hoaDon);
-           // string hoaDonString = JsonConvert.SerializeObject(hoaDon);
-            //contx.HttpContext.Session.SetString("dsSpMua", hoaDonString);
+            //string hoaDonString = JsonConvert.SerializeObject(hoaDon);
+            //contx.HttpContext.Session.SetString("", hoaDonString);
         }
 
         public List<CT_HoaDon> TakeListProductIsBougth()
@@ -451,7 +418,7 @@ namespace DrugStore.Controllers
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
             string orderInfo = hoaDon.SoDH.ToString();
-            string returnUrl = "https://localhost:7254/Home/ConfirmPaymentClient";
+            string returnUrl = "https://localhost:1844/Home/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
 
@@ -505,23 +472,18 @@ namespace DrugStore.Controllers
         //Tham khảo bảng mã lỗi tại: https://developers.momo.vn/#/docs/aio/?id=b%e1%ba%a3ng-m%c3%a3-l%e1%bb%97i
         public IActionResult ConfirmPaymentClient(Result result)
         {
-           
+            //lấy kết quả Momo trả về và hiển thị thông báo cho người dùng (có thể lấy dữ liệu ở đây cập nhật xuống db)
+            //if (int.Parse(result.errorCode) == 0)
+            //{
+            //    int id = (int)Session["ordertempID"];
+
+            //    var order = _dbContext.Orders.Find(id);
+            //    order.Status = true;
+            //    _dbContext.SaveChanges();
+            //}
             string rMessage = result.message;
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
-            int code = Convert.ToInt32(rErrorCode);
-            if (code == 0)
-            {
-                hoaDon = dbContext.HoaDons.Where(p => p.SoDH.Equals(result.orderId)).FirstOrDefault();
-                if(hoaDon != null)
-                {
-                    hoaDon.DaThanhToan = true;
-                }
-                dbContext.SaveChanges();
-                SendMail(hoaDon);
-            }
-            
-
             return View();
         }
 
@@ -529,7 +491,7 @@ namespace DrugStore.Controllers
         public void SavePayment()
         {
             //cập nhật dữ liệu vào db
-            string a = "";
+            String a = "";
         }
     }
 }
