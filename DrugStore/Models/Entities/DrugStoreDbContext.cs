@@ -19,6 +19,8 @@ namespace DrugStore.Models.Entities
         public virtual DbSet<TrangThai> TrangThais { get; set; }
         public virtual DbSet<LoaiThuoc> LoaiThuocs { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<TongHopLoaiSP> TongHopLoaiSPs { get; set; }
+        public virtual DbSet<CT_CaNhanHoa> CT_CaNhanHoas { get; set; }
 
         private string connectionStrings;
         public DrugStoreDbContext() : base()
@@ -35,7 +37,6 @@ namespace DrugStore.Models.Entities
         {
             DrugStoreDbContext dbContext = new DrugStoreDbContext();
 
-            dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
             dbContext.Thuocs.Include(c => c.LoaiThuoc).Load();
             dbContext.CT_HoaDon.Include(c => c.HoaDon).Include(c => c.SanPham).Load();
             dbContext.GioHangs.Include(c => c.SanPham).Load();
@@ -44,7 +45,11 @@ namespace DrugStore.Models.Entities
             dbContext.TrangThais.Include(c => c.SanPhams).Load();
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.HinhThucThanhToans.Include(c => c.HoaDons).Load();
-            dbContext.AspNetUsers.Include(c => c.HoaDons);
+            dbContext.TongHopLoaiSPs.Include(c => c.LoaiThuoc);
+            dbContext.LoaiThuocs.Include(c => c.TongHopLoaiSP);
+            dbContext.SanPhams.Include(c => c.Thuoc).Include(c => c.TrangThai).Include(c => c.LoaiSP).Include(c => c.HangSX).Include(c => c.CT_HoaDon).Include(c => c.GioHangs).Load();
+            dbContext.CT_CaNhanHoas.Include(c => c.TongHopLoaiSP).Load();
+            //dbContext.AspNetUsers.Include(c => c.HoaDons);
 
             return dbContext;
         }
@@ -61,6 +66,8 @@ namespace DrugStore.Models.Entities
                     .HasKey(m => new { m.SoDH, m.MaSP });
             builder.Entity<GioHang>()
                     .HasKey(m => new { m.Id, m.MaSP });
+            builder.Entity<CT_CaNhanHoa>()
+                    .HasKey(m => new { m.MaTHLSP, m.Id });
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
                     .WithOne(e => e.SanPham)
@@ -101,7 +108,17 @@ namespace DrugStore.Models.Entities
                     .WithOne(e => e.User)
                     .HasForeignKey(e => e.Id) 
                     .IsRequired();
-            
+            builder.Entity<TongHopLoaiSP>()
+                    .HasOne(e => e.LoaiThuoc)
+                    .WithOne(e => e.TongHopLoaiSP)
+                    .HasForeignKey<LoaiThuoc>(e => e.MaLT)
+                    .IsRequired();
+            builder.Entity<LoaiThuoc>()
+                    .HasOne(e => e.TongHopLoaiSP)
+                    .WithOne(e => e.LoaiThuoc)
+                    .HasForeignKey<TongHopLoaiSP>(e => e.MaTHLSP)
+                    .IsRequired();
+
         }
     }
 }

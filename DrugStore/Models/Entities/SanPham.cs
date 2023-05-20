@@ -63,11 +63,11 @@ namespace DrugStore.Models.Entities
 
         public virtual ICollection<GioHang> GioHangs { get; set; }
         [DisplayName("Hãng Sản Xuất")]
-        public virtual HangSX HangSX { get; set; }
+        public virtual HangSX? HangSX { get; set; }
         [DisplayName("Loại Sản Phẩm")]
-        public virtual LoaiSP LoaiSP { get; set; }
+        public virtual LoaiSP? LoaiSP { get; set; }
         [DisplayName("Trạng Thái")]
-        public virtual TrangThai TrangThai { get; set; }
-        public virtual Thuoc Thuoc { get; set; }
+        public virtual TrangThai? TrangThai { get; set; }
+        public virtual Thuoc? Thuoc { get; set; }
     }
 }
