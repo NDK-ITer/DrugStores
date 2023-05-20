@@ -14,16 +14,16 @@ namespace DrugStore.Areas.Admin.Controllers
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/TinTuc/";
-        private readonly IHttpContextAccessor contx;
-        private UserManager<AppNetUser> userManager;
-        private SignInManager<AppNetUser> signInManager;
-        public TinTucsAdminController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx)
-        {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.contx = contx;
-            //var user = userManager.Users.ToList();
-        }
+        //private readonly IHttpContextAccessor contx;
+        //private UserManager<AppNetUser> userManager;
+        //private SignInManager<AppNetUser> signInManager;
+        //public TinTucsAdminController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx)
+        //{
+        //    this.userManager = userManager;
+        //    this.signInManager = signInManager;
+        //    this.contx = contx;
+        //    //var user = userManager.Users.ToList();
+        //}
         // GET: TinTucs
 
         public TinTucsAdminController(IWebHostEnvironment environment)
@@ -70,7 +70,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 tinTuc.AnhDaiDien = fileName;
                 tinTuc.SoLuotXem = 0;
                 tinTuc.ThoiGiaDang = DateTime.Now;
-                tinTuc.IdNguoiDang = userManager.GetUserId(User);
+                //tinTuc.IdNguoiDang = userManager.GetUserId(User);
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
