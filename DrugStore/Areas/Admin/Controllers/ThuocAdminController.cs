@@ -27,7 +27,8 @@ namespace DrugStore.Areas.Admin.Controllers
         // GET: ThuocAdminController/Details/5
         public ActionResult Details(Guid id)
         {
-            return View();
+            SanPham sanPham = dbContext.SanPhams.Find(id);
+            return View(sanPham);
         }
 
         // GET: ThuocAdminController/Create

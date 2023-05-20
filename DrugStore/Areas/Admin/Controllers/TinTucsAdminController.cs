@@ -11,25 +11,22 @@ namespace DrugStore.Areas.Admin.Controllers
     [Area("Admin")]
     public class TinTucsAdminController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/TinTuc/";
-        //private readonly IHttpContextAccessor contx;
-        //private UserManager<AppNetUser> userManager;
-        //private SignInManager<AppNetUser> signInManager;
-        //public TinTucsAdminController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx)
-        //{
-        //    this.userManager = userManager;
-        //    this.signInManager = signInManager;
-        //    this.contx = contx;
-        //    //var user = userManager.Users.ToList();
-        //}
-        // GET: TinTucs
-
-        public TinTucsAdminController(IWebHostEnvironment environment)
+        private readonly IHttpContextAccessor contx;
+        private UserManager<AppNetUser> userManager;
+        private SignInManager<AppNetUser> signInManager;
+        public TinTucsAdminController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx, IWebHostEnvironment environment)
         {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.contx = contx;
             this.environment = environment;
+
+            //var user = userManager.Users.ToList();
         }
+        // GET: TinTucs
         public ActionResult Index()
         {
             return View(dbContext.TinTucs.ToList());
@@ -70,7 +67,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 tinTuc.AnhDaiDien = fileName;
                 tinTuc.SoLuotXem = 0;
                 tinTuc.ThoiGiaDang = DateTime.Now;
-                //tinTuc.IdNguoiDang = userManager.GetUserId(User);
+                tinTuc.IdNguoiDang = userManager.GetUserId(User);
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
