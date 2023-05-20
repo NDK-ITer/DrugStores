@@ -1,6 +1,7 @@
 ﻿using System.Net.Mail;
 using System.Net;
 
+
 namespace DrugStore.Mail
 {
     public class EmailSender:IEmailSender
@@ -25,5 +26,7 @@ namespace DrugStore.Mail
                     IsBodyHtml=true
                 });
         }
+
+      
     }
 }
