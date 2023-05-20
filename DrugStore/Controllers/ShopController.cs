@@ -261,9 +261,6 @@ namespace DrugStore.Controllers
                 catch (Exception ex)
                 {
                 }
-
-
-
             }
         }
         public void SaveBill(HoaDon hoaDon)
