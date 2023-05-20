@@ -1,0 +1,41 @@
+﻿@model DrugStore.Models.Entities.HoaDon
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+<table class="" cellpadding="7" cellspacing="0">
+    <col width="40%" />
+
+    <col width="30%" />
+
+    <col width="20%" />
+
+    <col width="10%" />
+    <tr valign="top">
+        <td class="text-bold" align="center">
+            Sản Phẩm
+        </td>
+        <td class="text-bold" align="center">
+            Số Lượng
+        </td>
+        <td class="text-bold" align="center">
+            Giá Tiền
+        </td>
+    </tr>
+    @foreach (var item in Model.CT_HoaDon)
+    {
+        <tr>
+            <td align="center">@item.SanPham.TenSP</td>
+            <td align="center">@item.SoLuong</td>
+            <td align="center">@String.Format(info, "{0:c}", @item.ThanhTien)</td>
+        </tr>
+
+    }
+</table>
+<div class="checkout__order__total">Tổng Tiền <span> @String.Format(info, "{0:c}", Model.TongThanhTien)</span></div>
+@{
+    string tt = Model.DaThanhToan==true ? "đã thanh toán" : "chưa thanh toán";
+}
+<div class="checkout__order__subtotal">thanh toán:<span>@tt</span></div>
+<div class="checkout__order__subtotal">ngày giao:<span>@Model.NgayGiao</span></div>
+<div class="checkout__order__subtotal">địa chỉ giao:<span>@Model.DiaChiGiao</span></div>
