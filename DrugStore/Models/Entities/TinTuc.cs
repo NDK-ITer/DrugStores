@@ -31,5 +31,6 @@ namespace DrugStore.Models.Entities
         [ForeignKey("Users")]
         public string? IdNguoiDang { get; set; }
         public virtual AspNetUser? Users { get; set; }
+        public virtual ICollection<TagTinTuc>? TagTinTucs { get; set; }
     }
 }

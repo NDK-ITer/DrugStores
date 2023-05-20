@@ -1,5 +1,6 @@
 ﻿using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,7 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: TinTucs/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
