@@ -30,7 +30,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             contxt.HttpContext.Session.Clear();
-            _logger.LogInformation("User logged out.");
+            _logger.LogInformation("Người dùng đã đăng xuất.");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

@@ -55,7 +55,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             [BindProperty]
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Recovery Code")]
+            [Display(Name = "Mã khôi phục")]
             public string RecoveryCode { get; set; }
         }
 
@@ -65,7 +65,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Không thể tải người dùng xác thực hai yếu tố.");
             }
 
             ReturnUrl = returnUrl;
@@ -83,7 +83,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException($"Không thể tải người dùng xác thực hai yếu tố.");
             }
 
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
@@ -94,18 +94,18 @@ namespace DrugStore.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
+                _logger.LogInformation("Người dùng có ID '{UserId}' đã đăng nhập bằng mã khôi phục.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User account locked out.");
+                _logger.LogWarning("Tài khoản người dùng bị khóa.");
                 return RedirectToPage("./Lockout");
             }
             else
             {
-                _logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
-                ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
+                _logger.LogWarning("Mã khôi phục không hợp lệ được nhập cho người dùng có ID '{UserId}' ", user.Id);
+                ModelState.AddModelError(string.Empty, "Đã nhập mã khôi phục không hợp lệ.");
                 return Page();
             }
         }
