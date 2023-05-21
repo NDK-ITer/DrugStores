@@ -15,7 +15,7 @@
                     <ul>
                         @foreach (var item in Model.loaiSPs)
                         {
-                            <li><a href="#">@Html.DisplayFor(modelItem => item.TenLoaiSP)</a></li>
+                            <li><a href="@Url.Action("")">@item.TenLoaiSP</a></li>
                         }
 
                     </ul>

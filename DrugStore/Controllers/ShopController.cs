@@ -22,7 +22,7 @@ namespace DrugStore.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly DrugStoreDbContext dbContext =  new DrugStoreDbContext().Created();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         List<GioHang> gioHangs;
         List<CT_HoaDon> cT_HoaDons;
         private HoaDon hoaDon;
@@ -32,7 +32,7 @@ namespace DrugStore.Controllers
         private SignInManager<AppNetUser> signInManager;
 
 
-        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx,IEmailSender emailSender)
+        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx, IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -40,12 +40,16 @@ namespace DrugStore.Controllers
             this.emailSender = emailSender;
             //var user = userManager.Users.ToList();
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, List<SanPham>? sanPhams)
         {
-            if (page == null) { page = 1;}
-            page  = page < 1 ? 1 : page;
-            int pageSize = 3;
-            return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList((int)page, pageSize));
+            if (sanPhams == null || sanPhams.Count <= 0)
+            {
+                sanPhams = dbContext.SanPhams.Where(s => s.MaTT == 1).OrderBy(s => s.TenSP).ToList();
+            }
+            if (page == null) { page = 1; }
+            page = page < 1 ? 1 : page;
+            int pageSize = 6;
+            return View(sanPhams.ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
         {
@@ -73,7 +77,7 @@ namespace DrugStore.Controllers
 
         public void TakeShopingCart(string idUser)
         {
-            
+
             gioHangs = dbContext.GioHangs.Where(s => s.Id == idUser).ToList();
             if (gioHangs == null)
             {
@@ -112,24 +116,24 @@ namespace DrugStore.Controllers
                 //    result = (double)((int)item.SoLuong * (doiTuongKD.DonGia)) + result;
                 //    continue;
                 //}
-                result = (double)((int)item.SoLuong * (sanPham.DonGia - (sanPham.DonGia * sanPham.GiamGia/100))) + result;
+                result = (double)((int)item.SoLuong * (sanPham.DonGia - (sanPham.DonGia * sanPham.GiamGia / 100))) + result;
             }
             return result;
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id,string strURL)
+        public ActionResult AddToCart(Guid id, string strURL)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
             if (spGioHang != null)
             {
                 spGioHang.SoLuong++;
-                spGioHang.ThanhTien = spGioHang.ThanhTien + (spGioHang.SanPham.DonGia - (spGioHang.SanPham.DonGia*spGioHang.SanPham.GiamGia/100));
+                spGioHang.ThanhTien = spGioHang.ThanhTien + (spGioHang.SanPham.DonGia - (spGioHang.SanPham.DonGia * spGioHang.SanPham.GiamGia / 100));
                 dbContext.GioHangs.Update(spGioHang);
                 dbContext.SaveChanges();
                 TakeShopingCart(userManager.GetUserId(User));
-                
+
             }
             else if (spGioHang == null)
             {
@@ -138,7 +142,7 @@ namespace DrugStore.Controllers
                 spGioHang.MaSP = id;
                 spGioHang.Id = userManager.GetUserId(User);
                 spGioHang.SoLuong = 1;
-                spGioHang.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100))*spGioHang.SoLuong;
+                spGioHang.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spGioHang.SoLuong;
                 dbContext.GioHangs.Add(spGioHang);
                 dbContext.SaveChanges();
                 TakeShopingCart(userManager.GetUserId(User));
@@ -176,7 +180,7 @@ namespace DrugStore.Controllers
         {
             TakeBill();
             cT_HoaDons = TakeListProductIsBougth();
-            
+
             if (cT_HoaDons != null)
             {
                 foreach (var item in cT_HoaDons)
@@ -189,22 +193,22 @@ namespace DrugStore.Controllers
                 ViewBag.HinhThucThanhToan = new SelectList(dbContext.HinhThucThanhToans, "MaHT", "TenHT");
 
             }
-            
+
             return View(hoaDon);
         }
 
         [HttpPost]
         public async Task<IActionResult> Pay(HoaDon hoaDon)
         {
-                
-            
-                hoaDon.CT_HoaDon = TakeListProductIsBougth();
-                hoaDon.TongThanhTien = (decimal)SumProductBought();
-                hoaDon.NgayLap = DateTime.Now;
-                if (signInManager.IsSignedIn(User))
-                {
-                    hoaDon.Id = userManager.GetUserId(User);
-                }
+
+
+            hoaDon.CT_HoaDon = TakeListProductIsBougth();
+            hoaDon.TongThanhTien = (decimal)SumProductBought();
+            hoaDon.NgayLap = DateTime.Now;
+            if (signInManager.IsSignedIn(User))
+            {
+                hoaDon.Id = userManager.GetUserId(User);
+            }
             if (!ModelState.IsValid)
             {
                 TakeBill();
@@ -223,11 +227,11 @@ namespace DrugStore.Controllers
                 }
 
                 return View(hoaDon);
-               
+
             }
             SaveBill(hoaDon);
 
-           
+
             if (hoaDon.HinhThucThanhToan.MaHT == 1)
             {
                 return RedirectToAction("Momo", "Shop", hoaDon);
@@ -305,15 +309,15 @@ namespace DrugStore.Controllers
 
         public void TakeBill()
         {
-            if (hoaDon == null) 
-            { 
+            if (hoaDon == null)
+            {
                 hoaDon = new HoaDon();
                 hoaDon.SoDH = Guid.NewGuid();
                 hoaDon.NgayLap = DateTime.Now;
                 hoaDon.DaThanhToan = false;
             }
             LoginPay(hoaDon);
-           // string hoaDonString = JsonConvert.SerializeObject(hoaDon);
+            // string hoaDonString = JsonConvert.SerializeObject(hoaDon);
             //contx.HttpContext.Session.SetString("dsSpMua", hoaDonString);
         }
 
@@ -330,6 +334,7 @@ namespace DrugStore.Controllers
             {
                 cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
             }
+            
             return cT_HoaDons;
 
         }
@@ -338,7 +343,10 @@ namespace DrugStore.Controllers
         {
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
-
+            if (!signInManager.IsSignedIn(User))
+            {
+                cT_HoaDons.Clear();
+            }
             if (sp != null)
             {
                 CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
@@ -377,7 +385,7 @@ namespace DrugStore.Controllers
             }
         }
 
-       public IActionResult RemoveProductIsBought(Guid idSP)
+        public IActionResult RemoveProductIsBought(Guid idSP)
         {
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
@@ -385,7 +393,7 @@ namespace DrugStore.Controllers
             if (sp != null)
             {
                 CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
-                if(spDuocMua != null)
+                if (spDuocMua != null)
                 {
                     cT_HoaDons.Remove(spDuocMua);
                 }
@@ -393,13 +401,13 @@ namespace DrugStore.Controllers
 
             }
 
-                return RedirectToAction("Pay", "Shop");
+            return RedirectToAction("Pay", "Shop");
         }
 
         [HttpPost]
         public IActionResult ProductIsBought(Guid idSP, int soLuong, string strURL)
         {
-            if(soLuong <= 0)
+            if (soLuong <= 0)
             {
                 return Redirect(strURL);
             }
@@ -441,7 +449,7 @@ namespace DrugStore.Controllers
         {
 
 
-           
+
             //request params need to request to MoMo system
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             string partnerCode = "MOMOOJOI20210710";
@@ -453,7 +461,7 @@ namespace DrugStore.Controllers
 
 
             string amount = hoaDon.TongThanhTien.ToString();
-            string orderid =hoaDon.SoDH.ToString(); //mã đơn hàng
+            string orderid = hoaDon.SoDH.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString();
             string extraData = "";
 
@@ -493,7 +501,7 @@ namespace DrugStore.Controllers
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
             JObject jmessage = JObject.Parse(responseFromMomo);
-         
+
             return Redirect(jmessage.GetValue("payUrl").ToString());
         }
 
@@ -502,7 +510,7 @@ namespace DrugStore.Controllers
         //Tham khảo bảng mã lỗi tại: https://developers.momo.vn/#/docs/aio/?id=b%e1%ba%a3ng-m%c3%a3-l%e1%bb%97i
         public IActionResult ConfirmPaymentClient(Result result)
         {
-           
+
             string rMessage = result.message;
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
@@ -510,15 +518,13 @@ namespace DrugStore.Controllers
             if (code == 0)
             {
                 hoaDon = dbContext.HoaDons.Where(p => p.SoDH.Equals(result.orderId)).FirstOrDefault();
-                if(hoaDon != null)
+                if (hoaDon != null)
                 {
                     hoaDon.DaThanhToan = true;
                 }
                 dbContext.SaveChanges();
                 SendMail(hoaDon);
             }
-            
-
             return View();
         }
 
