@@ -122,7 +122,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id, string strURL)
+        public ActionResult AddToCart(Guid id)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -148,7 +148,7 @@ namespace DrugStore.Controllers
                 TakeShopingCart(userManager.GetUserId(User));
 
             }
-            return Redirect(strURL);
+            return View();
 
 
         }
@@ -334,22 +334,32 @@ namespace DrugStore.Controllers
             {
                 cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
             }
-            
+
             return cT_HoaDons;
 
         }
+
+        public IActionResult DeleteProductIsBought(Guid id)
+        {
+            cT_HoaDons = TakeListProductIsBougth();
+            CT_HoaDon? cT_HoaDon = cT_HoaDons.FirstOrDefault(c => c.MaSP == id);
+            if (cT_HoaDon != null)
+            {
+                cT_HoaDons.Remove(cT_HoaDon);
+                contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+            }
+            return RedirectToAction("Pay", "Shop");
+        }
+
+        
 
         public void AddProductIsBought(Guid idSP, int? soLuong)
         {
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
-            if (!signInManager.IsSignedIn(User))
-            {
-                cT_HoaDons.Clear();
-            }
             if (sp != null)
             {
-                CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
+                CT_HoaDon? spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
                 if (spDuocMua == null)
                 {
                     spDuocMua = new CT_HoaDon();

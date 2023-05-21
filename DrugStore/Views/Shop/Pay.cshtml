@@ -196,7 +196,7 @@
                                             @if (SignInManager.IsSignedIn(User))
                                             {
                                                 <a class="shoping__cart__item__close"
-                                                    href="@Url.Action("DeleteFromCart","Shop",new { @id = item.SanPham.MaSP })">
+                                                   href="@Url.Action("DeleteProductIsBought","Shop",new { @id = item.SanPham.MaSP })">
                                                     <span class="icon_close"></span>
                                                 </a>
                                             }
