@@ -17,6 +17,9 @@ using System.Reflection.Metadata;
 using Microsoft.IdentityModel.Tokens;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using DrugStore.Others.Momo;
+using DrugStore.Models;
+using DrugStore.Services;
 
 namespace DrugStore.Controllers
 {
@@ -30,14 +33,16 @@ namespace DrugStore.Controllers
         private readonly IHttpContextAccessor contx;
         private UserManager<AppNetUser> userManager;
         private SignInManager<AppNetUser> signInManager;
+        private readonly IVnPayService vnPayService;
 
 
-        public ShopController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx, IEmailSender emailSender)
+        public ShopController(IVnPayService vnPayService, UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx, IEmailSender emailSender)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.contx = contx;
             this.emailSender = emailSender;
+            this.vnPayService = vnPayService;
             //var user = userManager.Users.ToList();
         }
         public IActionResult Index(int? page, List<SanPham>? sanPhams)
@@ -235,6 +240,10 @@ namespace DrugStore.Controllers
             if (hoaDon.HinhThucThanhToan.MaHT == 1)
             {
                 return RedirectToAction("Momo", "Shop", hoaDon);
+            }
+            else if(hoaDon.HinhThucThanhToan.MaHT == 3){
+
+                return RedirectToAction("VnPay", "Shop", hoaDon);
             }
             else
             {
@@ -466,7 +475,7 @@ namespace DrugStore.Controllers
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
             string orderInfo = hoaDon.SoDH.ToString();
-            string returnUrl = "https://localhost:7254/Home/ConfirmPaymentClient";
+            string returnUrl = "https://localhost:7254/Shop/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
 
@@ -525,6 +534,7 @@ namespace DrugStore.Controllers
             string rOrderId = result.orderId;
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
             int code = Convert.ToInt32(rErrorCode);
+           
             if (code == 0)
             {
                 hoaDon = dbContext.HoaDons.Where(p => p.SoDH.Equals(result.orderId)).FirstOrDefault();
@@ -534,15 +544,53 @@ namespace DrugStore.Controllers
                 }
                 dbContext.SaveChanges();
                 SendMail(hoaDon);
+
+                ViewBag.Message = "Thanh toán thành công hóa đơn ";
+            }
+            
+            else
+            {
+                ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý";
             }
             return View();
         }
 
-        [HttpPost]
-        public void SavePayment()
+        public IActionResult VnPay(HoaDon model)
         {
-            //cập nhật dữ liệu vào db
-            string a = "";
+            
+            var url = vnPayService.CreatePaymentUrl(model, HttpContext);
+
+            return Redirect(url);
         }
+
+        public IActionResult ConfirmPaymentClientVnPay()
+        {         
+            var response = vnPayService.PaymentExecute(Request.Query);
+
+            PaymentResponseModel responseModel = response;
+           
+            if (responseModel != null)
+            {
+               if(responseModel.Success)
+                {
+                    hoaDon = dbContext.HoaDons.Where(p => p.SoDH.Equals(responseModel.OrderId)).FirstOrDefault();
+                    if (hoaDon != null)
+                    {
+                        hoaDon.DaThanhToan = true;
+                    }
+                    dbContext.SaveChanges();
+                    SendMail(hoaDon);
+
+                    ViewBag.Message = "Thanh toán thành công hóa đơn ";
+                }
+                else
+                {
+                    ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý";
+                }
+            }
+
+            return View();
+        }
+
     }
 }

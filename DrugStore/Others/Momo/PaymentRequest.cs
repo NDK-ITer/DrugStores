@@ -4,11 +4,12 @@ using System.IO;
 using System.Text;
 using System.Net;
 
-namespace DrugStore
+namespace DrugStore.Others.Momo
 {
     class PaymentRequest
     {
-        public PaymentRequest() {
+        public PaymentRequest()
+        {
         }
         public static string sendPaymentRequest(string endpoint, string postJsonString)
         {
