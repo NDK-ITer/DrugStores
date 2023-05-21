@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DrugStore
+namespace DrugStore.Others.Momo
 {
     class MoMoSecurity
     {
@@ -16,14 +16,14 @@ namespace DrugStore
         public string getHash(string partnerCode, string merchantRefId,
             string amount, string paymentCode, string storeId, string storeName, string publicKeyXML)
         {
-            string json = "{\"partnerCode\":\"" + 
+            string json = "{\"partnerCode\":\"" +
                 partnerCode + "\",\"partnerRefId\":\"" +
                 merchantRefId + "\",\"amount\":" +
                 amount + ",\"paymentCode\":\"" +
                 paymentCode + "\",\"storeId\":\"" +
                 storeId + "\",\"storeName\":\"" +
                 storeName + "\"}";
-           
+
             byte[] data = Encoding.UTF8.GetBytes(json);
             string result = null;
             using (var rsa = new RSACryptoServiceProvider(4096)) //KeySize
@@ -54,7 +54,7 @@ namespace DrugStore
                 partnerCode + "\",\"partnerRefId\":\"" +
                 merchantRefId + "\",\"requestId\":\"" +
                 requestid + "\"}";
-           
+
             byte[] data = Encoding.UTF8.GetBytes(json);
             string result = null;
             using (var rsa = new RSACryptoServiceProvider(2048))
@@ -87,7 +87,7 @@ namespace DrugStore
                 momoTranId + "\",\"amount\":" +
                 amount + ",\"description\":\"" +
                 description + "\"}";
-          
+
             byte[] data = Encoding.UTF8.GetBytes(json);
             string result = null;
             using (var rsa = new RSACryptoServiceProvider(2048))
