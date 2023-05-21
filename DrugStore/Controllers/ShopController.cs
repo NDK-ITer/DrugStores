@@ -334,6 +334,7 @@ namespace DrugStore.Controllers
             {
                 cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
             }
+            
             return cT_HoaDons;
 
         }
@@ -342,7 +343,10 @@ namespace DrugStore.Controllers
         {
             SanPham sp = dbContext.SanPhams.Find(idSP);
             cT_HoaDons = TakeListProductIsBougth();
-
+            if (!signInManager.IsSignedIn(User))
+            {
+                cT_HoaDons.Clear();
+            }
             if (sp != null)
             {
                 CT_HoaDon spDuocMua = cT_HoaDons.FirstOrDefault(c => c.MaSP == idSP);
@@ -521,8 +525,6 @@ namespace DrugStore.Controllers
                 dbContext.SaveChanges();
                 SendMail(hoaDon);
             }
-
-
             return View();
         }
 
