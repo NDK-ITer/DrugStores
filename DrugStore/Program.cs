@@ -5,13 +5,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using DrugStore.Mail;
+using NuGet.Protocol.Core.Types;
+using DrugStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddDistributedMemoryCache();
 
@@ -38,7 +40,7 @@ builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

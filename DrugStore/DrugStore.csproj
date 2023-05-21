@@ -36,7 +36,7 @@
   <ItemGroup>
     <Folder Include="Areas\Mail\Data\" />
     <Folder Include="Areas\Mail\Models\" />
-    <Folder Include="Others\" />
+    <Folder Include="Others\Vnpay\" />
     <Folder Include="wwwroot\Images\TinTuc\" />
   </ItemGroup>
 
