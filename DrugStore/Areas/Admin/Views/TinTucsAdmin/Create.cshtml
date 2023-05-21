@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Create";
     DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
-    List<Tag> tagTinTucs = dbContext.Tags.ToList();
+    List<Tag> tag = dbContext.Tags.ToList();
 }
 
 <h2>Create</h2>
@@ -41,21 +41,26 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Tag: </label>
+            <div class="col-md-10">
+                @foreach (var item in Model.TagTinTucs)
+                {
+                    <input type="checkbox" name="TagTinTucs" id="@item.IdTag" value="@item.IdTag" class="form-check-input" />
+
+                    @item.IdTag
+
+                    <br>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.AnhDaiDien, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="custom-file">
                 @Html.TextBox("fileImage", "", new { type = "file", accept = "image/*" })<br />
                 <img id="preview" src="https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg" width="150" height="100" class="hidden" />
             </div>
         </div>
-
-        @*<div class="form-group">
-            <label class="control-label col-md-2">Tag </label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TagTinTucs, new { htmlAttributes = new { @class = "form-control" } })
-                <input type="checkbox" name/>
-                @Html.ValidationMessageFor(model => model.TagTinTucs, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -40,12 +40,16 @@ namespace DrugStore.Controllers
             this.emailSender = emailSender;
             //var user = userManager.Users.ToList();
         }
-        public IActionResult Index(int? page)
+        public IActionResult Index(int? page, List<SanPham>? sanPhams)
         {
+            if (sanPhams == null || sanPhams.Count <= 0)
+            {
+                sanPhams = dbContext.SanPhams.Where(s => s.MaTT == 1).OrderBy(s => s.TenSP).ToList();
+            }
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
-            int pageSize = 3;
-            return View(dbContext.SanPhams.OrderBy(s => s.TenSP).ToPagedList((int)page, pageSize));
+            int pageSize = 6;
+            return View(sanPhams.ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
         {

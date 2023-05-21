@@ -44,7 +44,15 @@ namespace DrugStore.Areas.Admin.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            var model = new TinTuc();
+            model.TagTinTucs = new List<TagTinTuc>();
+            foreach (var item in dbContext.Tags.ToList())
+            {
+                TagTinTuc tagTinTuc = new TagTinTuc();
+                tagTinTuc.IdTag = item.IdTag;
+                model.TagTinTucs.Add(tagTinTuc);
+            }
+            return View(model);
         }
 
         // POST: TinTucs/Create
