@@ -80,7 +80,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             await _emailSender.SendEmailAsync(
                 Input.Email,
                 "Xác nhận email của bạn",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Nhấp vào đây</a>.");
+                $"Vui lòng xác nhận tài khoản của bạn bằng cách <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Nhấp vào đây</a>.");
 
             ModelState.AddModelError(string.Empty, "gửi email xác minh. Vui lòng kiểm tra email của bạn.");
             return Page();
