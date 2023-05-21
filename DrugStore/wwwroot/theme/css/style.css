@@ -730,7 +730,8 @@ ol {
 	height: 431px;
 	display: flex;
 	align-items: center;
-	padding-left: 75px;
+	padding-left: 138px;
+	padding-top: 75px;
 }
 
 .hero__text span {
