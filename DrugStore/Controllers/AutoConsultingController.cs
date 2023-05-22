@@ -43,7 +43,7 @@ namespace DrugStore.Controllers
                 }
                 foreach (var item in dsSP.ToList())
                 {
-                    if (!(item.CongDung.ToUpper().Contains(world) || item.TenSP.ToUpper().Contains(world) || item.MoTa.ToUpper().Contains(world)))
+                    if (!item.CongDung.ToUpper().Contains(world))
                     {
                         dsSP.Remove(item);
                     }
