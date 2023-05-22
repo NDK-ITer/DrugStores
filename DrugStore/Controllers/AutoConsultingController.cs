@@ -13,11 +13,7 @@ namespace DrugStore.Controllers
         
         public IActionResult Consulting(int? page)
         {
-            List<SanPham> dsSP = dbContext.SanPhams.ToList();
-            if (dsSP == null || dsSP.Count <= 0)
-            {
-                dsSP = new List<SanPham>();
-            }
+            List<SanPham> dsSP = new List<SanPham>(); ;
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
             int pageSize = 6;
@@ -62,7 +58,7 @@ namespace DrugStore.Controllers
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
             int pageSize = 6;
-            ViewBag.Message = "";
+            ViewBag.Message = "Kết quả của: " + consultString;
             return View(dsSP.ToPagedList((int)page, pageSize));
         }
     }
