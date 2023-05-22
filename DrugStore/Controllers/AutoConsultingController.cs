@@ -4,7 +4,7 @@ namespace DrugStore.Controllers
 {
     public class AutoConsultingController : Controller
     {
-        public IActionResult Consulting()
+        public IActionResult Consulting(string consultString)
         {
             return View();
         }
