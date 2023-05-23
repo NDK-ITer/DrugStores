@@ -74,27 +74,34 @@ namespace DrugStore.Controllers
                 }
                 worldList.Remove(world);
             }
-
+            if (dsSP.Count <= 0 || dsSP.Count == dbContext.SanPhams.ToList().Count)
+            {
+                return new List<SanPham>();
+            }
             return dsSP;
         }
 
         public IActionResult Index(int? page, List<SanPham>? sanPhams, string? consultString, string? idLoaiSP)
         {
+            int pageSize = 6;
             if (idLoaiSP != null)
             {
                 sanPhams = dbContext.SanPhams.Where(s => s.MaLoaiSP == idLoaiSP).ToList();
-            }
-            if (consultString != null)
-            {
-                sanPhams = AutoConsulting(consultString);
             }
             if (sanPhams == null || sanPhams.Count <= 0)
             {
                 sanPhams = dbContext.SanPhams.Where(s => s.MaTT == 1).OrderBy(s => s.TenSP).ToList();
             }
+            if (consultString != null)
+            {
+                sanPhams = AutoConsulting(consultString);
+                if (page == null) { page = 1; }
+                page = page < 1 ? 1 : page;
+
+                return View(sanPhams.ToPagedList((int)page, pageSize));
+            }
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
-            int pageSize = 6;
             return View(sanPhams.ToPagedList((int)page, pageSize));
         }
         public IActionResult Product(Guid id)
