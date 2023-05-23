@@ -84,7 +84,13 @@ namespace DrugStore.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [Display(Name = "Email")]
             public string Email { get; set; }
+            [Display(Name = "Họ")]
+            public string FirstName { get; set; }
+            [Display(Name = "Tên")]
+            public string LastName { get; set; }
+            public DateTime CreateDate { get; set; } = DateTime.Now;
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -132,9 +138,12 @@ namespace DrugStore.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                        LastName = info.Principal.FindFirstValue(ClaimTypes.Name),
                     };
                 }
+                //return RedirectToPage("./Register", new { Input = Input });
                 return Page();
             }
         }
@@ -153,7 +162,9 @@ namespace DrugStore.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.CreateDate = DateTime.Now;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
