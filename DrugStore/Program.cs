@@ -4,13 +4,17 @@ using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
+using DrugStore.Mail;
+using NuGet.Protocol.Core.Types;
+using DrugStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddDistributedMemoryCache();
 
 services.AddAuthentication().AddGoogle(googleOptions =>
@@ -25,14 +29,6 @@ services.AddAuthentication().AddFacebook(facebookOptions =>
     facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
 });
 
-
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromHours(3);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
 var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DrugStoreDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(connectionString));
@@ -44,14 +40,7 @@ builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,6 +62,11 @@ app.MapAreaControllerRoute(
     name: "Admin",
     areaName: "Admin",
     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+app.MapAreaControllerRoute(
+    name: "Mail",
+    areaName: "Mail",
+    pattern: "Mail/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

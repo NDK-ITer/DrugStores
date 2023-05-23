@@ -15,7 +15,7 @@ namespace DrugStore.Components
                 if (page == null) { page = 1; }
                 page = page < 1 ? 1 : page;
                 int pageSize = 9;
-                List<CT_CaNhanHoa> cT_CaNhanHoas = dbContext.CT_CaNhanHoas.Where(c => c.Id == idUser).OrderBy(c => c.SoLanXem).Take(5).ToList();
+                List<CT_CaNhanHoa> cT_CaNhanHoas = dbContext.CT_CaNhanHoas.Where(c => c.Id == idUser).OrderBy(c => c.SoLanXem)/*.Take(5)*/.ToList();
                 foreach (var item in cT_CaNhanHoas)
                 {
                     TongHopLoaiSP newItem = dbContext.TongHopLoaiSPs.Find(item.MaTHLSP);
@@ -31,6 +31,10 @@ namespace DrugStore.Components
                         }
                     }
                 }
+            }
+            if (dsSanPhamDeXua.Count < 1)
+            {
+                dsSanPhamDeXua = dbContext.SanPhams.OrderBy(s => s.NgayTao).ToList();
             }
             return View(dsSanPhamDeXua);
         }

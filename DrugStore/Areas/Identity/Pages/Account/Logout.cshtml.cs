@@ -17,17 +17,20 @@ namespace DrugStore.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppNetUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
+        private readonly IHttpContextAccessor contxt;
 
-        public LogoutModel(SignInManager<AppNetUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<AppNetUser> signInManager, ILogger<LogoutModel> logger, IHttpContextAccessor contxt)
         {
             _signInManager = signInManager;
             _logger = logger;
+            this.contxt = contxt;
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+            contxt.HttpContext.Session.Clear();
+            _logger.LogInformation("Người dùng đã đăng xuất.");
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

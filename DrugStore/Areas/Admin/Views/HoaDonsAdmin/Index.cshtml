@@ -1,0 +1,71 @@
+﻿@model X.PagedList.IPagedList<DrugStore.Models.Entities.HoaDon>
+@using X.PagedList.Mvc.Core;
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+
+<h1>Hóa Đơn</h1>
+<form asp-action="Index">
+    <label>Tìm kiếm: </label>
+    <input type="text" class="" name="keySearch" />
+    <button type="submit" class="btn-find" @*value="Tìm kiếm"*@><i class="fa fa-indent"></i> </button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            Tên Người Mua
+        </th>
+        <th>
+            Ngày Lập
+        </th>
+        <th>
+            Ngày Giao
+        </th>
+        <th>
+            Trạng Thái Thanh Toán
+        </th>
+        <th>
+            Tổng Thành Tiền
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNguoiMua)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayLap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayGiao)
+            </td>
+            @if (item.DaThanhToan == true)
+            {
+                <td>
+                    Đã Thanh Toán
+                </td>
+            }
+            else
+            {
+                <td>
+                    Chưa Thanh Toán
+                </td>
+            }
+            <td>
+                @String.Format(info, "{0:c}", item.TongThanhTien)
+            </td>
+
+            <td>
+                @Html.ActionLink("Chi Tiết", "Details", new { SoDH=item.SoDH })
+            </td>
+        </tr>
+    }
+</table>
+<div class="product__pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
+</div>

@@ -16,7 +16,6 @@ namespace DrugStore.Models.Entities
     public partial class TinTuc
     {
         [Key]
-
         public Guid? MaTT { get; set; }
         [DisplayName("Ảnh Đại Diện")]
         public string? AnhDaiDien { get; set; }
@@ -29,5 +28,9 @@ namespace DrugStore.Models.Entities
         public string? MoTaTT { get; set; }
         [DisplayName("Số Lượt Xem")]
         public int? SoLuotXem { get; set; }
+        [ForeignKey("Users")]
+        public string? IdNguoiDang { get; set; }
+        public virtual AspNetUser? Users { get; set; }
+        public virtual ICollection<TagTinTuc>? TagTinTucs { get; set; }
     }
 }

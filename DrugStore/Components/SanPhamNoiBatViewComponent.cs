@@ -6,7 +6,7 @@ namespace DrugStore.Components
 {
     public class SanPhamNoiBatViewComponent:ViewComponent
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         public async Task<IViewComponentResult> InvokeAsync()
         {
             List<SanPham> sanPhamNoibats = dbContext.SanPhams.OrderBy(s => s.SoLanMua).ToList();

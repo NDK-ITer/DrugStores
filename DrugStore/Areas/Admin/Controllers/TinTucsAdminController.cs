@@ -1,5 +1,8 @@
-﻿using DrugStore.Models.Entities;
+﻿using DrugStore.Areas.Identity.Data;
+using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -9,15 +12,22 @@ namespace DrugStore.Areas.Admin.Controllers
     [Area("Admin")]
     public class TinTucsAdminController : Controller
     {
-        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();
+        private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/TinTuc/";
-        // GET: TinTucs
-
-        public TinTucsAdminController(IWebHostEnvironment environment)
+        private readonly IHttpContextAccessor contx;
+        private UserManager<AppNetUser> userManager;
+        private SignInManager<AppNetUser> signInManager;
+        public TinTucsAdminController(UserManager<AppNetUser> userManager, SignInManager<AppNetUser> signInManager, IHttpContextAccessor contx, IWebHostEnvironment environment)
         {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.contx = contx;
             this.environment = environment;
+
+            //var user = userManager.Users.ToList();
         }
+        // GET: TinTucs
         public ActionResult Index()
         {
             return View(dbContext.TinTucs.ToList());
@@ -31,9 +41,18 @@ namespace DrugStore.Areas.Admin.Controllers
         }
 
         // GET: TinTucs/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            var model = new TinTuc();
+            model.TagTinTucs = new List<TagTinTuc>();
+            foreach (var item in dbContext.Tags.ToList())
+            {
+                TagTinTuc tagTinTuc = new TagTinTuc();
+                tagTinTuc.IdTag = item.IdTag;
+                model.TagTinTucs.Add(tagTinTuc);
+            }
+            return View(model);
         }
 
         // POST: TinTucs/Create
@@ -58,6 +77,7 @@ namespace DrugStore.Areas.Admin.Controllers
                 tinTuc.AnhDaiDien = fileName;
                 tinTuc.SoLuotXem = 0;
                 tinTuc.ThoiGiaDang = DateTime.Now;
+                tinTuc.IdNguoiDang = userManager.GetUserId(User);
                 dbContext.TinTucs.Add(tinTuc);
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
