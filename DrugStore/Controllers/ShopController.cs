@@ -45,8 +45,49 @@ namespace DrugStore.Controllers
             this.vnPayService = vnPayService;
             //var user = userManager.Users.ToList();
         }
-        public IActionResult Index(int? page, List<SanPham>? sanPhams)
+
+        public List<SanPham> AutoConsulting(string consultString)
         {
+            string[] temp = consultString.Trim().ToUpper().Split(' ');
+            List<string> worldList = temp.ToList();
+            List<SanPham> dsSP = dbContext.SanPhams.ToList();
+            foreach (string world in worldList.ToList())
+            {
+                if (string.IsNullOrEmpty(world))
+                {
+                    break;
+                }
+                foreach (var item in dsSP.ToList())
+                {
+                    if (item.CongDung == null)
+                    {
+                        continue;
+                    }
+                    if (!item.CongDung.ToUpper().Contains(world))
+                    {
+                        dsSP.Remove(item);
+                    }
+                }
+                if (dsSP.IsNullOrEmpty())
+                {
+                    dsSP = dbContext.SanPhams.ToList();
+                }
+                worldList.Remove(world);
+            }
+
+            return dsSP;
+        }
+
+        public IActionResult Index(int? page, List<SanPham>? sanPhams, string? consultString, string? idLoaiSP)
+        {
+            if (idLoaiSP != null)
+            {
+                sanPhams = dbContext.SanPhams.Where(s => s.MaLoaiSP == idLoaiSP).ToList();
+            }
+            if (consultString != null)
+            {
+                sanPhams = AutoConsulting(consultString);
+            }
             if (sanPhams == null || sanPhams.Count <= 0)
             {
                 sanPhams = dbContext.SanPhams.Where(s => s.MaTT == 1).OrderBy(s => s.TenSP).ToList();

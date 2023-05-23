@@ -15,7 +15,7 @@
                     <ul>
                         @foreach (var item in Model.loaiSPs)
                         {
-                            <li><a href="@Url.Action("")">@item.TenLoaiSP</a></li>
+                            <li><a href="@Url.Action("Index", "Shop", new{ idLoaiSP = @item.MaLoaiSP})">@item.TenLoaiSP</a></li>
                         }
 
                     </ul>
@@ -24,12 +24,12 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
+                        <form asp-action="Index" asp-controller="Shop">
                             <div class="hero__search__categories">
-                                Danh Mục
-                                <span class="arrow_carrot-down"></span>
+                                Tư vấn cho bạn
+                                @*<span class="arrow_carrot-down"></span>*@
                             </div>
-                            <input type="text" placeholder="Bạn cần gì?">
+                            <input type="text" name="consultString" placeholder="Bạn cần gì?">
                             <button type="submit" class="site-btn">TÌM KIẾM</button>
                         </form>
                     </div>
