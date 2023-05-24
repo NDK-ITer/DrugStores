@@ -90,7 +90,6 @@ namespace DrugStore.Areas.Identity.Pages.Account
             public string FirstName { get; set; }
             [Display(Name = "Tên")]
             public string LastName { get; set; }
-            public DateTime CreateDate { get; set; } = DateTime.Now;
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -143,7 +142,6 @@ namespace DrugStore.Areas.Identity.Pages.Account
                         LastName = info.Principal.FindFirstValue(ClaimTypes.Name),
                     };
                 }
-                //return RedirectToPage("./Register", new { Input = Input });
                 return Page();
             }
         }
