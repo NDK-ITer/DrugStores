@@ -23,13 +23,11 @@
                                 <li><a asp-controller="Shop" asp-action="Product" asp-route-id="@item.MaSP"><i class="fa fa-eye"></i></a></li>
                                 @if (!SignInManager.IsSignedIn(User))
                                 {
-                                    <li><a href="@Url.Action("AddToCart","Shop",new { @id = item.MaSP,@strURL= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
-
+                                    <li><a href="@Url.Action("AddToCart","Shop",new {@class = "ajax-add-to-cart",@id = item.MaSP,@x= Context.Request.GetDisplayUrl().ToString()} )"><i class="fa fa-shopping-cart"></i></a></li>
                                 }
                                 else
                                 {
-                                    <li><a class="ajax-add-to-cart" data-id="@item.MaSP" data-strURL="@Context.Request.GetDisplayUrl().ToString()"><i class="fa fa-shopping-cart"></i></a></li>
-
+                                    <li><a class="ajax-add-to-cart" data-id="@item.MaSP" data-x="@Context.Request.GetDisplayUrl().ToString()"><i class="fa fa-shopping-cart"></i></a></li>
                                 }
 
                             </ul>
@@ -44,6 +42,7 @@
         }
     </div>
 </div>
+
 
 
 
