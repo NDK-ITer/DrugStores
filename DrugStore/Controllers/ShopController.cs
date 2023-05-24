@@ -175,7 +175,7 @@ namespace DrugStore.Controllers
         }
 
         [Authorize]
-        public ActionResult AddToCart(Guid id)
+        public ActionResult AddToCart(Guid id, string? strURL)
         {
             TakeShopingCart(userManager.GetUserId(User));
             GioHang spGioHang = gioHangs.FirstOrDefault(n => n.MaSP == id);
@@ -200,6 +200,10 @@ namespace DrugStore.Controllers
                 dbContext.SaveChanges();
                 TakeShopingCart(userManager.GetUserId(User));
 
+            }
+            if (!signInManager.IsSignedIn(User) && strURL != null)
+            {
+                return Redirect(strURL);
             }
             return View();
 
