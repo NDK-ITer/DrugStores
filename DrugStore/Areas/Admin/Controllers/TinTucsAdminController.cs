@@ -1,9 +1,11 @@
-﻿using DrugStore.Areas.Identity.Data;
+﻿using DrugStore.Areas.Admin.Data;
+using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 
@@ -44,41 +46,53 @@ namespace DrugStore.Areas.Admin.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            var model = new TinTuc();
-            model.TagTinTucs = new List<TagTinTuc>();
-            foreach (var item in dbContext.Tags.ToList())
-            {
-                TagTinTuc tagTinTuc = new TagTinTuc();
-                tagTinTuc.IdTag = item.IdTag;
-                model.TagTinTucs.Add(tagTinTuc);
-            }
+            var model = new TinTucInput();
+           List<string> idtag = new List<string>();
+            model.drptag = dbContext.Tags.Select(x => new SelectListItem { Text = x.IdTag ,Value=x.IdTag}).ToList();
             return View(model);
         }
 
         // POST: TinTucs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TinTuc tinTuc, IFormFile fileImage)
+        public ActionResult Create(TinTucInput TinTucInput, IFormFile fileImage)
         {
             try
             {
-                tinTuc.MaTT = Guid.NewGuid();
+               Guid id = Guid.NewGuid();
                 Random random = new Random();
                 string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                 string extention = Path.GetExtension(fileImage.FileName);
-                fileName = tinTuc.MaTT.ToString() + random.Next().ToString()+ extention;
+                fileName = id.ToString() + random.Next().ToString() + extention;
                 string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                 var filePath = Path.Combine(uploadFolder, fileName);
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                 {
                     fileImage.CopyTo(stream);
                 }
+                TinTuc tinTuc = new TinTuc()
+                {
+                    MaTT=id,
+                    MoTaTT=TinTucInput.description,
+                    NoiDung=TinTucInput.content,
+                    ThoiGiaDang = DateTime.Now,
+                    AnhDaiDien=fileName,
+                    IdNguoiDang = userManager.GetUserId(User),
+                    SoLuotXem=0,
 
-                tinTuc.AnhDaiDien = fileName;
-                tinTuc.SoLuotXem = 0;
-                tinTuc.ThoiGiaDang = DateTime.Now;
-                tinTuc.IdNguoiDang = userManager.GetUserId(User);
+
+                };
                 dbContext.TinTucs.Add(tinTuc);
+                foreach (string tag in TinTucInput.idtag){
+                    TagTinTuc tagTinTuc = new TagTinTuc()
+                    {
+                        IdTag = tag,
+                        MaTT=id,
+                    };
+
+                    dbContext.TagTinTucs.Add(tagTinTuc);
+                } ;
+                
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -86,33 +100,53 @@ namespace DrugStore.Areas.Admin.Controllers
             {
                 return View();
             }
+           
         }
 
         // GET: TinTucs/Edit/5
         public ActionResult Edit(Guid id)
         {
-            TinTuc tinTuc = dbContext.TinTucs.Find(id);
-            return View(tinTuc);
+            TinTuc tinTuc=dbContext.TinTucs.Find(id);
+            TinTucInput TinTucinput = new TinTucInput()
+            {
+                idtintuc= (Guid)tinTuc.MaTT,
+                createdDate=tinTuc.ThoiGiaDang,
+                content=tinTuc.NoiDung,
+                description=tinTuc.MoTaTT,
+                cover=tinTuc.AnhDaiDien,
+
+            };
+
+
+            List<string> idtag = new List<string>();
+
+
+          
+
+          
+
+            TinTucinput.drptag = dbContext.Tags.Select(x => new SelectListItem { Text = x.IdTag, Value = x.IdTag,}).ToList();
+            return View(TinTucinput);
         }
 
         // POST: TinTucs/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TinTuc tinTuc, IFormFile fileImage)
+        public ActionResult Edit(TinTucInput tinTucInput, IFormFile fileImage)
         {
             try
             {
                 if (fileImage != null)
                 {
                     Random random = new Random();
-                    string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTuc.AnhDaiDien;
+                    string filePathDelete = environment.WebRootPath + "/" + fileImagePath + tinTucInput.cover;
                     FileInfo fileDelete = new FileInfo(filePathDelete);
                     fileDelete.Delete();
 
                     string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                     string extention = Path.GetExtension(fileImage.FileName);
-                    fileName = tinTuc.MaTT.ToString() + random.Next().ToString() + extention;
-                    tinTuc.AnhDaiDien = fileName;
+                    fileName =tinTucInput.idtintuc.ToString() + random.Next().ToString() + extention;
+                    tinTucInput.cover = fileName;
                     string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                     var filePath = Path.Combine(uploadFolder, fileName);
 
@@ -121,9 +155,33 @@ namespace DrugStore.Areas.Admin.Controllers
                         fileImage.CopyTo(stream);
                     }
                 }
+                TinTuc tinTuc= dbContext.TinTucs.Find(tinTucInput.idtintuc);
+                tinTuc.MaTT = tinTucInput.idtintuc;
+                tinTuc.MoTaTT = tinTucInput.description;
+                tinTuc.NoiDung = tinTucInput.content;
+                tinTuc.AnhDaiDien = tinTucInput.cover;
+                
 
-                //dbContext.Entry(tinTuc).State = EntityState.Modified;
+                
                 dbContext.TinTucs.Update(tinTuc);
+                var tagTinTuc1 = dbContext.TagTinTucs.Where(x=>x.MaTT==tinTucInput.idtintuc).ToList();
+                foreach ( var tag in tagTinTuc1)
+                {
+                    dbContext.TagTinTucs.Remove(tag);
+                }
+               
+                dbContext.SaveChanges();
+
+                foreach (string tag in tinTucInput.idtag)
+                {
+                    TagTinTuc tagTinTuc = new TagTinTuc()
+                    {
+                        IdTag = tag,
+                        MaTT = tinTucInput.idtintuc,
+                    };
+
+                    dbContext.TagTinTucs.Add(tagTinTuc);
+                };
                 dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -131,6 +189,7 @@ namespace DrugStore.Areas.Admin.Controllers
             {
                 return View();
             }
+           
         }
 
         // GET: TinTucs/Delete/5

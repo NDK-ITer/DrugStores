@@ -1,12 +1,6 @@
-﻿@model DrugStore.Models.Entities.TinTuc
-@using DrugStore.Models.Entities
+﻿@model DrugStore.Areas.Admin.Data.TinTucInput
 
-@{
-    ViewBag.Title = "Create";
-    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
-    List<Tag> tag = dbContext.Tags.ToList();
-}
-
+<div class="p-5">
 <h2>Create</h2>
 
 <form asp-action="Create"  enctype="multipart/form-data"  method="post">
@@ -16,49 +10,37 @@
         <h4>TinTuc</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="form-group">
-            @Html.LabelFor(model => model.ThoiGiaDang, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @DateTime.Now<br />
+                @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.content, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NoiDung, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MoTaTT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MoTaTT, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MoTaTT, "", new { @class = "text-danger" })
+        
+            <div class="form-group">
+                <label class="control-label col-md-2">tag</label>
+                <div class="col-md-10">
+                    @Html.ListBoxFor(model=> model.idtag,Model.drptag, new {@class="form-control",id="tag", multiple="multiple" })
+                @Html.ValidationMessageFor(model => model.idtag, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+       
 
         <div class="form-group">
-            <label class="control-label col-md-2">Tag: </label>
-            <div class="col-md-10">
-                @foreach (var item in Model.TagTinTucs)
-                {
-                    <input type="checkbox" name="TagTinTucs" id="@item.IdTag" value="@item.IdTag" class="form-check-input" />
-
-                    @item.IdTag
-
-                    <br>
-                }
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AnhDaiDien, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.cover, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="custom-file">
                 @Html.TextBox("fileImage", "", new { type = "file", accept = "image/*" })<br />
-                <img id="preview" src="https://climate.onep.go.th/wp-content/uploads/2020/01/default-image.jpg" width="150" height="100" class="hidden" />
+   
             </div>
         </div>
 
@@ -69,7 +51,18 @@
         </div>
     </div>
 </form>
+@section Scripts{
+    
+    <script>
+    $(function () {
+    $('#tag').multiselect({
+        includeSelectAllOption : true,
+    });
+    });
+</script>
+}
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+</div>
 </div>
