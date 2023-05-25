@@ -531,8 +531,8 @@
                     url: "@Url.Action("AddToCart","Shop")",
                     data: {
                         id: $(this).data("id"),
+                        x: "@Context.Request.GetDisplayUrl().ToString()",
                         type: "ajax",
-                        strURL: $(this).data("strURL"),
                     },
                     success: function (data) {
                         console.log(data);
