@@ -66,6 +66,6 @@
         </tr>
     }
 </table>
-<div class="product__pagination">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
+<div class="product__pagination"> 
+    Trang: @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
 </div>

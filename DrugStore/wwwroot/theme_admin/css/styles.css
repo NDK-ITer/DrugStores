@@ -77,16 +77,17 @@
 }
 
 body {
-  margin: 0;
-  font-family: var(--bs-body-font-family);
-  font-size: var(--bs-body-font-size);
-  font-weight: var(--bs-body-font-weight);
-  line-height: var(--bs-body-line-height);
-  color: var(--bs-body-color);
-  text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    text-align: var(--bs-body-text-align);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding: 3rem !important;
 }
 
 hr {
@@ -238,8 +239,61 @@ a {
   color: #0d6efd;
   text-decoration: underline;
 }
+
+    a.button {
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        font-family: sans-serif;
+        background-color: #57c9da;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        padding: 10px 50px;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: 10px;
+        text-transform: capitalize;
+    }
+
+/*    a.button::after, a.button::before {
+        content: '';
+        background-color: #57c9da;
+        height: 50%;
+        width: 0;
+        position: absolute;
+        transition: 0.3s cubic-bezier(.785, .135, .15, .86);
+        -webkit-transition: 0.3s cubic-bezier(.785, .135, .15, .86);
+        z-index: -1;
+    }
+
+    a.button:hover::before {
+        width: 100%;
+        right: 0;
+        left: auto;
+    }
+
+    a.button::before {
+        top: 0;
+        right: auto;
+        left: 0;
+    }
+
+    a.button:hover::after {
+        width: 100%;
+        right: auto;
+        left: 0;
+    }
+
+    a.button::after {
+        bot: 0;
+        right: 0;
+        left: auto;
+    }*/
+
 a:hover {
-  color: #0a58ca;
+  color: #000;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -7448,7 +7502,7 @@ textarea.form-control-lg {
 }
 
 .p-5 {
-  padding: 3rem !important;
+  padding: 1rem !important;
 }
 
 .px-0 {

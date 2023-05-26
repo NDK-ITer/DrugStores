@@ -416,6 +416,7 @@ ol {
 }
 
 .header__menu {
+	text-align: center;
 	padding: 24px 0;
 }
 
@@ -463,11 +464,17 @@ ol {
 		color: #0732c5;
 	}
 
-.header__menu ul li:hover .header__menu__dropdown {
-	top: 30px;
-	opacity: 1;
-	visibility: visible;
-}
+	.header__menu ul li.active a:hover{
+		color: blue;
+		background-color: lavender;
+		transition: all 1s ease;
+	}
+
+	.header__menu ul li:hover .header__menu__dropdown {
+		top: 30px;
+		opacity: 1;
+		visibility: visible;
+	}
 
 	.header__menu ul li:hover > a {
 		color: #0732c5;
