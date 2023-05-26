@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DrugStore.Models.Entities.HoaDon>
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                Ngày Lập
+            </th>
+        
+            <th>
+                Trạng Thái Thanh Toán
+            </th>
+            <th>
+                Tổng Thành Tiền
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.NgayLap
+                </td>
+                @if (item.DaThanhToan == true)
+                {
+                    <td>
+                        Đã Thanh Toán
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Chưa Thanh Toán
+                    </td>
+                }
+                <td>
+                    @String.Format(info, "{0:c}", item.TongThanhTien)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})">Chi tiết</a>
+                    @*<a asp-action="Detail" asp-controller="Bill" id = "@item.SoDH" >Chi tiết</a>*@
+                </td>
+            </tr>
+        }
+    </table>
+</div>

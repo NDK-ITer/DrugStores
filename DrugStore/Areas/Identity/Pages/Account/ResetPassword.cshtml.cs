@@ -60,7 +60,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Xác nhận mật khẩu")]
-            [Compare("Mật khẩu", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
+            [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
 
             /// <summary>
