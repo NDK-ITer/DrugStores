@@ -1,0 +1,110 @@
+﻿@model DrugStore.Models.Entities.HoaDon
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<div>
+    <h4>LoaiThuoc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Số hóa đơn
+        </dt>
+
+        <dt>
+            Ngày lập
+        </dt>
+
+        <dt>
+            Địa chỉ giao
+        </dt>
+
+        <dt>
+            Ghi chú
+        </dt>
+
+        <dt>
+            Trạng thái thanh toán
+        </dt>
+
+        <dt>
+            Tổng thành tiền
+        </dt>
+
+        <dd>
+            @Model.SoDH
+        </dd>
+
+        <dd>
+            @Model.NgayLap
+        </dd>
+
+        <dd>
+            @Model.DiaChiGiao
+        </dd>
+
+        <dd>
+            @Model.GhiChu
+        </dd>
+
+        @if (Model.DaThanhToan == true)
+        {
+            <dd>
+                Đã Thanh Toán
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Chưa Thanh Toán
+            </dd>
+        }
+
+        <dd>
+            @String.Format(info, "{0:c}", Model.TongThanhTien)
+        </dd>
+        <table class="table">
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+
+                <th>
+                    Ảnh
+                </th>
+
+                <th>
+                    Số Lượng
+                </th>
+
+                <th>
+                    Thành tiền
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.CT_HoaDon)
+            {
+                <tr>
+                    <td>
+                        @item.SanPham.TenSP
+                    </td>
+                    <td>
+                        @if (item.SanPham.Thuoc != null)
+                        {
+                            <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" width="100" height="100"/>
+                        }
+                    </td>
+                    <td>
+                        @item.SoLuong
+                    </td>
+                    <td>
+                        @String.Format(info, "{0:c}", item.ThanhTien)
+                    </td>
+                </tr>
+            }
+        </table>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

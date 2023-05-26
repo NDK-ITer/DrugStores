@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using DrugStore.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using DrugStore.Mail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -108,12 +108,12 @@ namespace DrugStore.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [StringLength(10, ErrorMessage = "The {0} must be at  equal {1} characters long.", MinimumLength =10)]
+            [StringLength(10, ErrorMessage = "The {0} must be at  equal {1} characters long.", MinimumLength = 10)]
             [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone Numner")]
-            public string PhoneNumner { get;set; }
-            public DateTime CreateDate { get; set; }=DateTime.Now;
+            public string PhoneNumner { get; set; }
+            public DateTime CreateDate { get; set; } = DateTime.Now;
         }
 
 
@@ -130,22 +130,24 @@ namespace DrugStore.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                
-                user=new AppNetUser {FirstName=Input.LastName,
-                 LastName= Input.FirstName,
-                 CreateDate=DateTime.Now,
-                 PhoneNumber=Input.PhoneNumner
-                 
+
+                user = new AppNetUser
+                {
+                    FirstName = Input.LastName,
+                    LastName = Input.FirstName,
+                    CreateDate = DateTime.Now,
+                    PhoneNumber = Input.PhoneNumner,
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

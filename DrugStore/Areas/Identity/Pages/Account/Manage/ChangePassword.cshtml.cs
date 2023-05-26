@@ -74,7 +74,7 @@ namespace DrugStore.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Xác nhận mật khẩu mới")]
-            [Compare("Mật khẩu mới", ErrorMessage = "Mật khẩu mới và mật khẩu xác nhận không khớp.")]
+            [Compare("NewPassword", ErrorMessage = "Mật khẩu mới và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
         }
 
