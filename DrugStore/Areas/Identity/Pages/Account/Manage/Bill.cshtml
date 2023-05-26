@@ -1,4 +1,18 @@
 ﻿@page
-@model DrugStore.Areas.Identity.Pages.Account.Manage.BillModel
+@model BillModel
 @{
+    
 }
+
+@if (Model.dsHD != null)
+{
+    @foreach (var item in Model.dsHD())
+    {
+        <div><a>@item.NgayLap</a></div>
+    }
+}
+else if (Model.dsHD().Count <= 0)
+{
+    <div>Bạn chưa có hóa đơn nào</div>
+}
+
