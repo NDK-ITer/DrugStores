@@ -8,7 +8,7 @@
 {
     @foreach (var item in Model.dsHD())
     {
-        <div><a href="#">@item.NgayLap</a></div>
+        <div><a asp-page=""><span>@item.NgayLap</span></a></div>
     }
 }
 else if (Model.dsHD().Count <= 0)
