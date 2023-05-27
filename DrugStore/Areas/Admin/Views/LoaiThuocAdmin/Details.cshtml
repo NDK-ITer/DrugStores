@@ -4,10 +4,10 @@
     ViewData["Title"] = "Loại Thuốc";
     //Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2>Details</h2>
+<h2>Chi tiết</h2>
 
 <div>
-    <h4>LoaiThuoc</h4>
+    <h4>Loại thuốc</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,6 +21,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaLT }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaLT }) |
+    @Html.ActionLink("Trở về danh sách", "Index")
 </p>

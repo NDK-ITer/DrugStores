@@ -11,9 +11,12 @@
     @Html.ActionLink("Tạo mới", "Create")
 
 </p>*@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+@*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Thêm
-</button>
+</button>*@
+<p>
+    <a href="/Admin/LoaiThuocAdmin/Create" class="button">Tạo mới</a>
+</p>
 <table class="table">
     <tr>
         <th>
@@ -29,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.TenLoaiThuoc)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.MaLT }) |
-                @Html.ActionLink("Details", "Details", new { id=item.MaLT }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.MaLT })
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.MaLT }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id=item.MaLT }) |
+                @Html.ActionLink("Xóa", "Delete", new { id=item.MaLT })
             </td>
         </tr>
     }

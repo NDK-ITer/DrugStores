@@ -4,10 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tin tức</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="/Admin/TinTucsAdmin/Create" class="button">Tạo mới</a>
 </p>
 <table class="table">
     <tr>
@@ -42,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.SoLuotXem)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.MaTT }) |
-                @Html.ActionLink("Details", "Details", new { id=item.MaTT }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.MaTT })
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.MaTT }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id=item.MaTT }) |
+                @Html.ActionLink("Xóa", "Delete", new { id=item.MaTT })
             </td>
         </tr>
     }
