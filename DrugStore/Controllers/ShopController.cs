@@ -81,7 +81,7 @@ namespace DrugStore.Controllers
             return dsSP;
         }
 
-        public IActionResult Index(int? page, List<SanPham>? sanPhams, string? consultString, string? idLoaiSP)
+        public IActionResult Index(int? page, List<SanPham> sanPhams, string? consultString, string? idLoaiSP, Guid? idTHLSP)
         {
             int pageSize = 6;
             if (idLoaiSP != null)
@@ -91,6 +91,14 @@ namespace DrugStore.Controllers
             if (sanPhams == null || sanPhams.Count <= 0)
             {
                 sanPhams = dbContext.SanPhams.Where(s => s.MaTT == 1).OrderBy(s => s.TenSP).ToList();
+            }
+            if (idTHLSP != null)
+            {
+                sanPhams = dbContext.SanPhams.Where(c => c.Thuoc != null && c.Thuoc.MaLT == idTHLSP).ToList();
+                if (sanPhams.IsNullOrEmpty())
+                {
+                    sanPhams = new List<SanPham>();
+                }
             }
             if (consultString != null)
             {
@@ -104,6 +112,13 @@ namespace DrugStore.Controllers
             page = page < 1 ? 1 : page;
             return View(sanPhams.ToPagedList((int)page, pageSize));
         }
+
+        //public IActionResult FillLoaiThuoc(Guid id)
+        //{
+        //    List<SanPham> dssp = dbContext.SanPhams.Where(c => c.Thuoc.MaLT == id).ToList();
+        //    return RedirectToAction("Index","Shop", dssp,null);
+        //}
+
         public IActionResult Product(Guid id)
         {
             SanPham sanPham = dbContext.SanPhams.Find(id);
@@ -293,7 +308,8 @@ namespace DrugStore.Controllers
             {
                 return RedirectToAction("Momo", "Shop", hoaDon);
             }
-            else if(hoaDon.HinhThucThanhToan.MaHT == 3){
+            else if (hoaDon.HinhThucThanhToan.MaHT == 3)
+            {
 
                 return RedirectToAction("VnPay", "Shop", hoaDon);
             }
@@ -412,7 +428,7 @@ namespace DrugStore.Controllers
             return RedirectToAction("Pay", "Shop");
         }
 
-        
+
 
         public void AddProductIsBought(Guid idSP, int? soLuong)
         {
@@ -528,7 +544,7 @@ namespace DrugStore.Controllers
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
             string orderInfo = hoaDon.SoDH.ToString();
             string returnUrl = "https://localhost:7254/Shop/ConfirmPaymentClient";
-        //    string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+            //    string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
 
             string amount = hoaDon.TongThanhTien.ToString();
@@ -545,7 +561,7 @@ namespace DrugStore.Controllers
                 orderid + "&orderInfo=" +
                 orderInfo + "&returnUrl=" +
                 returnUrl + "&notifyUrl=" +
-               // notifyurl + "&extraData=" +
+                // notifyurl + "&extraData=" +
                 extraData;
 
             MoMoSecurity crypto = new MoMoSecurity();
@@ -587,10 +603,10 @@ namespace DrugStore.Controllers
             Guid rOrderId = new Guid(result.orderId);
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
             int code = Convert.ToInt32(rErrorCode);
-           
+
             if (code == 0)
             {
-                hoaDon = dbContext.HoaDons.Where(p => p.SoDH== rOrderId).FirstOrDefault();
+                hoaDon = dbContext.HoaDons.Where(p => p.SoDH == rOrderId).FirstOrDefault();
                 if (hoaDon != null)
                 {
                     hoaDon.DaThanhToan = true;
@@ -600,7 +616,7 @@ namespace DrugStore.Controllers
 
                 ViewBag.Message = "Thanh toán thành công hóa đơn ";
             }
-            
+
             else
             {
                 ViewBag.Message = "Có lỗi xảy ra trong quá trình xử lý";
@@ -610,24 +626,24 @@ namespace DrugStore.Controllers
 
         public IActionResult VnPay(HoaDon model)
         {
-            
+
             var url = vnPayService.CreatePaymentUrl(model, HttpContext);
 
             return Redirect(url);
         }
 
         public IActionResult ConfirmPaymentClientVnPay()
-        {         
+        {
             var response = vnPayService.PaymentExecute(Request.Query);
 
             PaymentResponseModel responseModel = response;
-           
+
             if (responseModel != null)
             {
-               if(responseModel.Success)
+                if (responseModel.Success)
                 {
                     Guid rOrderId = new Guid(responseModel.OrderId);
-                    hoaDon = dbContext.HoaDons.Where(p => p.SoDH== rOrderId).FirstOrDefault();
+                    hoaDon = dbContext.HoaDons.Where(p => p.SoDH == rOrderId).FirstOrDefault();
                     if (hoaDon != null)
                     {
                         hoaDon.DaThanhToan = true;
