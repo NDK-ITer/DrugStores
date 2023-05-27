@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
@@ -121,11 +123,37 @@ namespace DrugStore.Areas.Admin.Controllers
             List<string> idtag = new List<string>();
 
 
-          
 
-          
 
-            TinTucinput.drptag = dbContext.Tags.Select(x => new SelectListItem { Text = x.IdTag, Value = x.IdTag,}).ToList();
+            
+
+
+            var x = dbContext.TagTinTucs.Where(x => x.MaTT == TinTucinput.idtintuc).Select(x => new SelectListItem { Text = x.IdTag, Value = x.IdTag,Selected=true}).ToList();
+            var y = dbContext.Tags.Select(x => new SelectListItem { Text = x.IdTag, Value = x.IdTag }).ToList();
+
+            var z=new List<SelectListItem>();
+            foreach(var n in x)
+            {
+                z.Add(n);
+            }
+            foreach(var n in y)
+            {
+                z.Add(n);
+            }
+
+            foreach(var n in y)
+            {
+                foreach (var m in x)
+                {if(m.Value.Equals(n.Value) && n.Selected==false)
+                    z.Remove(n);
+                if(m.Value.Equals(n.Value) && n.Selected == true)
+                    { z.Add(m); }
+                }
+            }
+
+           
+            TinTucinput.drptag = z;
+
             return View(TinTucinput);
         }
 
