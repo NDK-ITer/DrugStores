@@ -24,17 +24,46 @@ namespace DrugStore.Areas.Admin.Controllers
             //var user = userManager.Users.ToList();
         }
         // GET: HoaDonsController
-        public IActionResult Index(int? page, string? keySearch)
+        public IActionResult Index(int? page, string? keySearch,bool? thanhtoan)
         {
             List<HoaDon> hoaDons;
-            if (!keySearch.IsNullOrEmpty())
+            if (thanhtoan == null)
             {
-                hoaDons = dbContext.HoaDons.Where(c=>c.HinhThucThanhToan.TenHT.Contains(keySearch) || c.TenNguoiMua.Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch)).OrderBy(c => c.NgayLap).ToList();
+                if (!keySearch.IsNullOrEmpty())
+                {
+                    hoaDons = dbContext.HoaDons.Where(c => c.HinhThucThanhToan.TenHT.Contains(keySearch) || c.TenNguoiMua.Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch)).OrderBy(c => c.NgayLap).ToList();
+                }
+                else
+                {
+                    hoaDons = dbContext.HoaDons.OrderBy(s => s.NgayLap).ToList();
+                }
             }
             else
             {
-                hoaDons = dbContext.HoaDons.OrderBy(s => s.NgayLap).ToList();
+                if (thanhtoan == true)
+                {
+                    if (!keySearch.IsNullOrEmpty())
+                    {
+                        hoaDons = dbContext.HoaDons.Where(c => c.HinhThucThanhToan.TenHT.Contains(keySearch) || c.TenNguoiMua.Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) && c.DaThanhToan==true).OrderBy(c => c.NgayLap).ToList();
+                    }
+                    else
+                    {
+                        hoaDons = dbContext.HoaDons.Where(c=>c.DaThanhToan==true).OrderBy(s => s.NgayLap).ToList();
+                    }
+                }
+                else
+                {
+                    if (!keySearch.IsNullOrEmpty())
+                    {
+                        hoaDons = dbContext.HoaDons.Where(c => c.HinhThucThanhToan.TenHT.Contains(keySearch) || c.TenNguoiMua.Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch) || c.NgayLap.ToString().Contains(keySearch)&& c.DaThanhToan == false).OrderBy(c => c.NgayLap).ToList();
+                    }
+                    else
+                    {
+                        hoaDons = dbContext.HoaDons.Where(c => c.DaThanhToan == false).OrderBy(s => s.NgayLap).ToList();
+                    }
+                }
             }
+          
             
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;

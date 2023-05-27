@@ -71,7 +71,14 @@
                                     <div class="checkout__input">
                                         <p>SĐT<span>*</span></p>
                                         @*<input type="text" value="@Model.SDT" readonly>*@
-                                        @Html.TextBoxFor(model => model.SDT, new { type = "text", value=@Model.SDT, @readonly = "readonly"})
+                                        @*@if (Model.SDT == null)
+                                        {
+                                            @Html.TextBoxFor(model => model.SDT, new { type = "text", value=@Model.SDT, @readonly = "readonly"})
+                                        }else
+                                        {
+                                            @Html.TextBoxFor(model => model.SDT, new { type = "text"})
+                                        }*@
+                                        @Html.TextBoxFor(model => model.SDT, new { type = "text"})
                                         @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

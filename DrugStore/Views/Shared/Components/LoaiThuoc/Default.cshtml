@@ -1,0 +1,13 @@
+﻿@using DrugStore.Models.Entities;
+@model IEnumerable<DrugStore.Models.Entities.LoaiThuoc>
+@{
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
+}
+<div>
+    <h5>Thuốc</h5><br />
+    @foreach (var item in Model)
+    {
+        <li><a asp-action="Index" asp-controller="Shop" asp-route-idTHLSP="@item.MaLT"><span>@item.TenLoaiThuoc</span></a></li>
+    }
+
+</div>
