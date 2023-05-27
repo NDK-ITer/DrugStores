@@ -544,7 +544,7 @@ namespace DrugStore.Controllers
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
             string orderInfo = hoaDon.SoDH.ToString();
             string returnUrl = "https://localhost:7254/Shop/ConfirmPaymentClient";
-            //    string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+            string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
 
             string amount = hoaDon.TongThanhTien.ToString();
@@ -561,7 +561,7 @@ namespace DrugStore.Controllers
                 orderid + "&orderInfo=" +
                 orderInfo + "&returnUrl=" +
                 returnUrl + "&notifyUrl=" +
-                // notifyurl + "&extraData=" +
+                notifyurl + "&extraData=" +
                 extraData;
 
             MoMoSecurity crypto = new MoMoSecurity();
@@ -579,7 +579,7 @@ namespace DrugStore.Controllers
                 { "orderInfo", orderInfo },
                 { "returnUrl", returnUrl },
              //
-             //{ "notifyUrl", notifyurl },
+                { "notifyUrl", notifyurl },
                 { "extraData", extraData },
                 { "requestType", "captureMoMoWallet" },
                 { "signature", signature }
