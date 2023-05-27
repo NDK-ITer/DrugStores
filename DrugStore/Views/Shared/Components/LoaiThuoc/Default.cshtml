@@ -1,0 +1,8 @@
+﻿@model IEnumerable<DrugStore.Models.Entities.LoaiThuoc>
+
+
+<h6>Thuốc</h6>
+@foreach (var item in Model)
+{
+    <a href="#"><span>@item.TenLoaiThuoc</span></a><br />
+}
