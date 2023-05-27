@@ -262,6 +262,7 @@ namespace DrugStore.Controllers
             hoaDon.CT_HoaDon = TakeListProductIsBougth();
             hoaDon.TongThanhTien = (decimal)SumProductBought();
             hoaDon.NgayLap = DateTime.Now;
+            hoaDon.DaThanhToan = false;
             if (signInManager.IsSignedIn(User))
             {
                 hoaDon.Id = userManager.GetUserId(User);
