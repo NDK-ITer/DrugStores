@@ -30,13 +30,15 @@ namespace DrugStore.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AppNetUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<AppNetUser> userManager,
             IUserStore<AppNetUser> userStore,
             SignInManager<AppNetUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -108,12 +111,12 @@ namespace DrugStore.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [StringLength(10, ErrorMessage = "The {0} must be at  equal {1} characters long.", MinimumLength =10)]
+            [StringLength(10, ErrorMessage = "The {0} must be at  equal {1} characters long.", MinimumLength = 10)]
             [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone Numner")]
-            public string PhoneNumner { get;set; }
-            public DateTime CreateDate { get; set; }=DateTime.Now;
+            public string PhoneNumner { get; set; }
+            public DateTime CreateDate { get; set; } = DateTime.Now;
         }
 
 
@@ -130,22 +133,29 @@ namespace DrugStore.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                
-                user=new AppNetUser {FirstName=Input.LastName,
-                 LastName= Input.FirstName,
-                 CreateDate=DateTime.Now,
-                 PhoneNumber=Input.PhoneNumner
-                 
+
+                user = new AppNetUser
+                {
+                    FirstName = Input.LastName,
+                    LastName = Input.FirstName,
+                    CreateDate = DateTime.Now,
+                    PhoneNumber = Input.PhoneNumner,
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    var defaultrole = _roleManager.FindByNameAsync("User").Result;
+
+                    if (defaultrole != null)
+                    {
+                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

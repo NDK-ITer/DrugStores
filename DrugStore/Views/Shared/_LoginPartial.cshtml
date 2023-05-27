@@ -3,26 +3,31 @@
 
 @inject SignInManager<AppNetUser> SignInManager
 @inject UserManager<AppNetUser> UserManager*@
-
-
+@using DrugStore.Models.Entities
+@{
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
+}
 
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
+        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@dbContext.AspNetUsers.Find(UserManager.GetUserId(User)).LastName</a>
     </li>
-    <li>
-        @if (User.IsInRole("Admin".ToUpper().Trim()))
+    <li class="nav-item">
+        @if (User.IsInRole("Admin".ToUpper().Trim()) || User.IsInRole("Memember".ToUpper().Trim()))
         {
-            @Html.ActionLink("Quản lý", "Index", "HomeAdmin", new { area = "Admin", title = "Manage", @class = "nav-link" }, null)
+            <a id="manage" class="nav-link text-dark" title="Manage" asp-area="Admin" asp-action="Index" asp-controller="HomeAdmin">Quản lý</a>
+        }else if (User.IsInRole("User".ToUpper().Trim()))
+        {
+            <a id="manage" class="nav-link text-dark" title="Manage" asp-action="Index" asp-controller="Bill">Hóa đơn của bạn</a>
         }
     </li>
     
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Đăng xuất</button>
         </form>
     </li>
 }

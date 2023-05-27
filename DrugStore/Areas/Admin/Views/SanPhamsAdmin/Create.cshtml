@@ -3,7 +3,7 @@
 <h1>Chọn Loại Sản Phẩm</h1><br /><br />
 
 @foreach(var item in Model){
-    <a asp-action="CreateType" asp-route-id="@item.MaLoaiSP">@item.TenLoaiSP</a>
+    <a asp-action="CreateType" asp-route-id="@item.MaLoaiSP" class="button">@item.TenLoaiSP</a>
     <br />
 }
 
