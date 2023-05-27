@@ -30,13 +30,14 @@ namespace DrugStore.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AppNetUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
-
+        private readonly RoleManager<IdentityRole> _roleManager;
         public ExternalLoginModel(
             SignInManager<AppNetUser> signInManager,
             UserManager<AppNetUser> userManager,
             IUserStore<AppNetUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -44,6 +45,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -173,7 +175,12 @@ namespace DrugStore.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("Người dùng đã tạo một tài khoản bằng cách sử dụng nhà cung cấp {Name} .", info.LoginProvider);
+                        var defaultrole = _roleManager.FindByNameAsync("User").Result;
 
+                        if (defaultrole != null)
+                        {
+                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                        }
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
