@@ -3,49 +3,38 @@
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
-<div>
-    <h4>LoaiThuoc</h4>
+<div class="bill-details">
+    <h4>Số Hóa Đơn : @Model.SoDH</h4>
     <hr />
     <dl class="dl-horizontal">
+        
         <dt>
-            Số hóa đơn
+            Ngày lập: 
         </dt>
-
-        <dt>
-            Ngày lập
-        </dt>
-
-        <dt>
-            Địa chỉ giao
-        </dt>
-
-        <dt>
-            Ghi chú
-        </dt>
-
-        <dt>
-            Trạng thái thanh toán
-        </dt>
-
-        <dt>
-            Tổng thành tiền
-        </dt>
-
-        <dd>
-            @Model.SoDH
-        </dd>
 
         <dd>
             @Model.NgayLap
         </dd>
 
+        <dt>
+            Địa chỉ giao:
+        </dt>
+
         <dd>
             @Model.DiaChiGiao
         </dd>
 
+        <dt>
+            Ghi chú:
+        </dt>
+
         <dd>
             @Model.GhiChu
         </dd>
+
+        <dt>
+            Trạng thái thanh toán:
+        </dt>
 
         @if (Model.DaThanhToan == true)
         {
@@ -60,9 +49,18 @@
             </dd>
         }
 
+        <dt>
+            Tổng thành tiền:
+        </dt>
+
         <dd>
             @String.Format(info, "{0:c}", Model.TongThanhTien)
         </dd>
+
+        <dt>
+            Danh sách sản phẩm: 
+        </dt>
+
         <table class="table">
             <tr>
                 <th>
@@ -104,7 +102,8 @@
             }
         </table>
     </dl>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
