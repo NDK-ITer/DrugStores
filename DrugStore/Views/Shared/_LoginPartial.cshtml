@@ -13,7 +13,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@dbContext.AspNetUsers.Find(UserManager.GetUserId(User)).LastName</a>
+        <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@dbContext.AspNetUsers.Find(UserManager.GetUserId(User)).LastName</a>
     </li>
     <li class="nav-item">
         @if (User.IsInRole("Admin".ToUpper().Trim()) || User.IsInRole("Memember".ToUpper().Trim()))
@@ -27,7 +27,7 @@
     
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Đăng xuất</button>
+            <button id="logout" type="submit" class="nav-link btn btn-danger text-white border-0">Đăng xuất</button>
         </form>
     </li>
 }

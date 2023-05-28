@@ -51,11 +51,13 @@ h6 {
 }
 
 h1 {
+	text-align: center;
 	font-size: 70px;
 }
 
 h2 {
-	font-size: 36px;
+	text-align: center;
+	font-size: 50px;
 }
 
 h3 {
@@ -75,7 +77,7 @@ h6 {
 }
 
 p {
-	font-size: 16px;
+	font-size: 20px;
 	font-family: "Cairo", sans-serif;
 	color: #6f6f6f;
 	font-weight: 400;
@@ -425,6 +427,7 @@ ol {
 	display: inline-block;
 	margin-right: 50px;
 	position: relative;
+	padding: 10px;
 }
 
 .header__menu ul li .header__menu__dropdown {
@@ -3486,3 +3489,5 @@ ol {
 	width: 1000px;
 	height: auto;
 }
+
+
