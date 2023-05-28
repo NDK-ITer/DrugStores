@@ -3,6 +3,7 @@
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 }
 
+<h3 style="text-align:center; padding: 10px">Lịch sử mua hàng</h3>
 <div class="list-bill">
     <table class="table">
         <tr>
@@ -41,7 +42,7 @@
                 </td>
 
                 <td>
-                    <a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})">Chi tiết</a>
+                    <a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})" class="bill-details">Chi tiết</a>
                     @*<a asp-action="Detail" asp-controller="Bill" id = "@item.SoDH" >Chi tiết</a>*@
                 </td>
             </tr>
