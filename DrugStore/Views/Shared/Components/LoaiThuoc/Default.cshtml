@@ -7,7 +7,7 @@
     <h5>Thuốc</h5><br />
     @foreach (var item in Model)
     {
-        <li><a asp-action="Index" asp-controller="Shop" asp-route-idTHLSP="@item.MaLT"><span>@item.TenLoaiThuoc</span></a></li>
+        <li><a asp-action="Index" asp-controller="Shop" asp-route-idTHLSP="@item.MaLT" class="loaithuoc"><span>@item.TenLoaiThuoc</span></a></li>
     }
 
 </div>
