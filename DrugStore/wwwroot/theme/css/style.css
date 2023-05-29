@@ -89,6 +89,10 @@ img {
 	max-width: 100%;
 }
 
+	img.logout-icon {
+		padding: 0 0 3px 12px;
+	}
+
 input:focus,
 select:focus,
 button:focus,
