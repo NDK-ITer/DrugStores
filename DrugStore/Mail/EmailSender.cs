@@ -12,12 +12,12 @@ namespace DrugStore.Mail
             {
                 EnableSsl = true,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("cuongnguyen.16122002@gmail.com", "kuxovsiukdmldkvv"),
+                Credentials = new NetworkCredential("hkcdrugstore@gmail.com", "tqtehjhpdyvlzdto"),
                 
             };
            
             return client.SendMailAsync(
-                new MailMessage(from: "cuongnguyen.16122002@gmail.com",
+                new MailMessage(from: "hkcdrugstore@gmail.com",
                                 to: email,
                                 subject,
                                 message
