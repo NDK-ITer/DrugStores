@@ -94,7 +94,9 @@
             }
         }
     });
-
+    $('.hero__categories__all-2').on('click', function () {
+        $('.hero__categories-2 ul').slideToggle(400);
+    });
 
     $('.hero__categories__all').on('click', function(){
         $('.hero__categories ul').slideToggle(400);
