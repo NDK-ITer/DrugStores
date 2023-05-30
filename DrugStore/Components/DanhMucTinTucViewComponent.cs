@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DrugStore.Components
 {
-    public class TagViewComponent:ViewComponent
+    public class DanhMucTinTucViewComponent:ViewComponent
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         public async Task<IViewComponentResult> InvokeAsync()
