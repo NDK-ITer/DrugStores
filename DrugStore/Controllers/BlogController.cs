@@ -22,8 +22,12 @@ namespace DrugStore.Controllers
 
         public IActionResult BlogDetail(Guid id)
         {
-            TinTuc tinTuc = dbContext.TinTucs.Find(id);
-            return View(tinTuc);
+            if (id != null)
+            {
+                TinTuc tinTuc = dbContext.TinTucs.Find(id);
+                return View(tinTuc);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
