@@ -29,6 +29,12 @@ services.AddAuthentication().AddFacebook(facebookOptions =>
     facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdministratorRole",
+         policy => policy.RequireRole("Admin"));
+});
+
 var connectionString = builder.Configuration.GetConnectionString("DrugStoreDbContextConnection") ?? throw new InvalidOperationException("Connection string 'DrugStoreDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(connectionString));

@@ -1,16 +1,19 @@
 ﻿using DrugStore.Models;
 using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "ADMIN")]
     public class SanPhamsAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
