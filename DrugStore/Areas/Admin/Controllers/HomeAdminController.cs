@@ -13,7 +13,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class HomeAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();

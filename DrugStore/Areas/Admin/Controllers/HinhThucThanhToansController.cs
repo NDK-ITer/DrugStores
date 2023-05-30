@@ -8,7 +8,7 @@ using System.Data;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class HinhThucThanhToansController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();

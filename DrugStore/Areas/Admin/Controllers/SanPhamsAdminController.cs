@@ -13,7 +13,7 @@ using System.Drawing.Imaging;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class SanPhamsAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
