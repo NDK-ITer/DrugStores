@@ -3,11 +3,14 @@
 @{
     DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
 }
-<div>
-    <h5>Thuốc</h5><br />
-    @foreach (var item in Model)
-    {
-        <li><a asp-action="Index" asp-controller="Shop" asp-route-idTHLSP="@item.MaLT" class="loaithuoc"><span>@item.TenLoaiThuoc</span></a></li>
-    }
-
+<div class="hero__categories-2">
+    <div class="hero__categories__all-2">
+        <span>Thuốc</span>
+    </div>
+    <ul class="ul-2">
+        @foreach (var item in Model)
+        {
+            <li><a asp-action="Index" asp-controller="Shop" asp-route-idTHLSP="@item.MaLT" class="loaithuoc"><span>@item.TenLoaiThuoc</span></a></li>
+        }
+    </ul>
 </div>

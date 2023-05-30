@@ -29,9 +29,9 @@
         <div class="row">
             <div class="col-lg-3 col-md-5">
                 <div class="sidebar">
-                    <div class="sidebar__item">
+@*                    <div class="sidebar__item">
                         
-                    </div>
+                    </div>*@
                     <div class="sidebar__item">
                         <h4>Danh mục</h4>
                         <div class="price-range-wrap">
@@ -189,13 +189,14 @@
                         </div>
                     }
                 </div>
-                <div class="product__pagination">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page, @class="active"}))
+@*                <div class="product__pagination">
                     @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
-                    @*<a href="#">1</a>
+@*                    <a href="#">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
                     <a href="#"><i class="fa fa-long-arrow-right"></i></a>*@
-                </div><br />
+@*                </div><br />*@
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
                         <h2>Đang Giảm giá</h2>
