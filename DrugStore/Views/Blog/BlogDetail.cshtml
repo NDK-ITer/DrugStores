@@ -80,8 +80,8 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
                 <div class="blog__details__text">
                     <img src="/images/tintuc/@Model.AnhDaiDien" alt="">
-                    <p>
-                        @Model.NoiDung
+                    <input id="tempDescription" value="@Model.NoiDung" hidden readonly />
+                    <p id="Description">  
                     </p>
                     
                 </div>
@@ -181,4 +181,11 @@
         </div>
     </div>
 </section>
+<script>
+    $(window).on('load', function () {
+        var temp = $("#tempDescription").val();
+        $("#Description").html(temp);
+
+    })
+</script>
 <!-- Related Blog Section End -->

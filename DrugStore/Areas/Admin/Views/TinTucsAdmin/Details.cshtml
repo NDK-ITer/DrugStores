@@ -1,4 +1,5 @@
-﻿@model DrugStore.Models.Entities.TinTuc
+﻿@using System.Web;
+@model DrugStore.Models.Entities.TinTuc
 
 @{
     ViewBag.Title = "Delete";
@@ -10,7 +11,7 @@
     <h4>Tin tức</h4>
     <hr />
     <dl class="dl-horizontal">
-
+        <input id="tempDescription" value="@Model.NoiDung" hidden readonly />
         <dt>
             @Html.DisplayNameFor(model => model.ThoiGiaDang)
         </dt>
@@ -22,9 +23,11 @@
         <dt>
             @Html.DisplayNameFor(model => model.NoiDung)
         </dt>
+       
+        
+        <dd id="Description">
+            
 
-        <dd>
-            @Html.DisplayFor(model => model.NoiDung)
         </dd>
 
         <dt>
@@ -63,3 +66,10 @@
         </div>
     }
 </div>
+<script>
+    $(window).on('load', function () {
+        var temp = $("#tempDescription").val();
+        $("#Description").html(temp);
+
+    })
+</script>
