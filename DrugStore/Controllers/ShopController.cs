@@ -80,7 +80,7 @@ namespace DrugStore.Controllers
             return dsSP;
         }
 
-        public IActionResult Index(int? page, List<SanPham> sanPhams, string? consultString, string? idLoaiSP, Guid? idTHLSP)
+        public IActionResult Index(int? page, List<SanPham> sanPhams, string? consultString, string? idLoaiSP, Guid? idTHLSP, string? search)
         {
             int pageSize = 6;
             if (idLoaiSP != null)
@@ -98,6 +98,13 @@ namespace DrugStore.Controllers
                 {
                     sanPhams = new List<SanPham>();
                 }
+            }
+            if (search != null)
+            {
+                sanPhams = dbContext.SanPhams.Where(c => c.TenSP.Contains(search)).ToList();
+                if (page == null) { page = 1; }
+                page = page < 1 ? 1 : page;
+                return View(sanPhams.ToPagedList((int)page, pageSize));
             }
             if (consultString != null)
             {

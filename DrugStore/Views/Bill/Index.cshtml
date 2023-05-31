@@ -42,8 +42,8 @@
                 </td>
 
                 <td>
-                    <a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})" class="bill-details">Chi tiết</a>
-                    @*<a asp-action="Detail" asp-controller="Bill" id = "@item.SoDH" >Chi tiết</a>*@
+                    @*<a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})" class="bill-details">Chi tiết</a>*@
+                    <a asp-action="Detail" asp-controller="Bill" asp-route-id="@item.SoDH" class="bill-details">Chi tiết</a>
                 </td>
             </tr>
         }

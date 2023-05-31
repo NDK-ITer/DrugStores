@@ -1,13 +1,16 @@
 ﻿using DrugStore.Areas.Admin.Data;
 using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class ThuocAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();

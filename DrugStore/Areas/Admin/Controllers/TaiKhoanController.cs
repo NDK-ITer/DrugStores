@@ -1,14 +1,18 @@
 ﻿using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using X.PagedList;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class TaiKhoanController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
@@ -41,37 +45,11 @@ namespace DrugStore.Areas.Admin.Controllers
             return View(Users.ToPagedList((int)page, pageSize));
         }
 
-        // GET: AccountController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AccountController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AccountController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: AccountController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            ViewBag.RoleId = new SelectList(dbContext.AspNetRoles, "Id", "Name");
+            return View(dbContext.AspNetUsers.Find(id));
         }
 
         // POST: AccountController/Edit/5
@@ -89,25 +67,6 @@ namespace DrugStore.Areas.Admin.Controllers
             }
         }
 
-        // GET: AccountController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AccountController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

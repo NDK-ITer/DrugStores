@@ -1,11 +1,14 @@
 ﻿using DrugStore.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class HinhThucThanhToansController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext();

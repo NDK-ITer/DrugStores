@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 namespace DrugStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class TinTucsAdminController : Controller
     {
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();

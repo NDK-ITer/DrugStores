@@ -33,11 +33,11 @@ namespace DrugStore.Models.Entities
             builder.AddJsonFile("appsettings.json", optional: false);
             var configuration = builder.Build();
             connectionStrings = configuration.GetConnectionString("DrugStoreDbContextConnection").ToString();
-            
+
         }
 
 
-        public  DrugStoreDbContext Created()
+        public DrugStoreDbContext Created()
         {
             DrugStoreDbContext dbContext = new DrugStoreDbContext();
 
@@ -55,8 +55,8 @@ namespace DrugStore.Models.Entities
             dbContext.HoaDons.Include(c => c.HinhThucThanhToan).Load();
             dbContext.AspNetRoles.Include(c => c.Users).Load();
             dbContext.AspNetUserRoles.Include(c => c.Users).Include(c => c.Roles).Load();
-            dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Include(c=>c.TinTucs).Load();
-            dbContext.TinTucs.Include(c => c.Users).Load();
+            dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Include(c => c.TinTucs).Load();
+            dbContext.TinTucs.Include(c => c.Users).Include(c => c.TagTinTucs).Load();
             return dbContext;
         }
 
@@ -117,7 +117,7 @@ namespace DrugStore.Models.Entities
             builder.Entity<AspNetUser>()
                     .HasMany(e => e.HoaDons)
                     .WithOne(e => e.User)
-                    .HasForeignKey(e => e.Id) 
+                    .HasForeignKey(e => e.Id)
                     .IsRequired();
             builder.Entity<TinTuc>()
                     .HasOne(e => e.Users)
