@@ -16,10 +16,10 @@
         <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@dbContext.AspNetUsers.Find(UserManager.GetUserId(User)).LastName</a>
     </li>
     <li class="nav-item">
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager".ToUpper().Trim()))
+         @if (User.IsInRole("Admin") || User.IsInRole("Manager".ToUpper().Trim()))
         {
             <a id="manage" class="nav-link text-dark" title="Manage" asp-area="Admin" asp-action="Index" asp-controller="HomeAdmin">Quản lý</a>
-        }else if (User.IsInRole("User".ToUpper().Trim()))
+        }else if (User.IsInRole("User"))
         {
             <a id="manage" class="nav-link text-dark" title="Manage" asp-action="Index" asp-controller="Bill">Hóa đơn của bạn</a>
         }

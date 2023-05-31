@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace DrugStore.Models.Entities
 {
@@ -29,6 +30,7 @@ namespace DrugStore.Models.Entities
         public DateTime? UpdateDate { get; set; }
 
         [StringLength(256)]
+        [DisplayName("Tên Đăng Nhập")]
         public string UserName { get; set; }
 
         [StringLength(256)]
@@ -61,6 +63,7 @@ namespace DrugStore.Models.Entities
         public int? AccessFailedCount { get; set; }
 
         public ICollection<HoaDon>? HoaDons { get; set; }
+        [DisplayName("Phân Quyền")]
         public virtual ICollection<AspNetUserRoles>? Roles { get; set; }
         public virtual ICollection<TinTuc>? TinTucs { get; set; }
     }
