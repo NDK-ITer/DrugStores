@@ -158,7 +158,11 @@
                                 {
                                     foreach (var item in Listimage)
                                     {
-                                        <img src="@item" alt="" data-image="@item" style="width: 100px; height: 100px; padding: 10px">
+                                        if (!String.IsNullOrEmpty(item))
+                                        {
+                                            <img src="@fileImagePath@item" alt="" data-image="@item" style="width: 100px; height: 100px; padding: 10px">
+                                        }
+                                      
                                     }
                                 }
 

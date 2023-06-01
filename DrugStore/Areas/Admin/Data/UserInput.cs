@@ -2,12 +2,14 @@
 {
     public class UserInput
     {
-        public string id { get; set; }
-        public string username { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
 
-        public string idroles { get; set; }
+        public string Idrole { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
-        public bool userlock { get; set; }
+
+        public bool Userlock { get; set; }
 
     }
 }
