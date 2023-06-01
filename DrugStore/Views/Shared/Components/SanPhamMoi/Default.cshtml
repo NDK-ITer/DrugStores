@@ -13,7 +13,15 @@
                 </div>
             }
             <div class="latest-product__item__text">
-                <h6>@item.TenSP.Substring(0,20)...</h6>
+                @if (@item.TenSP.Length > 50)
+                {
+                    <h6>@item.TenSP.Substring(0,20)... </h6>
+                }
+                else
+                {
+                    <h6> @item.TenSP.Length</h6>
+                }
+               
                 <span>@String.Format(info, "{0:c}", item.DonGia-(item.DonGia*(item.GiamGia/100)))</span>
             </div>
         </a>
