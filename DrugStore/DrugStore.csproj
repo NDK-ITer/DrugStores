@@ -46,6 +46,7 @@
     <Folder Include="Areas\Mail\Models\" />
     <Folder Include="Data\" />
     <Folder Include="Others\" />
+    <Folder Include="wwwroot\Images\Lock\" />
     <Folder Include="wwwroot\Images\TinTuc\" />
   </ItemGroup>
 

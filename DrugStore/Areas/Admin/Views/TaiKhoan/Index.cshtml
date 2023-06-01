@@ -59,9 +59,9 @@
                 </td>
             <td>@role.Name</td>
             @{
-                var temp = @item.LockoutEnd > @DateTime.Now ? "bị khóa" : "chưa khóa";
+                var temp = @item.LockoutEnd > @DateTime.Now ? "/Images/Lock/lock.png" : "/Images/Lock/unlock.png";
             }
-            <td>@temp</td>
+            <td><img src="@temp" width="40" height="40" /></td>
             <td>
                 @if (role.Name != "Admin")
                 {
