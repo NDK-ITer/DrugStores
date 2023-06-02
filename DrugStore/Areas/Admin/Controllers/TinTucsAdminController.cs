@@ -1,4 +1,5 @@
-﻿using DrugStore.Areas.Admin.Data;
+﻿using Azure;
+using DrugStore.Areas.Admin.Data;
 using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using X.PagedList;
 
 namespace DrugStore.Areas.Admin.Controllers
 {
@@ -33,9 +35,21 @@ namespace DrugStore.Areas.Admin.Controllers
             //var user = userManager.Users.ToList();
         }
         // GET: TinTucs
-        public ActionResult Index()
+        public ActionResult Index(int? page, string? keySearch)
         {
-            return View(dbContext.TinTucs.ToList());
+            List<TinTuc> dsTinTuc;
+            if (keySearch != null)
+            {
+                dsTinTuc = dbContext.TinTucs.Where(c => c.MoTaTT.Contains(keySearch)).ToList();
+            }
+            else
+            {
+                dsTinTuc = dbContext.TinTucs.OrderByDescending(c => c.ThoiGiaDang).ToList();
+            }
+            if (page == null) { page = 1; }
+            page = page < 1 ? 1 : page;
+            int pageSize = 4;
+            return View(dsTinTuc.ToPagedList((int)page, pageSize));
         }
 
         // GET: TinTucs/Details/5
@@ -55,6 +69,15 @@ namespace DrugStore.Areas.Admin.Controllers
             return View(model);
         }
 
+        private bool TinTucInputIsNull(TinTucInput TinTucInput)
+        {
+            if (TinTucInput.content == null) { return false; }
+            if (TinTucInput.description == null) { return false; }
+            if (TinTucInput.idtag == null) { return false; }
+            
+            return true;
+        }
+
         // POST: TinTucs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -62,7 +85,11 @@ namespace DrugStore.Areas.Admin.Controllers
         {
             try
             {
-               Guid id = Guid.NewGuid();
+                if (fileImage == null || TinTucInputIsNull(TinTucInput) == false)
+                {
+                    return RedirectToAction(nameof(Create));
+                }
+                Guid id = Guid.NewGuid();
                 Random random = new Random();
                 string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                 string extention = Path.GetExtension(fileImage.FileName);

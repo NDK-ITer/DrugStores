@@ -6,8 +6,8 @@
 
 <div class="blog__sidebar">
     <div class="blog__sidebar__search">
-        <form action="#">
-            <input type="text" placeholder="Tìm kiếm...">
+        <form asp-action="Index" asp-controller="Blog">
+            <input type="text" name="search" placeholder="Tìm kiếm...">
             <button type="submit"><span class="icon_search"></span></button>
         </form>
     </div>
@@ -23,9 +23,9 @@
     <div class="blog__sidebar__item">
         <h4>Tin mới</h4>
         <div class="blog__sidebar__recent">
-            @foreach (var item in dbContext.TinTucs.OrderBy(c=>c.ThoiGiaDang).ToList())
+            @foreach (var item in dbContext.TinTucs.OrderByDescending(c=>c.ThoiGiaDang).Take(6).ToList())
             {
-                <a href="#" class="blog__sidebar__recent__item">
+                <a asp-action="BlogDetail" asp-controller="Blog" asp-route-id="@item.MaTT" class="blog__sidebar__recent__item">
                     <div class="blog__sidebar__recent__item__pic">
                         <img src="/images/tintuc/@item.AnhDaiDien" width="120px" height="60px" alt="">
                     </div>

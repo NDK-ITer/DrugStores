@@ -42,44 +42,48 @@
                             @if (ViewBag.CountCart == 0)
                             {
                                 <tr>
-                                    Chưa Có Sản Phẩm Nào Trong Giỏ hàng
+                                    <td>Chưa Có Sản Phẩm Nào Trong Giỏ hàng</td>
                                 </tr>
                             }
-                            @foreach (var item in Model)
+                            else
                             {
-                                <tr>
-                                    @if (item.SanPham.MaLoaiSP == "T")
-                                    {
-                                        <td class="shoping__cart__item">
-                                            <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" alt="" width="100px" height="100px">
-                                            <h5 class="pt-2">@item.SanPham.TenSP</h5>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @if (item.SanPham.MaLoaiSP == "T")
+                                        {
+                                            <td class="shoping__cart__item">
+                                                <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" alt="" width="100px" height="100px">
+                                                <h5 class="pt-2">@item.SanPham.TenSP</h5>
+                                            </td>
+                                        }
+
+                                        <td class="shoping__cart__price">
+                                            @String.Format(info, "{0:c}", item.SanPham.DonGia)
                                         </td>
-                                    }
-                                    
-                                    <td class="shoping__cart__price">
-                                        @String.Format(info, "{0:c}", item.SanPham.DonGia)
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        @item.SanPham.GiamGia%
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        @*<div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>*@
-                                        @item.SoLuong
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        @String.Format(info, "{0:c}", item.ThanhTien)
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <a href="@Url.Action("DeleteFromCart","Shop",new { @id = item.SanPham.MaSP })">
-                                            <span class="icon_close"></span>
-                                        </a>
-                                    </td>
-                                </tr>
+                                        <td class="shoping__cart__price">
+                                            @item.SanPham.GiamGia%
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            @*<div class="quantity">
+                                    <div class="pro-qty">
+                                    <input type="text" value="1">
+                                    </div>
+                                    </div>*@
+                                            @item.SoLuong
+                                        </td>
+                                        <td class="shoping__cart__total">
+                                            @String.Format(info, "{0:c}", item.ThanhTien)
+                                        </td>
+                                        <td class="shoping__cart__item__close">
+                                            <a href="@Url.Action("DeleteFromCart","Shop",new { @id = item.SanPham.MaSP })">
+                                                <span class="icon_close"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
                             }
+                            
                             
                             @*<tr>
                                 <td class="shoping__cart__item">
@@ -134,6 +138,7 @@
             <div class="col-lg-12">
                 <div class="shoping__cart__btns">
                     @*<a href="#" class="primary-btn cart-btn">Tiếp tục mua sắm</a>*@
+                    @Html.PagedListPager(Model, page => Url.Action("Shopingcart", new{ page = page, @class="active"}))
                     <a href="#" class="primary-btn cart-btn cart-btn-right">
                         @*<span class="icon_loading"></span>
                         Upadate Cart*@

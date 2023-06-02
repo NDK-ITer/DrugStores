@@ -195,7 +195,7 @@
                         </div>
                     }
                 </div>
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page, @class="active"}))
+                <br /><br />@Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page, @class="active"}))
 @*                <div class="product__pagination">
                     @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
 @*                    <a href="#">1</a>

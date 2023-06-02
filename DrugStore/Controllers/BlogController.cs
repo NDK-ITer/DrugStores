@@ -10,6 +10,10 @@ namespace DrugStore.Controllers
         public IActionResult Index(string? search, int? page)
         {
             List<TinTuc> dsTinTuc = null;
+            if (search != null)
+            {
+                dsTinTuc = dbContext.TinTucs.Where(c => c.MoTaTT.Contains(search)).ToList();
+            }
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
             int pageSize = 6;
@@ -25,6 +29,9 @@ namespace DrugStore.Controllers
             if (id != null)
             {
                 TinTuc tinTuc = dbContext.TinTucs.Find(id);
+                tinTuc.SoLuotXem++;
+                dbContext.SaveChanges();
+                dbContext.TinTucs.Update(tinTuc);
                 return View(tinTuc);
             }
             return RedirectToAction("Index");

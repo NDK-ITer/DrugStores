@@ -32,5 +32,6 @@ namespace DrugStore.Models.Entities
         public string? IdNguoiDang { get; set; }
         public virtual AspNetUser? Users { get; set; }
         public virtual ICollection<TagTinTuc>? TagTinTucs { get; set; }
+        public List<Tag> Tags { get; } = new();
     }
 }

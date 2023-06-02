@@ -1,5 +1,6 @@
 ﻿using DrugStore.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
 
@@ -57,6 +58,7 @@ namespace DrugStore.Models.Entities
             dbContext.AspNetUserRoles.Include(c => c.Users).Include(c => c.Roles).Load();
             dbContext.AspNetUsers.Include(c => c.HoaDons).Include(c => c.Roles).Include(c => c.TinTucs).Load();
             dbContext.TinTucs.Include(c => c.Users).Include(c => c.TagTinTucs).Load();
+            dbContext.Tags.Include(c => c.TagTinTucs).Load();
             return dbContext;
         }
 
@@ -78,6 +80,12 @@ namespace DrugStore.Models.Entities
                     .HasKey(m => new { m.UserId, m.RoleId });
             builder.Entity<TagTinTuc>()
                     .HasKey(m => new { m.IdTag, m.MaTT });
+            builder.Entity<TinTuc>()
+                    .HasMany(e => e.Tags)
+                    .WithMany(e => e.TinTucs)
+                    .UsingEntity<TagTinTuc>(
+                        l => l.HasOne<Tag>(e => e.Tag).WithMany(e => e.TagTinTucs).HasForeignKey(e => e.IdTag),
+                        r => r.HasOne<TinTuc>(e => e.TinTuc).WithMany(e => e.TagTinTucs).HasForeignKey(e => e.MaTT));
 
             builder.Entity<SanPham>()
                     .HasOne(e => e.Thuoc)
