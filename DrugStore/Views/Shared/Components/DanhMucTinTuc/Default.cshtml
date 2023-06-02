@@ -16,7 +16,7 @@
         <ul>
             @foreach (var item in Model)
             {
-                <li><a href="#">@item.IdTag</a></li>
+                <li><a asp-action="Index" asp-controller="Blog" asp-route-idTag="@item.IdTag">@item.IdTag</a></li>
             }
         </ul>
     </div>
