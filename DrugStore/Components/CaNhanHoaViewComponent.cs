@@ -36,7 +36,7 @@ namespace DrugStore.Components
             {
                 dsSanPhamDeXua = dbContext.SanPhams.OrderBy(s => s.NgayTao).ToList();
             }
-            return View(dsSanPhamDeXua);
+            return View(dsSanPhamDeXua.Take(12));
         }
     }
 }

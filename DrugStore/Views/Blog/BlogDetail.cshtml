@@ -112,10 +112,11 @@
                         <div class="col-lg-6">
                             <div class="blog__details__widget">
                                 <ul>
+                                    
                                     @*<li><span>Categories:</span> Food</li>*@
                                     <li><span>Tags:</span> @foreach (var item in Model.TagTinTucs)
                                         {
-                                            <a href="#">@item.IdTag</a>
+                                            <a asp-action="Index" asp-controller="Blog" asp-route-idTag="@item.IdTag">@item.IdTag</a>
                                         }</li>
                                 </ul>
                                 <div class="blog__details__social">
