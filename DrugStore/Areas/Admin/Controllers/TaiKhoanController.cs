@@ -1,4 +1,5 @@
-﻿using DrugStore.Areas.Identity.Data;
+﻿using DrugStore.Areas.Admin.Data;
+using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -42,29 +43,61 @@ namespace DrugStore.Areas.Admin.Controllers
             if (page == null) { page = 1; }
             page = page < 1 ? 1 : page;
             int pageSize = 5;
+
             return View(Users.ToPagedList((int)page, pageSize));
+          
         }
+
+
 
         // GET: AccountController/Edit/5
         public ActionResult Edit(string id)
         {
             ViewBag.RoleId = new SelectList(dbContext.AspNetRoles, "Id", "Name");
-            return View(dbContext.AspNetUsers.Find(id));
+            var user = dbContext.AspNetUsers.Find(id);
+            var role = dbContext.AspNetUserRoles.Where(x=>x.UserId==id).FirstOrDefault();
+
+            var userinput = new UserInput() { 
+            Id=user.Id,
+            UserName= user.UserName,
+            Idrole=role.RoleId,
+            Userlock= user.LockoutEnd > DateTime.Now ? true : false,    
+            
+            };
+
+            return View(userinput);
         }
 
         // POST: AccountController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(UserInput userInput)
         {
-            try
+            var user = dbContext.AspNetUsers.Find(userInput.Id);
+           
+            user.LockoutEnd= userInput.Userlock ? DateTime.Now.AddYears(100) : DateTime.Now;
+            user.UpdateDate=DateTime.Now;
+            
+
+
+            var role = dbContext.AspNetUserRoles.Where(x => x.UserId == userInput.Id).FirstOrDefault();
+            if (role.RoleId != userInput.Idrole)
             {
-                return RedirectToAction(nameof(Index));
+                dbContext.AspNetUserRoles.Remove(role);
+                dbContext.SaveChanges();
+
+                var roleuser = new AspNetUserRoles()
+                {
+                    UserId = user.Id,
+                    RoleId = userInput.Idrole,
+                };
+                dbContext.AspNetUserRoles.Add(roleuser);
+                dbContext.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            dbContext.SaveChanges();
+
+
+            return RedirectToAction("Index", "TaiKhoan");
         }
 
         

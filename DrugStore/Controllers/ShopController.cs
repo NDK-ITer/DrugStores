@@ -378,7 +378,7 @@ namespace DrugStore.Controllers
             {
                 hoaDon.Id = userManager.GetUserId(User);
                 AspNetUser aspNetUser = dbContext.AspNetUsers.Find(userManager.GetUserId(User));
-                hoaDon.TenNguoiMua = aspNetUser.FirstName + aspNetUser.LastName;
+                hoaDon.TenNguoiMua = aspNetUser.FirstName+" " + aspNetUser.LastName;
                 hoaDon.Email = aspNetUser.Email;
                 hoaDon.SDT = aspNetUser.PhoneNumber;
             }

@@ -9,7 +9,7 @@ namespace DrugStore.Models.ViewModel
         public List<TinTuc> tinTucs { get; set; }
         public HomeViewModel()
         {
-            tinTucs = dbContext.TinTucs.ToList();
+            tinTucs = dbContext.TinTucs.Take(3).ToList();
         }
     }
 }

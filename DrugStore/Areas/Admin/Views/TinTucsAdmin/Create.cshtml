@@ -29,20 +29,22 @@
         </div>
 
         
-            <div class="form-group">
-                <label class="control-label col-md-2">tag</label>
-                <div class="col-md-10">
-                    @Html.ListBoxFor(model=> model.idtag,Model.drptag, new {@class="form-control",id="tag", multiple="multiple" })
+        <div class="form-group">
+            <label class="control-label col-md-2">tag</label>
+            <div class="col-md-10">
+                @Html.ListBoxFor(model=> model.idtag,Model.drptag, new {@class="form-control",id="tag", multiple="multiple" })
                 @Html.ValidationMessageFor(model => model.idtag, "", new { @class = "text-danger" })
-                </div>
             </div>
+        </div>
        
 
         <div class="form-group">
             @Html.LabelFor(model => model.cover, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="custom-file">
-                @Html.TextBox("fileImage", "", new { type = "file", accept = "image/*" })<br />
-   
+                <input type="file" name="fileImage" value="" accept = "image/*" id="Upimg1" multiple />
+                @*@Html.TextBox("fileImage", "", new { type = "file", accept = "image/*", @id="Upimg" })<br />*@
+                <div id="divImageMediaPreview1"></div>
+                
             </div>
         </div>
 
@@ -68,3 +70,27 @@
     @Html.ActionLink("Trở về danh sách", "Index")
 </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#Upimg1").change(function () {
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = $("#divImageMediaPreview1");
+                dvPreview.html("");
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $("<img />");
+                        img.attr("style", "width: 200px; height:120px; padding: 10px");
+                        img.attr("src", e.target.result);
+                        dvPreview.append(img);
+                    }
+                    reader.readAsDataURL(file[0]);
+                });
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+
+    })
+</script>

@@ -119,6 +119,11 @@ namespace DrugStore.Areas.Admin.Controllers
 
 
                 }
+                else
+                {
+                    return RedirectToAction(nameof(Create));
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

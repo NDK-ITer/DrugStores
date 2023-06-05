@@ -1,5 +1,17 @@
-﻿@model DrugStore.Models.Entities.TinTuc
-
+﻿@using DrugStore.Models.Entities;
+@using NuGet.Packaging;
+@model DrugStore.Models.Entities.TinTuc
+@{
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
+    List<TinTuc> tinTucLikes = new List<TinTuc>();
+    List<Tag> tags;
+    foreach (var item in Model.TagTinTucs.ToList())
+    {
+        Tag tag = dbContext.Tags.Find(item.IdTag);
+        tinTucLikes.AddRange(tag.TinTucs);
+    }
+    
+}
  @*<!-- Hero Section Begin -->
 <section class="hero hero-normal">
     <div class="container">
@@ -58,11 +70,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="blog__details__hero__text">
-                    <h2>The Moment You Need To Remove Garlic From The Menu</h2>
+                    <h2>@Model.MoTaTT</h2>
                     <ul>
-                        <li>By Michael Scofield</li>
-                        <li>January 14, 2019</li>
-                        <li>8 Comments</li>
+                        @*<li>By Michael Scofield</li>*@
+                        <li>@Model.ThoiGiaDang</li>
+                        <li>@Model.SoLuotXem Lượt xem</li>
                     </ul>
                 </div>
             </div>
@@ -100,10 +112,11 @@
                         <div class="col-lg-6">
                             <div class="blog__details__widget">
                                 <ul>
-                                    <li><span>Categories:</span> Food</li>
+                                    
+                                    @*<li><span>Categories:</span> Food</li>*@
                                     <li><span>Tags:</span> @foreach (var item in Model.TagTinTucs)
                                         {
-                                            <a href="#">@item.IdTag</a>
+                                            <a asp-action="Index" asp-controller="Blog" asp-route-idTag="@item.IdTag">@item.IdTag</a>
                                         }</li>
                                 </ul>
                                 <div class="blog__details__social">
@@ -115,6 +128,7 @@
                                 </div>
                             </div>
                         </div>
+                        <a asp-action="Index" asp-controller="Blog" class="btn btn-primary">Quay lại danh sách tin tức</a>
                     </div>
                 </div>
             </div>
@@ -128,12 +142,30 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title related-blog-title">
-                    <h2>Post You May Like</h2>
+                    <h2>Các tin liên quan</h2>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6">
+            @foreach (var item in tinTucLikes.OrderBy(c=>c.SoLuotXem).Take(3).ToList())
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="/images/tintuc/@item.AnhDaiDien" height="180" width="200" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> @item.ThoiGiaDang</li>
+                                <li><i class="fa fa-eye"></i> @item.SoLuotXem</li>
+                            </ul>
+                            <h5><a asp-action="BlogDetail" asp-controller="Blog" asp-route-id="@item.MaTT">@item.MoTaTT</a></h5>
+                            @*<p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>*@
+                        </div>
+                    </div>
+                </div>
+            }
+            @*<div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="blog__item">
                     <div class="blog__item__pic">
                         <img src="/theme/img/blog/blog-1.jpg" alt="">
@@ -177,7 +209,7 @@
                         <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>

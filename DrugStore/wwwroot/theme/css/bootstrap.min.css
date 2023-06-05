@@ -5325,7 +5325,7 @@ a.badge-dark.focus, a.badge-dark:focus {
     }
 
         .pagination li.active {
-            background-color: #4CAF50;
+            background-color: #0732c5;
             color: white;
             border: 1px solid #4CAF50;
         }

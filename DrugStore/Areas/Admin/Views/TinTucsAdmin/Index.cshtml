@@ -1,5 +1,5 @@
-﻿@model IEnumerable<DrugStore.Models.Entities.TinTuc>
-
+﻿@model X.PagedList.IPagedList<DrugStore.Models.Entities.TinTuc>
+@using X.PagedList.Mvc.Core;
 @{
     ViewBag.Title = "Index";
 }
@@ -13,16 +13,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AnhDaiDien)
+            Ảnh đại diện
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ThoiGiaDang)
+            Thời gian đăng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MoTaTT)
+            Mô tả 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoLuotXem)
+            Số lượt xem
         </th>
         <th></th>
     </tr>
@@ -51,3 +51,6 @@
     }
 
 </table>
+<div @*class="product__pagination"*@>
+    Trang: @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
+</div>

@@ -78,23 +78,35 @@
             </div>
             <div class="col-lg-8 col-md-7">
                 <div class="row">
+                    @if (Model.Count == 0)
+                    {
+                        <div>
+                            <h3>Hiện chưa có tin tức phù hợp, chúng tôi sẽ cập nhập sớm nhất yêu cầu của bạn</h3>
+                            <img src="" alt=""/>
+                            <div>
+                                <a asp-action="Index" asp-controller="Blog" class="btn btn-primary">Quay lại danh sách tin tức</a>
+                            </div>
+
+                        </div>
+                    }
                     @foreach (var item in Model)
                     {
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="blog__item">
                                 <div class="blog__item__pic">
-                                    <img src="/images/tintuc/@item.AnhDaiDien" alt="">
+                                    <img src="/images/tintuc/@item.AnhDaiDien" alt="" height="200" width="400">
                                 </div>
                                 <div class="blog__item__text">
                                     <ul>
                                         <li><i class="fa fa-calendar-o"></i> Đăng ngày @item.ThoiGiaDang</li>
                                         @*<li><i class="fa fa-comment-o"></i> 5</li>*@
                                     </ul>
-                                    <h5><a href="#">@item.MoTaTT</a></h5>
+                                    <div><h5><a asp-action="BlogDetail" asp-controller="Blog" asp-route-id="@item.MaTT">@item.MoTaTT</a></h5></div>
+
                                     @*<p>
                                         @item.NoiDung
                                     </p>*@
-                                    <a href="@Url.Action("BlogDetail","Blog",new{id = @item.MaTT})" class="blog__btn" id="@item.MaTT">ĐỌC THÊM <span class="arrow_right"></span></a>
+                                    <a asp-action="BlogDetail" asp-controller="Blog" asp-route-id="@item.MaTT" class="blog__btn">ĐỌC THÊM <span class="arrow_right"></span></a>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +226,7 @@
                         </div>
                     </div>*@
                     <div class="col-lg-12">
-                        <div class="product__pagination blog__pagination">
+                        <div>
                             @Html.PagedListPager(Model, page => Url.Action("Index", new{ page = page}))
                         </div>
                     </div>
