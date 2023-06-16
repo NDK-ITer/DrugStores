@@ -1337,6 +1337,8 @@ ol {
     position: relative;
     overflow: hidden;
     width: 200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
     .product__discount__item__pic .product__discount__percent {
