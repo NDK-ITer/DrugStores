@@ -31,7 +31,7 @@ namespace DrugStore.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            contxt.HttpContext.Session.Remove("dsSpMua" + _userManager.GetUserId(User));
+            contxt.HttpContext.Session.Remove("dsSpMua");
             _logger.LogInformation("Người dùng đã đăng xuất.");
             if (returnUrl != null)
             {
