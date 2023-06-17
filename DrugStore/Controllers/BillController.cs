@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DrugStore.Controllers
 {
@@ -21,13 +22,33 @@ namespace DrugStore.Controllers
         [Authorize]
         public IActionResult Index(List<HoaDon> dshd)
         {
-            if (dshd.IsNullOrEmpty())
-            {
-                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User)).OrderByDescending(c=>c.NgayLap).ToList();
-            }
+           
             return View(dshd);
         }
 
+
+        public ActionResult ListBill(DateTime datefrom , DateTime dateto)
+        {
+            List<HoaDon> dshd=new List<HoaDon>();
+            if (dshd.IsNullOrEmpty())
+            {
+                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User) && c.NgayLap>=datefrom && c.NgayLap<=dateto).OrderByDescending(c => c.NgayLap).ToList();
+            }
+
+            List<Bill> list = new List<Bill>();
+
+            foreach (HoaDon d in dshd)
+            {
+                Bill bill=new Bill();
+                bill.id = d.SoDH;
+                bill.ngay = (DateTime)d.NgayLap;
+                bill.trangthai = (bool)d.DaThanhToan ? "Đã thanh toán" : "chưa thanh toán";
+                bill.tongtien = d.TongThanhTien.ToString();
+                list.Add(bill);
+            }
+
+            return Json(new { list = list });
+        }
                  
         public IActionResult Detail(Guid id)
         {

@@ -6,12 +6,20 @@
 <h3 style="text-align:center; padding: 10px">Lịch sử mua hàng</h3>
 
 <div class="list-bill">
+    <div class="row">
+        <div class="col-xl-6 pb-3">
+            <label for="filterEntriesMonth" class="mr-1 font-weight-bold">
+                Lọc:
+            </label>
+            <input type="text" name="daterange"   style="width:200px;"/>
+        </div>
+    </div>
     <table class="table">
         <tr>
             <th>
                 Ngày Lập
             </th>
-        
+
             <th>
                 Trạng Thái Thanh Toán
             </th>
@@ -20,33 +28,82 @@
             </th>
             <th></th>
         </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.NgayLap
-                </td>
-                @if (item.DaThanhToan == true)
-                {
-                    <td>
-                        Đã Thanh Toán
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        Chưa Thanh Toán
-                    </td>
-                }
-                <td>
-                    @String.Format(info, "{0:c}", item.TongThanhTien)
-                </td>
+        <tbody id="list">
+        </tbody>
 
-                <td>
-                    @*<a href="@Url.Action("Detail","Bill", new{ id = item.SoDH})" class="bill-details">Chi tiết</a>*@
-                    <a asp-action="Detail" asp-controller="Bill" asp-route-id="@item.SoDH" class="bill-details">Chi tiết</a>
-                </td>
-            </tr>
-        }
     </table>
 </div>
+<script>
+    $(window).on("load", function () {
+        var temp = "temp";
+        $('input[name="daterange"]').daterangepicker({
+            timePicker: false,
+            timePickerSeconds: false,
+            ranges: _dateRanges,
+            opens: 'left',
+            locale: {
+                "format": "DD/MM/YYYY",
+            },
+            "startDate": _startDate.format("DD/MM/YYYY"),
+            "endDate": _endDate.format("DD/MM/YYYY"),
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+
+
+            $.ajax({
+                type: "Get",
+                url: 'https://localhost:7254/Bill/ListBill',
+                data: {
+                    datefrom: start.format('YYYY-MM-DD'),
+                    dateto: end.format('YYYY-MM-DD'),
+                    type: "ajax",
+                },
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    var temp = "";
+                    var list = result.list;
+                    console.log(list);
+                    for (let x in list) {
+
+                        let tien = list[x].tongtien > 1000 ? list[x].tongtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : list[x].tongtien + 'đ';
+
+                        temp += "<tr>" + "<td>" + list[x].ngay + "</td>" + "<td>" + list[x].trangthai + "</td>" + "<td>" + tien + "</td>" + "<td>" + "<a class='bill-details' href='/Bill/Detail/" + list[x].id + "'>" + "chi tiết" + "<a/>" + "</td>" + "</tr>";
+
+
+                        console.log(list[x].ngay);
+                    }
+                    document.getElementById("list").innerHTML = temp;
+                }
+            });
+        });
+
+
+
+        $.ajax({
+            type: "Get",
+            url: 'https://localhost:7254/Bill/ListBill',
+            data: {
+                datefrom: _startDate.format('YYYY-MM-DD'),
+                dateto: _endDate.format('YYYY-MM-DD'),
+                type: "ajax",
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                //console.log(result.list);
+                var temp = "";
+                var list = result.list;
+                console.log(list);
+                for (let x in list) {
+
+                    let tien = list[x].tongtien > 1000 ? list[x].tongtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : list[x].tongtien + 'đ';
+
+                    temp += "<tr>" + "<td>" + list[x].ngay + "</td>" + "<td>" + list[x].trangthai + "</td>" + "<td>" + tien + "</td>" + "<td>" + "<a class='bill-details' href='/Bill/Detail/" + list[x].id + "'>" + "chi tiết" + "<a/>" + "</td>" + "</tr>";
+
+
+                    console.log(list[x].ngay);
+                }
+                 document.getElementById("list").innerHTML = temp;
+            }
+        });
+    });
+</script>
