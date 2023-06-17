@@ -1,4 +1,5 @@
 ﻿using DrugStore.Areas.Identity.Data;
+using DrugStore.Models;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -22,10 +23,12 @@ namespace DrugStore.Controllers
         {
             if (dshd.IsNullOrEmpty())
             {
-                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User)).ToList();
+                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User)).OrderByDescending(c=>c.NgayLap).ToList();
             }
             return View(dshd);
         }
+
+                 
         public IActionResult Detail(Guid id)
         {
             return View(dbContext.HoaDons.Find(id));
