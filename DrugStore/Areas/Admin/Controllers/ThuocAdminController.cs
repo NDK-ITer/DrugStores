@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 
 namespace DrugStore.Areas.Admin.Controllers
@@ -47,7 +48,7 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ThuocInput thuocInput,List<IFormFile> fileImages, IFormFile fileImage)
+        public ActionResult Create(ThuocInput thuocInput, List<IFormFile> fileImages, IFormFile fileImage)
         {
             try
             {
@@ -147,17 +148,64 @@ namespace DrugStore.Areas.Admin.Controllers
         // POST: ThuocAdminController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Thuoc thuoc)
+        public ActionResult Edit(Thuoc thuocUpdate, List<IFormFile> fileImages, IFormFile fileImage)
         {
             try
             {
-                dbContext.Entry(thuoc).State = EntityState.Modified;
+                Random random = new Random();
+                if (fileImage != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                    string extention = Path.GetExtension(fileImage.FileName);
+                    fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
+                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                    var filePath = Path.Combine(uploadFolder, fileName);
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileImage.CopyTo(stream);
+                    }
+                thuocUpdate.SanPham.AnhDaiDien = fileName;
+                }
+                if (fileImages != null)
+                {
+                    string Listimage = "";
+                    foreach (var image in fileImages)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                        string extention = Path.GetExtension(image.FileName);
+                        fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
+                        string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                        var filePath = Path.Combine(uploadFolder, fileName);
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            image.CopyTo(stream);
+                        }
+                        Listimage += fileName + ",";
+                    }
+                    thuocUpdate.SanPham.DSAnhSP = Listimage;
+                }
+                var thuoc = dbContext.Thuocs.Find(thuocUpdate.MaSP);
+                if (thuoc != null)
+                {
+                    thuoc.SanPham.TenSP = thuocUpdate.SanPham.TenSP;
+                    thuoc.SanPham.CongDung = thuocUpdate.SanPham.CongDung;
+                    thuoc.SanPham.MoTa = thuocUpdate.SanPham.MoTa;
+                    thuoc.SanPham.AnhDaiDien = thuoc.SanPham.AnhDaiDien;
+                    thuoc.SanPham.DSAnhSP = thuocUpdate.SanPham.DSAnhSP;
+                    thuoc.SanPham.MaTT = thuocUpdate.SanPham.MaTT;
+                    thuoc.SanPham.GiamGia = thuocUpdate.SanPham.GiamGia;
+                    thuoc.SanPham.DonGia = thuocUpdate.SanPham.DonGia;
+                    thuoc.SanPham.NgayCapNhat = DateTime.Now;
+                    thuoc.TacDungPhu = thuocUpdate.TacDungPhu;
+                    thuoc.MaLT = thuocUpdate.MaLT;
+                }
+                dbContext.Thuocs.Update(thuoc);
                 dbContext.SaveChanges();
-                return RedirectToAction("Index", "SanPhamAdmin");
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
