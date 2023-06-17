@@ -124,21 +124,9 @@ namespace DrugStore.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX");
-                    ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT");
-                    ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
-                    return View();
-                }
-<<<<<<< HEAD
-               
-=======
-                else
-                {
                     return RedirectToAction(nameof(Create));
 
                 }
-                return RedirectToAction(nameof(Index));
->>>>>>> master
             }
             catch
             {
