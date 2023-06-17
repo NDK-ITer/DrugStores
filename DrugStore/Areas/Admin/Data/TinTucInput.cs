@@ -12,7 +12,8 @@ namespace DrugStore.Areas.Admin.Data
         public string cover { get; set; }
         [DisplayName("Mô tả")]
         public string description { get; set; }
-        public DateTime? createdDate { get; set; }
+        [DisplayName("Ngày đăng")]
+        public DateTime? createdDate { get; set; } 
         public string[] idtag  { get; set;}
         public List<SelectListItem> drptag { get; set; }    
     }
