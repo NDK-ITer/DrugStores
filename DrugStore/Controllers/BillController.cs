@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DrugStore.Controllers
@@ -41,7 +42,8 @@ namespace DrugStore.Controllers
             {
                 Bill bill=new Bill();
                 bill.id = d.SoDH;
-                bill.ngay = (DateTime)d.NgayLap;
+                
+                bill.ngay = d.NgayLap?.ToString("MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
                 bill.trangthai = (bool)d.DaThanhToan ? "Đã thanh toán" : "chưa thanh toán";
                 bill.tongtien = d.TongThanhTien.ToString();
                 list.Add(bill);
