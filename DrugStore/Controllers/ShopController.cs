@@ -408,16 +408,31 @@ namespace DrugStore.Controllers
         public List<CT_HoaDon> TakeListProductIsBougth()
         {
             //TakeBill();
-            string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
             List<CT_HoaDon> cT_HoaDons = new List<CT_HoaDon>();
-            if (dsSpMuaString == null)
+            string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
+            if (signInManager.IsSignedIn(User))
             {
-                contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                if (dsSpMuaString == null)
+                {
+                    contx.HttpContext.Session.SetString("dsSpMua" + userManager.GetUserId(User), JsonConvert.SerializeObject(cT_HoaDons));
+                }
+                else
+                {
+                    cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                }
             }
             else
             {
-                cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                if (dsSpMuaString == null)
+                {
+                    contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                }
+                else
+                {
+                    cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                }
             }
+            
 
             return cT_HoaDons;
 

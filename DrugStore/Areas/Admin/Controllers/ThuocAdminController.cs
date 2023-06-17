@@ -129,7 +129,16 @@ namespace DrugStore.Areas.Admin.Controllers
                     ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc");
                     return View();
                 }
+<<<<<<< HEAD
                
+=======
+                else
+                {
+                    return RedirectToAction(nameof(Create));
+
+                }
+                return RedirectToAction(nameof(Index));
+>>>>>>> master
             }
             catch
             {
