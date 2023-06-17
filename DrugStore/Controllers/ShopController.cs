@@ -408,17 +408,32 @@ namespace DrugStore.Controllers
         public List<CT_HoaDon> TakeListProductIsBougth()
         {
             //TakeBill();
-            string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
+            
             List<CT_HoaDon> cT_HoaDons = new List<CT_HoaDon>();
-            if (dsSpMuaString == null)
+            if (signInManager.IsSignedIn(User))
             {
-                contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua"+userManager.GetUserId(User));
+                if (dsSpMuaString == null)
+                {
+                    contx.HttpContext.Session.SetString("dsSpMua" + userManager.GetUserId(User), JsonConvert.SerializeObject(cT_HoaDons));
+                }
+                else
+                {
+                    cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                }
             }
             else
             {
-                cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
+                if (dsSpMuaString == null)
+                {
+                    contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                }
+                else
+                {
+                    cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+                }
             }
-
             return cT_HoaDons;
 
         }
@@ -458,7 +473,14 @@ namespace DrugStore.Controllers
                     }
                     spDuocMua.ThanhTien = (sp.DonGia - (sp.DonGia * sp.GiamGia / 100)) * spDuocMua.SoLuong;
                     cT_HoaDons.Add(spDuocMua);
-                    contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                    if (signInManager.IsSignedIn(User))
+                    {
+                        contx.HttpContext.Session.SetString("dsSpMua"+ userManager.GetUserId(User), JsonConvert.SerializeObject(cT_HoaDons));
+                    }
+                    else
+                    {
+                        contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+                    }
 
                 }
                 else
