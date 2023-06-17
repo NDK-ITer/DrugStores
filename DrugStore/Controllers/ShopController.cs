@@ -645,6 +645,7 @@ namespace DrugStore.Controllers
                 SendMail(hoaDon);
 
                 ViewBag.Message = "Thanh toán thành công hóa đơn ";
+                contx.HttpContext.Session.Remove("dsSpMua");
             }
 
             else
