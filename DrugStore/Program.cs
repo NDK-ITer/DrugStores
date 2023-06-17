@@ -47,7 +47,6 @@ builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
-//builder.Services.AddAuthentication().AddCookie();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
