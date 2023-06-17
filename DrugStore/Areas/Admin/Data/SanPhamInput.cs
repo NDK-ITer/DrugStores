@@ -55,5 +55,7 @@ namespace DrugStore.Areas.Admin.Data
         public virtual LoaiSP? LoaiSP { get; set; }
         [DisplayName("Trạng Thái")]
         public virtual TrangThai? TrangThai { get; set; }
+
+
     }
 }
