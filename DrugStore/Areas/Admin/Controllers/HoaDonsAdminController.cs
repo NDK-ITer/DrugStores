@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using X.PagedList;
@@ -78,7 +79,28 @@ namespace DrugStore.Areas.Admin.Controllers
             HoaDon hoaDon = dbContext.HoaDons.Find(SoDH);
             return View(hoaDon);
         }
+        public IActionResult Edit(Guid SoDH)
+        {
+            HoaDon hoaDon = dbContext.HoaDons.Find(SoDH);
+            return View(hoaDon);
+        }
 
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(HoaDon hoaDon)
+        {
+            try
+            {
+                HoaDon hoaDon1 = dbContext.HoaDons.Find(hoaDon.SoDH);
+                hoaDon1.DaThanhToan=hoaDon.DaThanhToan;
+                hoaDon1.DiaChiGiao = hoaDon.DiaChiGiao;
+                dbContext.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

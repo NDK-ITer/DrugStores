@@ -1,0 +1,121 @@
+﻿@model DrugStore.Models.Entities.HoaDon
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Chỉnh sửa</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.SoDH)
+    <div class="bill-details">
+        <h4>Số Hóa Đơn : @Model.SoDH</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                Ngày lập:
+            </dt>
+
+            <dd>
+                @Model.NgayLap
+            </dd>
+            <dt>
+                Ghi chú:
+            </dt>
+
+            <dd>
+                @Model.GhiChu
+            </dd>
+
+            <dt>
+                Tổng thành tiền:
+            </dt>
+
+            <dd>
+                @String.Format(info, "{0:c}", Model.TongThanhTien)
+            </dd>
+
+            <dt>
+                Danh sách sản phẩm:
+            </dt>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Tên sản phẩm
+                    </th>
+
+                    <th>
+                        Ảnh
+                    </th>
+
+                    <th>
+                        Số Lượng
+                    </th>
+
+                    <th>
+                        Thành tiền
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.CT_HoaDon)
+                {
+                    <tr>
+                        <td>
+                            @item.SanPham.TenSP
+                        </td>
+                        <td>
+                            @if (item.SanPham.Thuoc != null)
+                            {
+                                <img src="/images/sanpham/thuoc/@item.SanPham.AnhDaiDien" width="100" height="100" />
+                            }
+                        </td>
+                        <td>
+                            @item.SoLuong
+                        </td>
+                        <td>
+                            @String.Format(info, "{0:c}", item.ThanhTien)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dl>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiaChiGiao, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DiaChiGiao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiaChiGiao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2 pb-1 pt-2">
+                Thanh Toán
+            </div>
+            <div class="col-md-10">
+                <div class="co-md-6">
+                    @Html.RadioButtonFor(m => m.DaThanhToan,true) <span>rồi</span>
+                </div>
+                <div class="co-md-6">
+                    @Html.RadioButtonFor(m => m.DaThanhToan,false)<span>chưa</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở về danh sách", "Index")
+</div>
