@@ -27,6 +27,9 @@
             Trạng Thái Thanh Toán
         </th>
         <th>
+            hình thức thanh toán
+        </th>
+        <th>
             Tổng Thành Tiền
         </th>
         <th></th>
@@ -56,6 +59,9 @@
                     Chưa Thanh Toán
                 </td>
             }
+            <td>
+                @item.HinhThucThanhToan.TenHT
+            </td>
             <td>
                 @String.Format(info, "{0:c}", item.TongThanhTien)
             </td>

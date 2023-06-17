@@ -32,7 +32,12 @@
             <dd>
                 @Model.GhiChu
             </dd>
-
+            <dt>
+                Hình thức thanh toán:
+            </dt>
+            <dd>
+                @Model.HinhThucThanhToan.TenHT
+            </dd>
             <dt>
                 Tổng thành tiền:
             </dt>
@@ -93,23 +98,26 @@
                 @Html.ValidationMessageFor(model => model.DiaChiGiao, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="control-label col-md-2 pb-1 pt-2">
-                Thanh Toán
-            </div>
-            <div class="col-md-10">
-                <div class="co-md-6">
-                    @Html.RadioButtonFor(m => m.DaThanhToan,true) <span>rồi</span>
+        @if (Model.HinhThucThanhToan.MaHT != 1)
+        {
+            <div class="form-group">
+                <div class="control-label col-md-2 pb-1 pt-2">
+                    Thanh Toán
                 </div>
-                <div class="co-md-6">
-                    @Html.RadioButtonFor(m => m.DaThanhToan,false)<span>chưa</span>
+                <div class="col-md-10">
+                    <div class="co-md-6">
+                        @Html.RadioButtonFor(m => m.DaThanhToan,true) <span>rồi</span>
+                    </div>
+                    <div class="co-md-6">
+                        @Html.RadioButtonFor(m => m.DaThanhToan,false)<span>chưa</span>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        }
+      
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-10  pb-1 pt-2">
                 <input type="submit" value="Cập nhật" class="btn btn-primary" />
             </div>
         </div>

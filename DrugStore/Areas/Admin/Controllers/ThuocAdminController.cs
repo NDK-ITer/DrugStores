@@ -1,9 +1,7 @@
 ﻿using DrugStore.Areas.Admin.Data;
-using DrugStore.Areas.Identity.Data;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +17,15 @@ namespace DrugStore.Areas.Admin.Controllers
         private readonly DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
         private readonly IWebHostEnvironment environment;
         private readonly string fileImagePath = "Images/SanPham/Thuoc";
-          private UserManager<AppNetUser> userManager;
-        public ThuocAdminController(IWebHostEnvironment environment, UserManager<AppNetUser> userManager)
+        public ThuocAdminController(IWebHostEnvironment environment)
         {
             this.environment = environment;
-            this.userManager = userManager;
+
         }
         // GET: ThuocAdminController
         public ActionResult Index()
         {
-            return RedirectToAction("Index","SanPhamsAdmin");
+            return RedirectToAction("Index", "SanPhamsAdmin");
         }
 
         // GET: ThuocAdminController/Details/5
@@ -66,190 +63,17 @@ namespace DrugStore.Areas.Admin.Controllers
                     {
                         string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
                         string extention = Path.GetExtension(fileImage.FileName);
-                        fileName = sanPham.MaSP.ToString()+ random.Next().ToString() + extention;
-                        string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
-                        var filePath = Path.Combine(uploadFolder, fileName);
-                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            fileImage.CopyTo(stream);
-                        }
-                        thuocInput.AnhDaiDien = fileName;
-                    }
-                    if(fileImages.Count> 0)
-                    {
-                        string Listimage = "";
-                        foreach (var image in fileImages)
-                        {
-                            string fileName = Path.GetFileNameWithoutExtension(image.FileName);
-                            string extention = Path.GetExtension(image.FileName);
-                            fileName = sanPham.MaSP.ToString() + random.Next().ToString() + extention;
-                            string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
-                            var filePath = Path.Combine(uploadFolder, fileName);
-                            using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                image.CopyTo(stream);
-                            }
-                            Listimage += fileName +",";
-                        }
-                        thuocInput.DSAnhSP = Listimage;
-                    }
-
-                    sanPham.TenSP = thuocInput.TenSP;
-                    sanPham.CongDung = thuocInput.CongDung;
-                    sanPham.MoTa = thuocInput.MoTa;
-                    sanPham.AnhDaiDien = thuocInput.AnhDaiDien;
-                    sanPham.DSAnhSP=thuocInput.DSAnhSP;
-                    sanPham.SoLanMua = 0;
-                    sanPham.MaLoaiSP = thuocInput.MaLoaiSP;
-                    sanPham.MaTT = thuocInput.MaTT;
-                    sanPham.GiamGia = thuocInput.GiamGia;
-                    sanPham.DonGia = thuocInput.DonGia;
-                    sanPham.MaHSX = thuocInput.MaHSX;
-                    sanPham.SoLuong = thuocInput.SoLuong;
-                    sanPham.NgayTao = DateTime.Now;
-                    sanPham.MaLoaiSP = "T";
-                    sanPham.NguoiTao = dbContext.AspNetUsers.Find(userManager.GetUserId(User)).UserName;
-                    thuoc.MaSP = sanPham.MaSP;
-                    thuoc.DonViTinh = thuocInput.DonViTinh;
-                    thuoc.LieuDung = thuocInput.LieuDung;
-                    thuoc.TacDungPhu = thuocInput.TacDungPhu;
-                    thuoc.ThanhPhan = thuocInput.ThanhPhan;
-                    thuoc.MaLT = thuocInput.MaLT;
-
-                    dbContext.SanPhams.Add(sanPham);
-                    dbContext.SaveChanges();
-                    dbContext.Thuocs.Add(thuoc);
-                    dbContext.SaveChanges();
-
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    return RedirectToAction(nameof(Create));
-
-                }
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ThuocAdminController/Edit/5
-        public ActionResult Edit(Guid id)
-        {
-            Thuoc thuoc = dbContext.Thuocs.Find(id);
-            SanPham sanPham = dbContext.SanPhams.Find(id);
-
-            ThuocInput thuocInput = new ThuocInput() { 
-                MaSP = sanPham.MaSP,
-                TenSP=sanPham.TenSP,
-               CongDung=sanPham.CongDung,
-           MoTa = sanPham.MoTa,
-           AnhDaiDien = sanPham.AnhDaiDien,
-            DSAnhSP = sanPham.DSAnhSP,
-           MaTT = sanPham.MaTT,
-            GiamGia = sanPham.GiamGia,
-            DonGia = sanPham.DonGia,
-           MaHSX = sanPham.MaHSX,
-            SoLuong = sanPham.SoLuong,
-            
-            DonViTinh = thuoc.DonViTinh,
-            LieuDung = thuoc.LieuDung,
-            TacDungPhu = thuoc.TacDungPhu,
-           ThanhPhan = thuoc.ThanhPhan,
-           MaLT = thuoc.MaLT,
-        };
-
-
-
-            //LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
-            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX", thuoc.SanPham.MaHSX);
-            ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT", thuoc.SanPham.MaTT);
-            ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc", thuoc.MaLT);
-            return View(thuocInput);
-        }
-
-        // POST: ThuocAdminController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-<<<<<<< HEAD
-        public ActionResult Edit(ThuocInput thuocInput, List<IFormFile> fileImages, IFormFile fileImage)
-        {
-            try
-            {
-                Thuoc thuoc = dbContext.Thuocs.Find(thuocInput.MaSP);
-                SanPham sanPham = dbContext.SanPhams.Find(thuocInput.MaSP);
-                Random random = new Random();
-                thuocInput.AnhDaiDien = sanPham.AnhDaiDien;
-                thuocInput.DSAnhSP = sanPham.DSAnhSP;
-                    if (fileImage != null)
-                    {
-                        if (!string.IsNullOrEmpty(sanPham.AnhDaiDien))
-                        {
-                            string filePathDelete = environment.WebRootPath + "/" + fileImagePath + "/" + sanPham.AnhDaiDien;
-                            FileInfo fileDelete = new FileInfo(filePathDelete);
-                            fileDelete.Delete();
-
-                        }
-
-                        string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
-                        string extention = Path.GetExtension(fileImage.FileName);
                         fileName = sanPham.MaSP.ToString() + random.Next().ToString() + extention;
-=======
-        public ActionResult Edit(Thuoc thuocUpdate, List<IFormFile> fileImages, IFormFile fileImage)
-        {
-            try
-            {
-                Random random = new Random();
-                if (fileImage != null)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
-                    string extention = Path.GetExtension(fileImage.FileName);
-                    fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
-                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
-                    var filePath = Path.Combine(uploadFolder, fileName);
-                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        fileImage.CopyTo(stream);
-                    }
-                thuocUpdate.SanPham.AnhDaiDien = fileName;
-                }
-                if (fileImages != null)
-                {
-                    string Listimage = "";
-                    foreach (var image in fileImages)
-                    {
-                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
-                        string extention = Path.GetExtension(image.FileName);
-                        fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
->>>>>>> Khuong
                         string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
                         var filePath = Path.Combine(uploadFolder, fileName);
                         using (FileStream stream = new FileStream(filePath, FileMode.Create))
                         {
-<<<<<<< HEAD
                             fileImage.CopyTo(stream);
                         }
                         thuocInput.AnhDaiDien = fileName;
                     }
-                    if (fileImages.Count > 0)
+                    if (fileImages != null)
                     {
-
-                        if (!string.IsNullOrEmpty(sanPham.DSAnhSP))
-                        {
-                            string[] filesold = sanPham.DSAnhSP.Split(',');
-                            foreach (var fileold in filesold)
-                            {
-                                if (!string.IsNullOrEmpty(fileold))
-                                {
-                                    string filePathDelete1 = environment.WebRootPath + "/" + fileImagePath + "/" + fileold;
-                                    FileInfo fileDelete1 = new FileInfo(filePathDelete1);
-                                    fileDelete1.Delete();
-                                }
-
-                            }
-                        }
                         string Listimage = "";
                         foreach (var image in fileImages)
                         {
@@ -272,26 +96,88 @@ namespace DrugStore.Areas.Admin.Controllers
                     sanPham.MoTa = thuocInput.MoTa;
                     sanPham.AnhDaiDien = thuocInput.AnhDaiDien;
                     sanPham.DSAnhSP = thuocInput.DSAnhSP;
-               
-                    sanPham.NgayCapNhat = DateTime.Now;
-                    sanPham.NguoiCapNhat = dbContext.AspNetUsers.Find(userManager.GetUserId(User)).UserName;
+                    sanPham.SoLanMua = 0;
                     sanPham.MaLoaiSP = thuocInput.MaLoaiSP;
                     sanPham.MaTT = thuocInput.MaTT;
                     sanPham.GiamGia = thuocInput.GiamGia;
                     sanPham.DonGia = thuocInput.DonGia;
                     sanPham.MaHSX = thuocInput.MaHSX;
                     sanPham.SoLuong = thuocInput.SoLuong;
-                  
+                    sanPham.NgayTao = DateTime.Now;
+                    sanPham.MaLoaiSP = "T";
 
-             
-            
-                dbContext.SaveChanges();
-           
-               
+                    thuoc.MaSP = sanPham.MaSP;
+                    thuoc.DonViTinh = thuocInput.DonViTinh;
+                    thuoc.LieuDung = thuocInput.LieuDung;
+                    thuoc.TacDungPhu = thuocInput.TacDungPhu;
+                    thuoc.ThanhPhan = thuocInput.ThanhPhan;
+                    thuoc.MaLT = thuocInput.MaLT;
+
+                    dbContext.SanPhams.Add(sanPham);
+                    dbContext.SaveChanges();
+                    dbContext.Thuocs.Add(thuoc);
+                    dbContext.SaveChanges();
 
 
-                return RedirectToAction("Index", "SanPhamsAdmin");
-=======
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Create));
+
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: ThuocAdminController/Edit/5
+        public ActionResult Edit(Guid id)
+        {
+            Thuoc thuoc = dbContext.Thuocs.Find(id);
+            SanPham sanPham = dbContext.SanPhams.Find(id);
+            //LoaiThuoc loaiThuoc = dbContext.LoaiThuocs.Find(thuoc.MaLT);
+            ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX", thuoc.SanPham.MaHSX);
+            ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT", thuoc.SanPham.MaTT);
+            ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc", thuoc.MaLT);
+            return View(thuoc);
+        }
+
+        // POST: ThuocAdminController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Thuoc thuocUpdate, List<IFormFile> fileImages, IFormFile fileImage)
+        {
+            try
+            {
+                Random random = new Random();
+                if (fileImage != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(fileImage.FileName);
+                    string extention = Path.GetExtension(fileImage.FileName);
+                    fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
+                    string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                    var filePath = Path.Combine(uploadFolder, fileName);
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fileImage.CopyTo(stream);
+                    }
+                    thuocUpdate.SanPham.AnhDaiDien = fileName;
+                }
+                if (fileImages != null)
+                {
+                    string Listimage = "";
+                    foreach (var image in fileImages)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+                        string extention = Path.GetExtension(image.FileName);
+                        fileName = thuocUpdate.SanPham.MaSP.ToString() + random.Next().ToString() + extention;
+                        string uploadFolder = Path.Combine(environment.WebRootPath, fileImagePath);
+                        var filePath = Path.Combine(uploadFolder, fileName);
+                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        {
                             image.CopyTo(stream);
                         }
                         Listimage += fileName + ",";
@@ -316,19 +202,10 @@ namespace DrugStore.Areas.Admin.Controllers
                 dbContext.Thuocs.Update(thuoc);
                 dbContext.SaveChanges();
                 return RedirectToAction("Index");
->>>>>>> Khuong
             }
-            catch(Exception ex)
+            catch
             {
-<<<<<<< HEAD
-                Thuoc thuoc = dbContext.Thuocs.Find(thuocInput.MaSP);
-                ViewBag.MaHSX = new SelectList(dbContext.HangSXes, "MaHSX", "TenHSX", thuoc.SanPham.MaHSX);
-                ViewBag.MaTT = new SelectList(dbContext.TrangThais, "MaTT", "TenTT", thuoc.SanPham.MaTT);
-                ViewBag.MaLT = new SelectList(dbContext.LoaiThuocs, "MaLT", "TenLoaiThuoc", thuoc.MaLT);
-                return View();
-=======
                 return RedirectToAction("Index");
->>>>>>> Khuong
             }
         }
 
@@ -339,7 +216,7 @@ namespace DrugStore.Areas.Admin.Controllers
             {
                 SanPham sanPham = dbContext.SanPhams.Find(id);
                 Thuoc thuoc = dbContext.Thuocs.Find(id);
-                if (sanPham != null && thuoc!=null)
+                if (sanPham != null && thuoc != null)
                 {
                     if (!string.IsNullOrEmpty(sanPham.AnhDaiDien))
                     {
@@ -361,7 +238,7 @@ namespace DrugStore.Areas.Admin.Controllers
                                 FileInfo fileDelete1 = new FileInfo(filePathDelete1);
                                 fileDelete1.Delete();
                             }
-                            
+
                         }
                     }
                     dbContext.Thuocs.Remove(thuoc);

@@ -51,6 +51,7 @@ namespace DrugStore.Areas.Admin.Controllers
 
 
         // GET: AccountController/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
             ViewBag.RoleId = new SelectList(dbContext.AspNetRoles, "Id", "Name");
