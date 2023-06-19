@@ -1,6 +1,8 @@
-﻿@model DrugStore.Models.Entities.Thuoc
+@using DrugStore.Models.Entities;
+@model DrugStore.Models.Entities.Thuoc
 @{
     string fileImagePath = "/images/SanPham/Thuoc/";
+    DrugStoreDbContext dbContext = new DrugStoreDbContext().Created();
 }
 
 
@@ -11,162 +13,174 @@
         <h4>Thuốc</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-       <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.TenSP, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.TenSP, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.CongDung, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.CongDung, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.CongDung, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.MoTa, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.MoTa, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.MoTa, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.GiamGia, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.GiamGia, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.GiamGia, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.DonGia, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.DonGia, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.DonGia, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.SoLuong, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SanPham.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SanPham.SoLuong, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DonViTinh, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DonViTinh, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.LieuDung, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LieuDung, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LieuDung, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.TacDungPhu, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TacDungPhu, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TacDungPhu, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ThanhPhan, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ThanhPhan, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ThanhPhan, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            @*<div class="form-group">
-            @Html.LabelFor(model => model.MaLoaiSP, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+        <input type="hidden" asp-for="MaSP" />
+        <input type="hidden" asp-for="SanPham.MaSP" />
+        <input type="hidden" asp-for="SanPham.AnhDaiDien" />
+        <input type="hidden" asp-for="SanPham.MaLoaiSP" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.TenSP, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
             <div class="col-md-10">
-            @Html.DropDownList("MaLoaiSP", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.SanPham.MaLoaiSP, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.SanPham.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.TenSP, "", new { @class = "text-danger" })
             </div>
-            </div>*@
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.MaHSX, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("MaHSX", (IEnumerable<SelectListItem>)ViewBag.MaHSX, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SanPham.MaHSX, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.CongDung, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SanPham.CongDung, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.CongDung, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.MoTa, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SanPham.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.GiamGia, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SanPham.GiamGia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.GiamGia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.DonGia, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SanPham.DonGia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.DonGia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.SoLuong, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SanPham.SoLuong, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SanPham.SoLuong, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DonViTinh, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DonViTinh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DonViTinh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LieuDung, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LieuDung, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LieuDung, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TacDungPhu, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TacDungPhu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TacDungPhu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThanhPhan, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ThanhPhan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ThanhPhan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+        @Html.LabelFor(model => model.MaLoaiSP, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+        <div class="col-md-10">
+        @Html.DropDownList("MaLoaiSP", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.SanPham.MaLoaiSP, "", new { @class = "text-danger" })
+        </div>
+        </div>*@
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.MaHSX, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("MaHSX", (IEnumerable<SelectListItem>)ViewBag.MaHSX, htmlAttributes: new { @class = "form-control" })*@
+                <select asp-for="SanPham.MaHSX" asp-items="ViewBag.MaHSX" class="form-control" htmlAttributes></select>
+                @Html.ValidationMessageFor(model => model.SanPham.MaHSX, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SanPham.MaTT,htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                <select asp-for="SanPham.MaTT" asp-items="ViewBag.MaTT" class="form-control" htmlAttributes></select>
+                @*@Html.DropDownList("MaTT", (IEnumerable<SelectListItem>)ViewBag.MaTT, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.SanPham.MaTT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaLT, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
+            <div class="col-md-10">
+                <select asp-for="MaLT" asp-items="ViewBag.MaLT" class="form-control" htmlAttributes></select>
+                @*@Html.DropDownList("MaLT", (IEnumerable<SelectListItem>)ViewBag.MaLT, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.MaLT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SanPham.AnhDaiDien" class="col-md-2 control-label col-md-2 pb-1 pt-2"></label>
+            <div class="col-md-5">
+
+                <input type="file" name="fileImage" value="" id="Upimg1" />
+                <span asp-validation-for="SanPham.AnhDaiDien" class="text-danger"></span>
+                <div id="divImageMediaPreview1">
+                    <img src="/images/SanPham/Thuoc/@Model.SanPham.AnhDaiDien" style="width: 100px; height: 100px; padding: 10px" />
                 </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SanPham.MaTT,htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("MaTT", (IEnumerable<SelectListItem>)ViewBag.MaTT, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SanPham.MaTT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.MaLT, htmlAttributes: new { @class = "control-label col-md-2 pb-1 pt-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("MaLT", (IEnumerable<SelectListItem>)ViewBag.MaLT, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MaLT, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="SanPham.AnhDaiDien" class="col-md-2 control-label col-md-2 pb-1 pt-2"></label>
-                <div class="col-md-5">
-
-                    <input type="file" name="fileImage" value="" id="Upimg1" />
-                    <span asp-validation-for="SanPham.AnhDaiDien" class="text-danger"></span>
-                    <div id="divImageMediaPreview1">
-                    <img src="@fileImagePath@Model.SanPham.AnhDaiDien" style="width: 100px; height: 100px; padding: 10px" />
-                    </div>
-
-                </div>
 
             </div>
-            <div class="form-group">
-                <label asp-for="SanPham.DSAnhSP" class="col-md-2 control-label col-md-2 pb-1 pt-2"></label>
-                <div class="col-md-5">
+
+        </div>
+        <div class="form-group">
+            <label asp-for="SanPham.DSAnhSP" class="col-md-2 control-label col-md-2 pb-1 pt-2"></label>
+            <div class="col-md-5">
 
 
-                    <input type="file" name="fileImages" value="" id="Upimg" multiple />
-                    <span asp-validation-for="SanPham.DSAnhSP" class="text-danger"></span>
-                    <div id="divImageMediaPreview">
+                <input type="file" name="fileImages" value="" id="Upimg" multiple />
+                <span asp-validation-for="SanPham.DSAnhSP" class="text-danger"></span>
+                <div id="divImageMediaPreview">
                     @{
 
                         try
                         {
-                            var Listimage = Model.SanPham.DSAnhSP.Split(',');
-
-                            if (!string.IsNullOrEmpty(Model.SanPham.DSAnhSP))
+                            if (Model.SanPham.DSAnhSP != null)
                             {
-
-
-                                if (@Listimage.Count() > 0)
+                                var Listimage = Model.SanPham.DSAnhSP.Split(',');
+                                if (!string.IsNullOrEmpty(Model.SanPham.DSAnhSP))
                                 {
-                                    foreach (var item in Listimage)
-                                    {
-                                        if (!String.IsNullOrEmpty(item))
-                                        {
-                                            <img src="@fileImagePath@item" alt="" data-image="@item" style="width: 100px; height: 100px; padding: 10px">
-                                        }
-                                      
-                                    }
-                                }
 
+
+                                    if (@Listimage.Count() > 0)
+                                    {
+                                        foreach (var item in Listimage)
+                                        {
+                                            if (!String.IsNullOrEmpty(item))
+                                            {
+                                                <img src="@fileImagePath@item" alt="" data-image="@item" style="width: 100px; height: 100px; padding: 10px">
+                                            }
+
+                                        }
+                                    }
+
+                                }
                             }
+
                         }
                         catch (Exception ex)
                         {
@@ -174,11 +188,11 @@
                         }
 
                     }
-                    </div>
-
                 </div>
 
             </div>
+
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

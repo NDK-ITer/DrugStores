@@ -18,18 +18,20 @@ namespace DrugStore.Areas.Identity.Pages.Account
         private readonly SignInManager<AppNetUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
         private readonly IHttpContextAccessor contxt;
+        private readonly UserManager<AppNetUser> _userManager;
 
-        public LogoutModel(SignInManager<AppNetUser> signInManager, ILogger<LogoutModel> logger, IHttpContextAccessor contxt)
+        public LogoutModel(SignInManager<AppNetUser> signInManager, UserManager<AppNetUser> userManager, ILogger<LogoutModel> logger, IHttpContextAccessor contxt)
         {
             _signInManager = signInManager;
             _logger = logger;
             this.contxt = contxt;
+            this._userManager = userManager;
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            contxt.HttpContext.Session.Clear();
+            contxt.HttpContext.Session.Remove("dsSpMua");
             _logger.LogInformation("Người dùng đã đăng xuất.");
             if (returnUrl != null)
             {

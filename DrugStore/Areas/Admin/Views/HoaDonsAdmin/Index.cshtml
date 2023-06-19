@@ -27,6 +27,9 @@
             Trạng Thái Thanh Toán
         </th>
         <th>
+            hình thức thanh toán
+        </th>
+        <th>
             Tổng Thành Tiền
         </th>
         <th></th>
@@ -57,11 +60,17 @@
                 </td>
             }
             <td>
+                @item.HinhThucThanhToan.TenHT
+            </td>
+            <td>
                 @String.Format(info, "{0:c}", item.TongThanhTien)
             </td>
 
             <td>
                 @Html.ActionLink("Chi Tiết", "Details", new { SoDH=item.SoDH })
+            </td>
+            <td>
+                @Html.ActionLink("cập nhật", "Edit", new { SoDH=item.SoDH })
             </td>
         </tr>
     }

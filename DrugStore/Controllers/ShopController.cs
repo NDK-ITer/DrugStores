@@ -324,6 +324,7 @@ namespace DrugStore.Controllers
             {
                 SendMail(hoaDon);
             }
+            contx.HttpContext.Session.Remove("dsSpMua");
             return RedirectToAction("Index");
 
         }
@@ -408,8 +409,30 @@ namespace DrugStore.Controllers
         public List<CT_HoaDon> TakeListProductIsBougth()
         {
             //TakeBill();
-            string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
             List<CT_HoaDon> cT_HoaDons = new List<CT_HoaDon>();
+            string dsSpMuaString = contx.HttpContext.Session.GetString("dsSpMua");
+            //if (signInManager.IsSignedIn(User))
+            //{
+            //    if (dsSpMuaString == null)
+            //    {
+            //        contx.HttpContext.Session.SetString("dsSpMua" + userManager.GetUserId(User), JsonConvert.SerializeObject(cT_HoaDons));
+            //    }
+            //    else
+            //    {
+            //        cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+            //    }
+            //}
+            //else
+            //{
+            //    if (dsSpMuaString == null)
+            //    {
+            //        contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
+            //    }
+            //    else
+            //    {
+            //        cT_HoaDons = JsonConvert.DeserializeObject<List<CT_HoaDon>>(dsSpMuaString);
+            //    }
+            //}
             if (dsSpMuaString == null)
             {
                 contx.HttpContext.Session.SetString("dsSpMua", JsonConvert.SerializeObject(cT_HoaDons));
@@ -622,6 +645,7 @@ namespace DrugStore.Controllers
                 SendMail(hoaDon);
 
                 ViewBag.Message = "Thanh toán thành công hóa đơn ";
+                contx.HttpContext.Session.Remove("dsSpMua");
             }
 
             else
@@ -659,6 +683,7 @@ namespace DrugStore.Controllers
                     SendMail(hoaDon);
 
                     ViewBag.Message = "Thanh toán thành công hóa đơn ";
+                    contx.HttpContext.Session.Remove("dsSpMua");
                 }
                 else
                 {
