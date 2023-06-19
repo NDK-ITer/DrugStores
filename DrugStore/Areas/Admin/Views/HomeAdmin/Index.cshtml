@@ -14,11 +14,19 @@
             <li class="breadcrumb-item active">Biểu Đồ</li>
         </ol>
         <div class="row">
+            <div class="col-xl-6 pb-3">
+                <label for="filterEntriesMonth" class="mr-1">
+                   Lọc:
+                </label>
+                <input type="text" name="daterange" />
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xl-3 col-md-3">
                 <div class="card bg-primary text-white mb-4">
                     <div class="row card-body">
                         <div class="col-md-6">Tổng Tiền</div>
-                        <div class="col-md-6"> @String.Format(info, "{0:c}", @ViewBag.tongtien)</div>
+                        <div class="col-md-6"><span id="tongtien"></span></div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" asp-area="Admin" asp-controller="HoaDonsAdmin" asp-action="Index">Chi Tiết</a>
@@ -30,7 +38,7 @@
                 <div class="card bg-warning text-white mb-4">
                     <div class="row card-body">
                         <div class="col-md-6">Thanh Toán</div>
-                        <div class="col-md-6"> @String.Format(info, "{0:c}", @ViewBag.thanhtoan)</div>
+                        <div class="col-md-6"><span id="thanhtoan"></span></div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" asp-area="Admin" asp-controller="HoaDonsAdmin" asp-action="Index" asp-route-thanhtoan="true">Chi Tiết</a>
@@ -42,7 +50,7 @@
                 <div class="card bg-success text-white mb-4">
                     <div class="row card-body">
                         <div class="col-md-6">Chưa Thanh Toán</div>
-                        <div class="col-md-6"> @String.Format(info, "{0:c}", @ViewBag.chuathanhtoan)</div>
+                        <div class="col-md-6"> <span id="chuathanhtoan"></span></div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" asp-area="Admin" asp-controller="HoaDonsAdmin" asp-action="Index" asp-route-thanhtoan="false">Chi tiết</a>
@@ -63,6 +71,7 @@
                 </div>
             </div>
         </div>
+       
         <div class="row">
             <div class="col-xl-6">
                 <div class="card mb-4">
@@ -86,12 +95,168 @@
 
     </div>
 </main>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
+   
 <script>
+
+   
         $(window).on("load", function () {
+
+        $('input[name="daterange"]').daterangepicker({
+            timePicker: false,
+            timePickerSeconds: false,
+            ranges: _dateRanges,
+            opens: 'left',
+            locale: {
+                "format": "DD/MM/YYYY",
+            },
+            "startDate": _startDate.format("DD/MM/YYYY"),
+            "endDate": _endDate.format("DD/MM/YYYY"),
+        }, function (start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            $.ajax({
+                type: "Get",
+                url: 'https://localhost:7254/Admin/HomeAdmin/tongHoaDon',
+                data: {
+                    datefrom: start.format('YYYY-MM-DD'),
+                    dateto: end.format('YYYY-MM-DD'),
+                    type: "ajax",
+                },
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    console.log(result.data);
+                    let chartlabels = result.data.map(object => object.gio)
+                    let chartdata = result.data.map(object => object.soluong)
+                    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                    Chart.defaults.global.defaultFontColor = '#292b2c';
+
+                    // Area Chart Example
+                    var ctx = document.getElementById("myBarChart");
+                    var myLineChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: chartlabels,
+                            datasets: [
+                                {
+                                    label: 'Tổng Hóa Đơn',
+                                    backgroundColor: '#FCC984',
+                                    borderColor: '#FCC984',
+                                    borderWidth: 2,
+                                    data: chartdata,
+                                }
+                            ]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            elements: {
+                                bar: {
+                                    borderWidth: 2,
+                                }
+                            },
+                            responsive: true,
+                            legend: {
+                                display: false,
+                            },
+                            plugins: {
+                                labels: {
+                                    render: function (args) {
+                                        return '';
+                                    }
+                                },
+                                legend: {
+                                    display: false,
+                                },
+                            }
+                        },
+                    });
+
+
+                }
+            });
+            // Run code
+            $.ajax({
+                type: "Get",
+                url: 'https://localhost:7254/Admin/HomeAdmin/tongTien',
+                data: {
+                      datefrom: start.format('YYYY-MM-DD'),
+                      dateto: end.format('YYYY-MM-DD'),
+                    type: "ajax",
+                    },
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    console.log(result.data);
+                    let chartlabels = result.data.map(object => object.ngay)
+                    let chartdata = result.data.map(object => object.tongtien)
+
+                    // Set new default font family and font color to mimic Bootstrap's default styling
+                    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                    Chart.defaults.global.defaultFontColor = '#292b2c';
+
+                    // Area Chart Example
+                    var ctx = document.getElementById("myAreaChart");
+                    var myLineChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: chartlabels,
+                            datasets: [{
+                                label: 'Tiền',
+                                data: chartdata,
+                                backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                            }]
+                        },
+                        options: {
+                            tooltips: {
+                                callbacks: {
+                                    label: function (t, d) {
+                                        var xLabel = d.datasets[t.datasetIndex].label;
+                                        var yLabel = t.yLabel >= 1000 ? t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : t.yLabel + 'đ';
+                                        return xLabel + ': ' + yLabel;
+                                    }
+                                }
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        callback: function (value, index, values) {
+                                            if (parseInt(value) >= 1000) {
+                                                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ';
+                                            } else {
+                                                return value + 'đ';
+                                            }
+                                        }
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                }
+            });
+            $.ajax({
+                type: "Get",
+                url: 'https://localhost:7254/Admin/HomeAdmin/tong',
+                data: {
+                    datefrom: start.format('YYYY-MM-DD'),
+                    dateto: end.format('YYYY-MM-DD'),
+                    type: "ajax",
+                },
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    console.log(result.tongtien);
+                    document.getElementById("tongtien").innerHTML = result.tongtien > 1000 ? result.tongtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.tongtien + 'đ';
+                    document.getElementById("thanhtoan").innerHTML = result.thanhtoan > 1000 ? result.thanhtoan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.thanhtoan + 'đ';
+                    document.getElementById("chuathanhtoan").innerHTML = result.chuathanhtoan > 1000 ? result.chuathanhtoan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.chuathanhtoan + 'đ';
+                }
+            });
+        });
+
         $.ajax({
             type: "Get",
             url: 'https://localhost:7254/Admin/HomeAdmin/tongHoaDon',
+            data: {
+                datefrom: _startDate.format('YYYY-MM-DD'),
+                dateto: _endDate.format('YYYY-MM-DD'),
+                type: "ajax",
+            },
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 console.log(result.data);
@@ -143,61 +308,84 @@
 
             }
         });
-            // Run code
-            $.ajax({
-                type: "Get",
+        // Run code
+        $.ajax({
+            type: "Get",
             url: 'https://localhost:7254/Admin/HomeAdmin/tongTien',
-                //data: fdata,
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    console.log(result.data);
-                    let chartlabels = result.data.map(object => object.ngay)
-                    let chartdata = result.data.map(object => object.tongtien)
-               
-                    // Set new default font family and font color to mimic Bootstrap's default styling
-                    Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-                    Chart.defaults.global.defaultFontColor = '#292b2c';
+            data: {
+                datefrom: _startDate.format('YYYY-MM-DD'),
+                dateto: _endDate.format('YYYY-MM-DD'),
+                type: "ajax",
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                console.log(result.data);
+                let chartlabels = result.data.map(object => object.ngay)
+                let chartdata = result.data.map(object => object.tongtien)
 
-                    // Area Chart Example
-                    var ctx = document.getElementById("myAreaChart");
-                    var myLineChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: chartlabels,
-                            datasets: [{
-                                label: 'Tiền',
-                                data: chartdata,
-                                backgroundColor: 'rgba(0, 119, 204, 0.8)',
-                            }]
-                        },
-                        options: {
-                            tooltips: {
-                                callbacks: {
-                                    label: function (t, d) {
-                                        var xLabel = d.datasets[t.datasetIndex].label;
-                                        var yLabel = t.yLabel >= 1000 ? t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'đ' :  t.yLabel+'đ';
-                                        return xLabel + ': ' + yLabel;
-                                    }
+                // Set new default font family and font color to mimic Bootstrap's default styling
+                Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+                Chart.defaults.global.defaultFontColor = '#292b2c';
+
+                // Area Chart Example
+                var ctx = document.getElementById("myAreaChart");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: chartlabels,
+                        datasets: [{
+                            label: 'Tiền',
+                            data: chartdata,
+                            backgroundColor: 'rgba(0, 119, 204, 0.8)',
+                        }]
+                    },
+                    options: {
+                        tooltips: {
+                            callbacks: {
+                                label: function (t, d) {
+                                    var xLabel = d.datasets[t.datasetIndex].label;
+                                    var yLabel = t.yLabel >= 1000 ? t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : t.yLabel + 'đ';
+                                    return xLabel + ': ' + yLabel;
                                 }
-                            },
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        callback: function (value, index, values) {
-                                            if (parseInt(value) >= 1000) {
-                                                return  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ 'đ';
-                                            } else {
-                                                return  value+'đ';
-                                            }
+                            }
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    callback: function (value, index, values) {
+                                        if (parseInt(value) >= 1000) {
+                                            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ';
+                                        } else {
+                                            return value + 'đ';
                                         }
                                     }
-                                }]
-                            }
+                                }
+                            }]
                         }
-                    });
-               
-                }
-            });
+                    }
+                });
+
+            }
         });
+
+
+        $.ajax({
+            type: "Get",
+            url: 'https://localhost:7254/Admin/HomeAdmin/tong',
+            data: {
+                datefrom: _startDate.format('YYYY-MM-DD'),
+                dateto: _endDate.format('YYYY-MM-DD'),
+                type: "ajax",
+            },
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                console.log(result.tongtien);
+                document.getElementById("tongtien").innerHTML = result.tongtien > 1000 ? result.tongtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.tongtien + 'đ';
+                document.getElementById("thanhtoan").innerHTML = result.thanhtoan > 1000 ? result.thanhtoan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.thanhtoan + 'đ';
+                document.getElementById("chuathanhtoan").innerHTML = result.chuathanhtoan > 1000 ? result.chuathanhtoan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 'đ' : result.chuathanhtoan + 'đ';
+            }
+        });
+        });
+
 
 </script>

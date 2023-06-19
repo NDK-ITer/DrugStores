@@ -22,23 +22,26 @@ namespace DrugStore.Areas.Admin.Controllers
         {
             ViewBag.nguoidung=dbContext.AspNetUsers.Count();
 
-            ViewBag.tongtien = dbContext.HoaDons.Sum(x=>x.TongThanhTien);
-
-            ViewBag.thanhtoan = dbContext.HoaDons.Where(x=>x.DaThanhToan==true).Sum(x => x.TongThanhTien);
-
-            ViewBag.chuathanhtoan = dbContext.HoaDons.Where(x => x.DaThanhToan == false).Sum(x => x.TongThanhTien);
-
-           
+          
 
            return View();
         }
 
-        public ActionResult tongTien()
+        public ActionResult tong(DateTime datefrom, DateTime dateto)
+        {
+           var tongtien = dbContext.HoaDons.Where(x => x.NgayLap >= datefrom && x.NgayLap < dateto).Sum(x => x.TongThanhTien);
+
+            var thanhtoan = dbContext.HoaDons.Where(x => x.DaThanhToan == true && x.NgayLap >= datefrom && x.NgayLap < dateto).Sum(x => x.TongThanhTien);
+
+            var chuathanhtoan = dbContext.HoaDons.Where(x => x.DaThanhToan == false && x.NgayLap >= datefrom && x.NgayLap < dateto).Sum(x => x.TongThanhTien);
+
+            return Json(new { tongtien = tongtien, thanhtoan= thanhtoan, chuathanhtoan= chuathanhtoan });
+        }
+
+        public ActionResult tongTien(DateTime datefrom, DateTime dateto)
         {
             
-            DateTime datefrom = DateTime.Parse("2023-05-08");
-            DateTime dateto = DateTime.Now;
-
+         
             List<ChartTongTien> chartTongTiens = new List<ChartTongTien>();
             
             var query = "tongtien @datefrom , @dateto ";
@@ -57,12 +60,10 @@ namespace DrugStore.Areas.Admin.Controllers
             return Json(new { data = data});
         }
 
-        public ActionResult tongHoaDon()
+        public ActionResult tongHoaDon(DateTime datefrom, DateTime dateto)
         {
 
-            DateTime datefrom = DateTime.Parse("2023-05-08");
-            DateTime dateto = DateTime.Now;
-
+            
             List<ChartHoaDon> chartHoadons = new List<ChartHoaDon>();
 
             var query = "tonghoadon @datefrom , @dateto ";

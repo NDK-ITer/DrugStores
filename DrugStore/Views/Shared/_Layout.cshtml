@@ -20,7 +20,13 @@
     <link rel="stylesheet" href="~/theme/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="~/theme/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="~/theme/css/style.css" type="text/css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 </head>
 <body>
     <!-- Page Preloder -->
@@ -298,5 +304,22 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>*@
     @await RenderSectionAsync("scripts", required: false)
+    <script>
+        var _startDate = null;
+        var _endDate = null;
+
+        _startDate = moment('2023-01-01').startOf('day');
+        _endDate = moment().endOf("day");
+
+        var _dateRanges = {
+            'Today': [moment().startOf("day"), moment().endOf("day")],
+            'Yesterday': [moment().subtract(1, 'days').startOf("day"), moment().subtract(1, 'days').endOf("day")],
+            'Last 30 Days': [moment().subtract(29, 'days').startOf("day"), moment().endOf("day")],
+            'Last 60 Days': [moment().subtract(59, 'days').startOf("day"), moment().endOf("day")],
+            'Last 90 Days': [moment().subtract(89, 'days').startOf("day"), moment().endOf("day")],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'Reset': [moment().startOf("year").startOf("day"), moment().endOf("year").endOf("day")],
+        };
+    </script>
 </body>
 </html>

@@ -1,9 +1,12 @@
 ﻿using DrugStore.Areas.Identity.Data;
+using DrugStore.Models;
 using DrugStore.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DrugStore.Controllers
 {
@@ -20,12 +23,35 @@ namespace DrugStore.Controllers
         [Authorize]
         public IActionResult Index(List<HoaDon> dshd)
         {
-            if (dshd.IsNullOrEmpty())
-            {
-                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User)).ToList();
-            }
+           
             return View(dshd);
         }
+
+
+        public ActionResult ListBill(DateTime datefrom , DateTime dateto)
+        {
+            List<HoaDon> dshd=new List<HoaDon>();
+            if (dshd.IsNullOrEmpty())
+            {
+                dshd = dbContext.HoaDons.Where(c => c.Id == userManager.GetUserId(User) && c.NgayLap>=datefrom && c.NgayLap<=dateto).OrderByDescending(c => c.NgayLap).ToList();
+            }
+
+            List<Bill> list = new List<Bill>();
+
+            foreach (HoaDon d in dshd)
+            {
+                Bill bill=new Bill();
+                bill.id = d.SoDH;
+                
+                bill.ngay = d.NgayLap?.ToString("MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture);
+                bill.trangthai = (bool)d.DaThanhToan ? "Đã thanh toán" : "chưa thanh toán";
+                bill.tongtien = d.TongThanhTien.ToString();
+                list.Add(bill);
+            }
+
+            return Json(new { list = list });
+        }
+                 
         public IActionResult Detail(Guid id)
         {
             return View(dbContext.HoaDons.Find(id));
