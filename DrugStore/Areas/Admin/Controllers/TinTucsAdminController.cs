@@ -64,7 +64,7 @@ namespace DrugStore.Areas.Admin.Controllers
         public ActionResult Create()
         {
             var model = new TinTucInput();
-           List<string> idtag = new List<string>();
+            List<string> idtag = new List<string>();
             model.drptag = dbContext.Tags.Select(x => new SelectListItem { Text = x.IdTag ,Value=x.IdTag}).ToList();
             return View(model);
         }
@@ -149,11 +149,6 @@ namespace DrugStore.Areas.Admin.Controllers
 
 
             List<string> idtag = new List<string>();
-
-
-
-
-            
 
 
             var x = dbContext.TagTinTucs.Where(x => x.MaTT == TinTucinput.idtintuc).Select(x => new SelectListItem { Text = x.IdTag, Value = x.IdTag,Selected=true}).ToList();
